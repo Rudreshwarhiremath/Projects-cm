@@ -13,17 +13,15 @@ public class UserDTO {
 	@NotNull
 	private int id;
 	@NotBlank
-	@Size(min = 4, max = 30, message = "UserId should be greater then 4 and less then 10")
+	@Size(min = 4, max = 30, message = "UserId should be greater then 4 and less then 30")
 	private String userId;
 	@NotBlank
-	@Size(min = 4, max = 40, message = "email should be greater then 5 and less then 25")
+	@Size(min = 4, max = 40, message = "email should be greater then 4 and less then 40")
 	private String email;
 	@NotNull
-	@Max(value = 10 ,message = "Digit must be 10")
-	@Min(value = 10 ,message = "Digit must be 10")
 	private Long mobile;
 	@NotBlank
-	@Size(min = 4, max = 10, message = "password should be greater then 5 and less then 12")
+	@Size(min = 4, max = 12, message = "password should be greater then 4 and less then 12")
 	private String password;
 	@NotNull
 	@NotBlank

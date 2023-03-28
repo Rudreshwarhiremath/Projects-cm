@@ -1,0 +1,14 @@
+package com.xworkz.pro.dto;
+
+import lombok.Data;
+
+@Data
+public class UserDTO {
+	private String userId;
+	private String email;
+	private Long mobile;
+	private String password;
+	private String confirmPassword;
+	private Boolean agreement;
+
+}

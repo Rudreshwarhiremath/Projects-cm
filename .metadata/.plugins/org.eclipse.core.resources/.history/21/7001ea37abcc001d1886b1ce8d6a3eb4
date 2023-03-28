@@ -1,0 +1,5 @@
+package com.xworkz.pro.dto;
+
+public abstract class AbstractAudit {
+
+}

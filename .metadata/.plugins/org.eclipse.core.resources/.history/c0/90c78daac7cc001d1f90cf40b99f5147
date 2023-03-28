@@ -1,0 +1,16 @@
+package com.xworkz.pro.entity;
+
+import com.xworkz.pro.dto.AbstractAudit;
+
+import lombok.Data;
+
+@Data
+public class UserEntity extends AbstractAudit {
+	private int id;
+	private String userId;
+	private String email;
+	private long mobile;
+	private String password;
+	private Boolean agreement;
+
+}

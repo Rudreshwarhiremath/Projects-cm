@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequestMapping("/")
 public class UserController {
-	
+
 	@Autowired
 	private UserService userService;
 
@@ -29,15 +29,20 @@ public class UserController {
 
 	@PostMapping("/save")
 	public String userInfo(UserDTO userDTO, Model model) {
-		Set<ConstraintViolation<UserDTO>> violations = this.userService.validateAndSave(userDTO);
-		if (violations.isEmpty()) {
-			model.addAttribute("message", "data saved sucessfull");
-			log.info(""+userDTO);
+		if (userDTO.getPassword().equals(userDTO.getConfirmPassword())) {
+			Set<ConstraintViolation<UserDTO>> violations = this.userService.validateAndSave(userDTO);
+			if (violations.isEmpty()) {
+				model.addAttribute("message", "data saved sucessfull");
+				log.info("" + userDTO);
+				return "signUp";
+
+			} else {
+				model.addAttribute("errors", violations);
+				model.addAttribute("messag", "data not saved");
+			}
 			return "signUp";
-		
-		} else {
-			model.addAttribute("errors", violations);
-			model.addAttribute("messag", "data not saved sucessfull");
+		}else {
+			model.addAttribute("password","Password and Confirmpassword must be same");
 		}
 
 		return "signUp";
