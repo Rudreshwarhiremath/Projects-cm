@@ -32,7 +32,8 @@
 	<c:forEach items="${errors}" var="e">${e.message}</c:forEach>
 	</h5>
 	<form action="save" method="post"> 
-User ID	<input type="text" name="userId"> <br>
+User ID	<input type="text" name="userId" id="userName"  onchange="ValideName()"> 
+<span id="nameError" style="color: red"></span><br>
 Email<input type="email" name="email"> <br>
 Mobile Number<input type="number" name="mobile"> <br>
 Password<input type="password" name="password"> <br>
@@ -49,6 +50,22 @@ if(agree.checked){
 	document.getElementById('submitId').disabled=false;
 }else{
 	document.getElementById('submitId').disabled='disabled';
+}
+	
+}
+function ValideName() {
+var	user=document.getElementById('userName');
+var uservalue=user.value;
+console.log(uservalue);
+if(uservalue!=null && uservalue!="" && uservalue.length>3 && uservalue.length<30 )
+{
+	console.log('valide name');
+	document.getElementById('nameError').innerHTML='';
+}
+else
+{
+	console.log('invalide name');
+	document.getElementById('nameError').innerHTML='Plese enter valide name min 4 and max 30';
 }
 	
 }
