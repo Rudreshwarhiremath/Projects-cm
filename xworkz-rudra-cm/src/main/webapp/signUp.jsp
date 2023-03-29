@@ -33,30 +33,31 @@
 		<c:forEach items="${errors}" var="e">${e.message}</c:forEach>
 	</h5>
 	<form action="save" method="post">
-		User ID <input type="text" name="userId" id="userName"
-			onchange="ValideName()"> <span id="nameError"
-			style="color: red"></span>
-			<h5 style="color: red">${userIdExesist}</h5>
-			<br> 
-		Email<input type="email" name="email" id="emailId" onchange="valideEmail()"> <span
-			id="emailError" style="color: red"></span>
-			<h5 style="color: red">${emailIdExesist}</h5>
-			<br> 
-		Mobile Number<input type="number" name="mobile" id="userMobile" onchange="ValideMobile()">
-		    <span id="mobileError" style="color: red"></span>
-		    <h5 style="color: red">${mobileNumberExesist}</h5>`
-		     <br> 
-		Password<input type="password" name="password" id="userPassword"> <span id="passwordError"
-			style="color: red"></span> <input type="checkbox"
-			onclick="myFunction()">Show Password <br>
-			
-		ConfirmPassword<input type="password" name="confirmPassword"
-			id="userConfirmPassword" onblur="ValidePassword()">
-			<span	id="passwordCompare" style="color: red"></span> <br>  
-		Agreement <input type="checkbox" name="agreement" id="agreementConfirm"
-			onclick="onconfirm()"> <br>
-		    <button type="submit" class="btn btn-success" id="submitId"
-			disabled="true">SignUp</button>
+		User ID <input type="text" name="userId" id="userName" onchange="ValideName()"> 
+		<span id="nameError" style="color: red"></span>
+		<span style="color: red">${userIdExesist}</span>
+		<span id="displayUserName" style="color: red"></span>
+		<br>
+		 Email<input type="email" name="email" id="emailId" onchange="valideEmail()">
+		 <span id="emailError" style="color: red"></span>
+		<span id="display" style="color: red"></span>
+		<span style="color: red">${emailIdExesist}</span>
+		<br>
+		 Mobile Number<input type="number" name="mobile" id="userMobile" onchange="ValideMobile()">
+		<span id="mobileError" style="color: red"></span>
+		<span id="displayUserMobile" style="color: red"></span>
+		<span style="color: red">${mobileNumberExesist}</span>
+		`<br>
+		 Password<input type="password" name="password" id="userPassword">
+		<span id="passwordError" style="color: red"></span> 
+		<input type="checkbox" onclick="myFunction()">Show Password 
+		<br>
+		ConfirmPassword<input type="password" name="confirmPassword" id="userConfirmPassword" onblur="ValidePassword()">
+		<span id="passwordCompare" style="color: red"></span> 
+		<br> 
+		Agreement <input type="checkbox" name="agreement" id="agreementConfirm" onclick="ValideName()"> 
+		<br>
+		<button type="submit" class="btn btn-success" id="submitId" disabled="true">SignUp</button>
 	</form>
 	<h4 style="color: red;">${password}</h4>
 	<script>
@@ -69,16 +70,16 @@
 			}
 		}
 
- 		function onconfirm() {
- 			var agree = document.getElementById('agreementConfirm');
-			console.log(agree.checked);
-			if (agree.checked) {
-				document.getElementById('submitId').disabled = false;
-			} else {
-				document.getElementById('submitId').disabled = 'disabled';
-			} 
+		/* 		function onconfirm() {
+		 var agree = document.getElementById('agreementConfirm');
+		 console.log(agree.checked);
+		 if (agree.checked) {
+		 document.getElementById('submitId').disabled = false;
+		 } else {
+		 document.getElementById('submitId').disabled = 'disabled';
+		 }
+		 } */
 
-	
 		function ValideName() {
 			var user = document.getElementById('userName');
 			var uservalue = user.value;
@@ -86,13 +87,30 @@
 			if (uservalue != null && uservalue != "" && uservalue.length > 3
 					&& uservalue.length < 30) {
 				console.log('valide name');
+				var agree = document.getElementById('agreementConfirm');
+				console.log(agree.checked);
+				if (agree.checked) {
+					document.getElementById('submitId').disabled = false;
+				}
 				document.getElementById('nameError').innerHTML = '';
 			} else {
 				console.log('invalide name');
+				document.getElementById('submitId').disabled = 'disabled';
 				document.getElementById('nameError').innerHTML = 'Plese enter valide name min 4 and max 30 character';
 			}
+			const xhttp = new XMLHttpRequest();
+			console.log('Running in ajax');
+			console.log(uservalue);
+			xhttp.open("GET", "http://localhost:8088/xworkz-rudra-cm/userName/"
+					+ uservalue);
+			xhttp.send();
 
-		}
+			xhttp.onload = function() {
+				console.log(this);
+
+				document.getElementById("displayUserName").innerHTML = this.responseText
+
+			}
 		}
 		function valideEmail() {
 			var userEmail = document.getElementById('emailId');
@@ -105,6 +123,22 @@
 			} else {
 				console.log('invalide email');
 				document.getElementById('emailError').innerHTML = 'Plese enter valide email';
+			}
+			const xhttp = new XMLHttpRequest();
+			console.log('Running in ajax');
+			console.log(userEmailvalue);
+			xhttp.open("GET", "http://localhost:8088/xworkz-rudra-cm/email/"
+					+ userEmailvalue);
+			xhttp.send();
+
+			xhttp.onload = function() {
+				console.log(this);
+
+				document.getElementById("display").innerHTML = this.responseText
+
+				/* 			var	json=JSON.parse(this.responseText);
+				 document.getElementById("display").innerHTML=json.email+'  ID is exist';
+				 */
 			}
 
 		}
@@ -120,22 +154,35 @@
 				console.log('invalide mobile');
 				document.getElementById('mobileError').innerHTML = 'Plese enter valide Mobile Number';
 			}
+			const xhttp = new XMLHttpRequest();
+			console.log('Running in ajax');
+			console.log(userMobilevalue);
+			xhttp.open("GET", "http://localhost:8088/xworkz-rudra-cm/mobile/"
+					+ userMobilevalue);
+			xhttp.send();
 
+			xhttp.onload = function() {
+				console.log(this);
+
+				document.getElementById("displayUserMobile").innerHTML = this.responseText
+
+			}
 		}
 		function ValidePassword() {
 			var userPassword = document.getElementById('userPassword');
-			var userConfirmPassword = document.getElementById('userConfirmPassword');
+			var userConfirmPassword = document
+					.getElementById('userConfirmPassword');
 			var userPasswordvalue = userPassword.value;
 			var userConfirmPasswordvalue = userConfirmPassword.value;
 			console.log(userPasswordvalue);
 			if (userPasswordvalue != null && userPasswordvalue != ""
 					&& userPasswordvalue.length > 4
 					&& userPasswordvalue.length < 12) {
-				if(userPasswordvalue==userConfirmPasswordvalue){
+				if (userPasswordvalue == userConfirmPasswordvalue) {
 					console.log('valide both password are same');
 					document.getElementById('passwordCompare').innerHTML = '';
 
-				}else{
+				} else {
 					console.log('valide both password are not same');
 					document.getElementById('passwordCompare').innerHTML = 'Password and ConfirmPassword must be same';
 				}
