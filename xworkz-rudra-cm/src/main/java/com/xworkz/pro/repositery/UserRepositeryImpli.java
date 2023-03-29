@@ -1,8 +1,11 @@
 package com.xworkz.pro.repositery;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -34,6 +37,19 @@ public class UserRepositeryImpli implements UserRepositery {
 			em.close();
 		}
 
+	}
+
+	@Override
+	public List<UserEntity> findAll() {
+		EntityManager em = this.entityManagerFactory.createEntityManager();
+		try {
+			Query query = em.createNamedQuery("find");
+			List<UserEntity> list = query.getResultList();
+			log.info("Total list size found in repo" + list.size());
+			return list;
+		} finally {
+			em.close();
+		}
 	}
 
 }

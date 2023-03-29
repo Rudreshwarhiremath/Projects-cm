@@ -1,7 +1,9 @@
 package com.xworkz.pro.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 import javax.enterprise.inject.spi.Bean;
@@ -43,17 +45,28 @@ public class UserServiceImpli implements UserService {
 		if (violations != null && !violations.isEmpty()) {
 			log.info("there is vailation in dto");
 			return violations;
-		}else {
-		log.info("No violations procceding to save");
-		UserEntity entity= new UserEntity();
-		entity.setCreatedBy(userDTO.getUserId());
-		entity.setCreatedDate(LocalDateTime.now());
-		BeanUtils.copyProperties(userDTO, entity);
-		boolean saved=this.userRepositery.save(entity);
-		log.info(""+saved);
-			}
-		return Collections.emptySet();
+		} else {
+			log.info("No violations procceding to save");
+			UserEntity entity = new UserEntity();
+			entity.setCreatedBy(userDTO.getUserId());
+			entity.setCreatedDate(LocalDateTime.now());
+			BeanUtils.copyProperties(userDTO, entity);
+			boolean saved = this.userRepositery.save(entity);
+			log.info("" + saved);
 		}
+		return Collections.emptySet();
+	}
+
+	@Override
+	public List<UserDTO> findAll() {
+		List<UserEntity> userEntity = this.userRepositery.findAll();
+		List<UserDTO> lists = new ArrayList<UserDTO>();
+		for (UserEntity entity : userEntity) {
+			UserDTO dto = new UserDTO();
+			BeanUtils.copyProperties(entity, dto);
+			lists.add(dto);
+
+		}
+		return lists;
+	}
 }
-
-

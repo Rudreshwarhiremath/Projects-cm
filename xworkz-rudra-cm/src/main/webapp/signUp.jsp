@@ -35,18 +35,23 @@
 	<form action="save" method="post">
 		User ID <input type="text" name="userId" id="userName"
 			onchange="ValideName()"> <span id="nameError"
-			style="color: red"></span><br> 
+			style="color: red"></span>
+			<h5 style="color: red">${userIdExesist}</h5>
+			<br> 
 		Email<input type="email" name="email" id="emailId" onchange="valideEmail()"> <span
-			id="emailError" style="color: red"></span><br> 
+			id="emailError" style="color: red"></span>
+			<h5 style="color: red">${emailIdExesist}</h5>
+			<br> 
 		Mobile Number<input type="number" name="mobile" id="userMobile" onchange="ValideMobile()">
-		    <span id="mobileError" style="color: red"></span> <br> 
-		Password<input type="password" name="password" id="userPassword"
-			onchange="ValidePassword()"> <span id="passwordError"
+		    <span id="mobileError" style="color: red"></span>
+		    <h5 style="color: red">${mobileNumberExesist}</h5>`
+		     <br> 
+		Password<input type="password" name="password" id="userPassword"> <span id="passwordError"
 			style="color: red"></span> <input type="checkbox"
 			onclick="myFunction()">Show Password <br>
 			
 		ConfirmPassword<input type="password" name="confirmPassword"
-			id="userConfirmPassword" onchange="ValidePassword()">
+			id="userConfirmPassword" onblur="ValidePassword()">
 			<span	id="passwordCompare" style="color: red"></span> <br>  
 		Agreement <input type="checkbox" name="agreement" id="agreementConfirm"
 			onclick="onconfirm()"> <br>
