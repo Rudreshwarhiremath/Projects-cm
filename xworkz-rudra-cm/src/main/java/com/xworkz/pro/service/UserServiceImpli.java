@@ -8,6 +8,7 @@ import java.util.Properties;
 import java.util.Set;
 
 import javax.mail.Authenticator;
+import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
@@ -48,21 +49,38 @@ public class UserServiceImpli implements UserService {
 
 	@Override
 	public Set<ConstraintViolation<UserDTO>> validateAndSave(UserDTO userDTO) {
-		if (userDTO.getPassword().equals(userDTO.getConfirmPassword())) {
-			Set<ConstraintViolation<UserDTO>> violations = validate(userDTO);
-			if (violations != null && !violations.isEmpty()) {
-				log.info("there is vailation in dto");
-				return violations;
-			} else {
-				log.info("No violations procceding to save");
+		Long emailCount = this.userRepositery.findByEmail(userDTO.getEmail());
+		Long userCount = this.userRepositery.findByUser(userDTO.getUserId());
+		Long mobileCount = this.userRepositery.findByMobile(userDTO.getMobile());
+		log.error("emailCount-" + emailCount);
+		log.error("userCount-" + userCount);
+		log.error("mobileCount-" + mobileCount);
+		if (emailCount == 0 && userCount == 0 && mobileCount == 0) {
+			if (userDTO.getPassword().equals(userDTO.getConfirmPassword())) {
+				Set<ConstraintViolation<UserDTO>> violations = validate(userDTO);
+				if (violations != null && !violations.isEmpty()) {
+					log.info("there is Violation in dto");
+					return violations;
+				} else {
+					log.info("No Violations procceding to save");
+					log.error("emailCount--" + emailCount);
+					log.error("userCount--" + userCount);
+					log.error("mobileCount--" + mobileCount);
+					UserEntity entity = new UserEntity();
+					entity.setCreatedBy(userDTO.getUserId());
+					entity.setCreatedDate(LocalDateTime.now());
+					BeanUtils.copyProperties(userDTO, entity);
+					boolean saved = this.userRepositery.save(entity);
+					boolean sent = this.sendMail(userDTO.getEmail());
+					log.info("Saved in Entity-" + saved);
+					log.info("Email sent -:" + sent);
 
-				UserEntity entity = new UserEntity();
-				entity.setCreatedBy(userDTO.getUserId());
-				entity.setCreatedDate(LocalDateTime.now());
-				BeanUtils.copyProperties(userDTO, entity);
-				boolean saved = this.userRepositery.save(entity);
-				log.info("" + saved);
+				}
+			} else {
+				log.error("Password must be same");
 			}
+		} else {
+			log.error("User already exsist");
 		}
 		return Collections.emptySet();
 	}
@@ -82,15 +100,15 @@ public class UserServiceImpli implements UserService {
 
 	@Override
 	public Long findByEmail(String email) {
-		Long email1 = this.userRepositery.findByEmail(email);
+		Long emailcount = this.userRepositery.findByEmail(email);
 		log.error("Find  by Email");
-		return email1;
+		return emailcount;
 	}
 
 	@Override
 	public Long findByMobile(Long mobile) {
-		Long count = this.userRepositery.findByMobile(mobile);
-		return count;
+		Long mobilecount = this.userRepositery.findByMobile(mobile);
+		return mobilecount;
 	}
 
 	@Override
@@ -100,18 +118,23 @@ public class UserServiceImpli implements UserService {
 	}
 
 	@Override
-	public boolean sendMail(String to) {
+	public boolean sendMail(String email) {
 		String portNumber = "587";// 485,587,25
-		String hostName = "smtp.gmail.com";
-		String fromEmail = "";
-		String password = "";
+		String hostName = "smtp.office365.com";
+		String fromEmail = "rudraproject26@outlook.com";
+		String password = "Rudra@1234";
+		String to = email;
 
 		Properties prop = new Properties();
 		prop.put("mail.smtp.host", hostName);
 		prop.put("mail.smtp.port", portNumber);
 		prop.put("mail.smtp.sttartls.enable", true);
+		prop.put("mail.debug", true);
+		prop.put("mail.smtp.auth", true);
+		prop.put("mail.transport.protocal", "smtp");
 
 		Session session = Session.getInstance(prop, new Authenticator() {
+			@Override
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(fromEmail, password);
 			}
@@ -120,11 +143,11 @@ public class UserServiceImpli implements UserService {
 		MimeMessage message = new MimeMessage(session);
 		try {
 			message.setFrom(new InternetAddress(fromEmail));
-			message.setSubject("Mail Subject");
+			message.setSubject("Registration  Completed");
 			message.setText("Thanks for registration");
-			String msg = "This is my first email using JavaMailer";
-
+			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 			Transport.send(message);
+			log.info("mail sent sucessfully");
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}

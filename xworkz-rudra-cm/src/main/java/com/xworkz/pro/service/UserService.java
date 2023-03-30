@@ -28,5 +28,5 @@ public interface UserService {
 		return null;
 	}
 
-	boolean sendMail(String to);
+	boolean sendMail(String email);
 }
