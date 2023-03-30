@@ -15,4 +15,18 @@ public interface UserService {
 	default List<UserDTO> findAll() {
 		return Collections.emptyList();
 	}
+
+	default Long findByEmail(String email) {
+		return null;
+	}
+
+	default Long findByMobile(Long mobile) {
+		return null;
+	}
+
+	default Long findByUser(String user) {
+		return null;
+	}
+
+	boolean sendMail(String to);
 }

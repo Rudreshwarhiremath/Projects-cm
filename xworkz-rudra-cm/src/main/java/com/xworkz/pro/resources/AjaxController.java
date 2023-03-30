@@ -30,40 +30,52 @@ public class AjaxController {
 
 	@GetMapping(value = "/email/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public String onEmail(@PathVariable String email) {
-		List<UserDTO> dtoList = this.userService.findAll();
-		System.err.println(email);
-		for (UserDTO dto : dtoList) {
-			if (email.equals(dto.getEmail())) {
-				System.err.println("Running in equals condition");
-				return "Email id exsist";
-			}
+		Long dbEmail = this.userService.findByEmail(email);
+		System.err.println(dbEmail);
+
+		if (dbEmail == 0) {
+			System.err.println("Running in equals condition");
+			return "";
+		} else {
+			return "Email id exsist";
 		}
-		return "";
 	}
 
 	@GetMapping(value = "/userName/{user}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public String onUser(@PathVariable String user) {
-		List<UserDTO> dtoList = this.userService.findAll();
-		System.err.println(user);
-		for (UserDTO dto : dtoList) {
-			if (user.equals(dto.getUserId())) {
-				System.err.println("Running in equals condition");
-				return "UserID exsist";
-			}
+		Long dbUser = this.userService.findByUser(user);
+		System.err.println(dbUser);
+
+		if (dbUser == 0) {
+			System.err.println("Running in equals condition");
+			return "";
+
+		} else {
+			return "UserID exsist";
 		}
-		return "";
 	}
 
 	@GetMapping(value = "/mobile/{number}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public String onMobile(@PathVariable Long number) {
-		List<UserDTO> dtoList = this.userService.findAll();
-		System.err.println(number);
-		for (UserDTO dto : dtoList) {
-			if (number.equals(dto.getMobile())) {
-				System.err.println("Running in equals condition");
-				return "Mobile Number exsist";
-			}
+		Long dbNumber = this.userService.findByMobile(number);
+		System.err.println(dbNumber);
+
+		if (dbNumber == 0) {
+			System.err.println("Running in equals condition");
+			return "";
+
+		} else {
+			return "Mobile Number exsist";
 		}
-		return "";
+	}
+
+	@GetMapping(value = "/dto", produces = MediaType.APPLICATION_JSON_VALUE)
+	public UserDTO userDto() {
+		UserDTO dto = new UserDTO();
+		dto.setUserId("Rudra12345");
+		dto.setEmail("Rudra@gmail.com");
+		dto.setMobile(8088928928L);
+		System.out.println(dto);
+		return dto;
 	}
 }

@@ -59,8 +59,28 @@
 		<br>
 		<button type="submit" class="btn btn-success" id="submitId" disabled="true">SignUp</button>
 	</form>
+	
+	<input type="submit" value="ShowDto" onclick="DisplayDTO()">
+	<span id="showDTO"></span>
 	<h4 style="color: red;">${password}</h4>
 	<script>
+	
+	function DisplayDTO() {
+		console.log('Running in DisplayDTO');
+		const xhttp = new XMLHttpRequest();
+		xhttp.open("GET", "http://localhost:8088/xworkz-rudra-cm/dto");
+		xhttp.send();
+
+		xhttp.onload = function() {
+			console.log(this);
+
+			document.getElementById("showDTO").innerHTML = this.responseText
+
+			var	json=JSON.parse(this.responseText);
+			// document.getElementById("showDTO").innerHTML=json.email;
+			 
+		}
+	}
 		function myFunction() {
 			var x = document.getElementById("userPassword");
 			if (x.type === "password") {

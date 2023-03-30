@@ -11,4 +11,16 @@ public interface UserRepositery {
 	default List<UserEntity> findAll() {
 		return Collections.emptyList();
 	}
+
+	default Long findByUser(String user) {
+		return null;
+	}
+
+	default Long findByEmail(String email) {
+		return null;
+	}
+
+	default Long findByMobile(Long number) {
+		return null;
+	}
 }

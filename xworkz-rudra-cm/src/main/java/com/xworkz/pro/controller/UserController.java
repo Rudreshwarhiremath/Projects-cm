@@ -31,40 +31,19 @@ public class UserController {
 
 	@PostMapping("/save")
 	public String userInfo(UserDTO userDTO, Model model) {
+		Set<ConstraintViolation<UserDTO>> violations = this.userService.validateAndSave(userDTO);
 
-		List<UserDTO> dtoList = this.userService.findAll();
-		for (UserDTO dto : dtoList) {
-			System.out.println(dto);
-			if (userDTO.getUserId().equals(dto.getUserId())) {
-				model.addAttribute("userIdExesist", "UserId already Existed");
-				return "signUp";
-			} else if (userDTO.getEmail().equals(dto.getEmail())) {
-				model.addAttribute("emailIdExesist", "Email ID already Existed");
-				return "signUp";
-			} else if (userDTO.getMobile().equals(dto.getMobile())) {
-				model.addAttribute("mobileNumberExesist", "Mobile Number already Existed");
-				return "signUp";
-			}
-
-		}
-		if (userDTO.getPassword().equals(userDTO.getConfirmPassword())) {
-			Set<ConstraintViolation<UserDTO>> violations = this.userService.validateAndSave(userDTO);
-
-			if (violations.isEmpty()) {
-				model.addAttribute("message", "data saved sucessfull");
-				log.info("" + userDTO);
-				return "signUp";
-
-			} else {
-				model.addAttribute("errors", violations);
-				model.addAttribute("messag", "data not saved");
-			}
+		if (violations.isEmpty()) {
+			model.addAttribute("message", "data saved sucessfull");
+			log.info("" + userDTO);
 			return "signUp";
-		} else {
-			model.addAttribute("password", "Password and Confirmpassword must be same");
-		}
 
+		} else {
+			model.addAttribute("errors", violations);
+			model.addAttribute("messag", "data not saved");
+		}
 		return "signUp";
+
 	}
 
 }

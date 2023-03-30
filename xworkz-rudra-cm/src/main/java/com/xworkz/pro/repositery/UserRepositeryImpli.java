@@ -52,4 +52,52 @@ public class UserRepositeryImpli implements UserRepositery {
 		}
 	}
 
+	@Override
+	public Long findByEmail(String email) {
+		EntityManager em = this.entityManagerFactory.createEntityManager();
+		try {
+			Query query = em.createNamedQuery("emailId");
+			query.setParameter("emailBy", email);
+			Object object = query.getSingleResult();
+			Long value = (Long) object;
+			System.out.println(value);
+			return value;
+
+		} finally {
+			em.close();
+		}
+
+	}
+
+	@Override
+	public Long findByUser(String user) {
+		EntityManager em = this.entityManagerFactory.createEntityManager();
+		try {
+			Query query = em.createNamedQuery("userId");
+			query.setParameter("userBy", user);
+			Object object = query.getSingleResult();
+			Long value = (Long) object;
+			System.out.println(value);
+			return value;
+
+		} finally {
+			em.close();
+		}
+	}
+
+	@Override
+	public Long findByMobile(Long number) {
+		EntityManager em = this.entityManagerFactory.createEntityManager();
+		try {
+			Query query = em.createNamedQuery("mobileId");
+			query.setParameter("mobileBy", number);
+			Object object = query.getSingleResult();
+			Long value = (Long) object;
+			System.out.println(value);
+			return value;
+
+		} finally {
+			em.close();
+		}
+	}
 }
