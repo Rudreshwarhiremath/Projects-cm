@@ -1,7 +1,5 @@
 package com.xworkz.pro.resources;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -67,15 +65,5 @@ public class AjaxController {
 		} else {
 			return "Mobile Number exsist";
 		}
-	}
-
-	@GetMapping(value = "/dto", produces = MediaType.APPLICATION_JSON_VALUE)
-	public UserDTO userDto() {
-		UserDTO dto = new UserDTO();
-		dto.setUserId("Rudra12345");
-		dto.setEmail("Rudra@gmail.com");
-		dto.setMobile(8088928928L);
-		System.out.println(dto);
-		return dto;
 	}
 }

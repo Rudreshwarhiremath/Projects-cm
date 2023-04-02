@@ -22,12 +22,16 @@
 			<a class="navbar-brand" href="#"> <img
 				src=" https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png"
 				alt="" width="80" height="48" class="d-inline-block align text-top">
-				<a href="signUp.jsp">signUpPage</a>
 				<a class="navbar-brand" href="#"></a> <img
 				src=" https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png"
 				alt="" width="80" height="48" class="d-inline-block align text-top">
 		</div>
-		
 	</nav>
+<nav class="navbar navbar-expand">
+  <div class="container-fluid">
+      <a href="signUp.jsp"><span class="glyphicon glyphicon-user"></span> Sign Up</a>
+      <a href="SignIn.jsp"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+  </div>
+</nav>
 </body>
 </html>

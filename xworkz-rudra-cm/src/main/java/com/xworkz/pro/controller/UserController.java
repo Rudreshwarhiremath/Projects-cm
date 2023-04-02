@@ -33,16 +33,33 @@ public class UserController {
 	public String userInfo(UserDTO userDTO, Model model) {
 		Set<ConstraintViolation<UserDTO>> violations = this.userService.validateAndSave(userDTO);
 
-		if (violations.isEmpty()) {
-			model.addAttribute("message", "data saved sucessfull");
+		if (violations != null && violations.isEmpty() && userDTO != null) {
+			model.addAttribute("message", "Registration sucessfull");
 			log.info("" + userDTO);
 			return "signUp";
-
-		} else {
-			model.addAttribute("errors", violations);
-			model.addAttribute("messag", "data not saved");
 		}
+		model.addAttribute("errors", violations);
+		model.addAttribute("messag", "Registration failed");
+
 		return "signUp";
+
+	}
+
+	@PostMapping("/signin")
+	public String userSignIn(String userId, String password, Model model) {
+		try {
+		UserDTO udto = this.userService.udto(userId, password);
+		if (udto!=null) {
+			log.info("User ID and password is matched");
+			model.addAttribute("userID",udto.getUserId());
+			return "LoginSucess";
+		}
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+		}
+			model.addAttribute("match", "UserID OR Password is not matching");
+			return "SignIn";			
 
 	}
 

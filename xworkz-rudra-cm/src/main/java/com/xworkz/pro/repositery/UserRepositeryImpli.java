@@ -40,6 +40,23 @@ public class UserRepositeryImpli implements UserRepositery {
 	}
 
 	@Override
+	public UserEntity userSignIn(String userId, String password) {
+		EntityManager em = this.entityManagerFactory.createEntityManager();
+		try {
+			Query query = em.createNamedQuery("userANDpassword");
+			query.setParameter("ui", userId);
+			query.setParameter("pwd", password);
+			Object object = query.getSingleResult();
+			UserEntity entity = (UserEntity) object;
+			log.info("" + entity);
+			return entity;
+		} finally {
+			em.close();
+		}
+
+	}
+
+	@Override
 	public List<UserEntity> findAll() {
 		EntityManager em = this.entityManagerFactory.createEntityManager();
 		try {

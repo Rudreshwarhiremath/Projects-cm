@@ -12,6 +12,10 @@ public interface UserRepositery {
 		return Collections.emptyList();
 	}
 
+	default UserEntity userSignIn(String userId, String password) {
+		return null;
+	}
+
 	default Long findByUser(String user) {
 		return null;
 	}

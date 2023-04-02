@@ -11,6 +11,10 @@ import com.xworkz.pro.dto.UserDTO;
 public interface UserService {
 
 	Set<ConstraintViolation<UserDTO>> validateAndSave(UserDTO userDTO);
+	
+	default UserDTO userSignIn(String userId, String password) {
+		return null;
+	}
 
 	default List<UserDTO> findAll() {
 		return Collections.emptyList();

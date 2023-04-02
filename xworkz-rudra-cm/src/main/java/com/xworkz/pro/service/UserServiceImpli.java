@@ -55,34 +55,42 @@ public class UserServiceImpli implements UserService {
 		log.error("emailCount-" + emailCount);
 		log.error("userCount-" + userCount);
 		log.error("mobileCount-" + mobileCount);
-		if (emailCount == 0 && userCount == 0 && mobileCount == 0) {
-			if (userDTO.getPassword().equals(userDTO.getConfirmPassword())) {
-				Set<ConstraintViolation<UserDTO>> violations = validate(userDTO);
-				if (violations != null && !violations.isEmpty()) {
-					log.info("there is Violation in dto");
-					return violations;
-				} else {
-					log.info("No Violations procceding to save");
-					log.error("emailCount--" + emailCount);
-					log.error("userCount--" + userCount);
-					log.error("mobileCount--" + mobileCount);
-					UserEntity entity = new UserEntity();
-					entity.setCreatedBy(userDTO.getUserId());
-					entity.setCreatedDate(LocalDateTime.now());
-					BeanUtils.copyProperties(userDTO, entity);
-					boolean saved = this.userRepositery.save(entity);
-					boolean sent = this.sendMail(userDTO.getEmail());
-					log.info("Saved in Entity-" + saved);
-					log.info("Email sent -:" + sent);
 
-				}
-			} else {
-				log.error("Password must be same");
+		Set<ConstraintViolation<UserDTO>> violations = validate(userDTO);
+		if (violations != null && !violations.isEmpty()) {
+			log.info("there is Violation in dto");
+			return violations;
+		}
+		if (!userDTO.getPassword().equals(userDTO.getConfirmPassword())) {
+			return null;
+		}
+		if (userCount == 0 && mobileCount == 0) {
+			log.info("No Violations procceding to save");
+			UserEntity entity = new UserEntity();
+			entity.setCreatedBy(userDTO.getUserId());
+			entity.setCreatedDate(LocalDateTime.now());
+			BeanUtils.copyProperties(userDTO, entity);
+			boolean saved = this.userRepositery.save(entity);
+			if (saved) {
+				boolean sent = this.sendMail(userDTO.getEmail());
+				log.info("Saved in Entity-" + saved);
+				log.info("Email sent -:" + sent);
+
 			}
-		} else {
-			log.error("User already exsist");
 		}
 		return Collections.emptySet();
+	}
+
+	@Override
+	public UserDTO userSignIn(String userId, String password) {
+		UserEntity entity = this.userRepositery.entity(userId, password);
+		UserDTO dto = new UserDTO();
+		dto.setUserId(entity.getUserId());
+		dto.setPassword(entity.getPassword());
+		if (dto.getUserId().equals(userId) && dto.getPassword().equals(password)) {
+			return dto;
+		}
+		return null;
 	}
 
 	@Override
@@ -122,16 +130,16 @@ public class UserServiceImpli implements UserService {
 		String portNumber = "587";// 485,587,25
 		String hostName = "smtp.office365.com";
 		String fromEmail = "rudraproject26@outlook.com";
-		String password = "Rudra@1234";
+		String password = "rudra@2026";
 		String to = email;
 
 		Properties prop = new Properties();
 		prop.put("mail.smtp.host", hostName);
 		prop.put("mail.smtp.port", portNumber);
-		prop.put("mail.smtp.sttartls.enable", true);
+		prop.put("mail.smtp.starttls.enable", true);
 		prop.put("mail.debug", true);
 		prop.put("mail.smtp.auth", true);
-		prop.put("mail.transport.protocal", "smtp");
+		prop.put("mail.transport.protocol", "smtp");
 
 		Session session = Session.getInstance(prop, new Authenticator() {
 			@Override
@@ -151,6 +159,6 @@ public class UserServiceImpli implements UserService {
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}
-		return false;
+		return true;
 	}
 }

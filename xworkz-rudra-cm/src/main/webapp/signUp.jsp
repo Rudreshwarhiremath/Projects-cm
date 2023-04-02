@@ -26,63 +26,56 @@
 					src=" https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png"
 					alt="" width="80" height="48" class="d-inline-block align text-top">
 		</div>
+		<a href="SignIn.jsp"><span class="glyphicon glyphicon-log-in"></span> Login</a>
 
 	</nav>
+	<div align="center">
 	<h1 style="color: green;">${message}</h1>
 	<h5 style="color: red;">${messag}<br>
 		<c:forEach items="${errors}" var="e">${e.message}</c:forEach>
 	</h5>
-	<form action="save" method="post">
-		User ID <input type="text" name="userId" id="userName" onchange="ValideName()"> 
+
+<form action="save" method="post">
+<table>
+		<tr> <td>	User ID </td>
+		
+	 <td>	<input type="text" name="userId" id="userName" onchange="ValideName()"> 
 		<span id="nameError" style="color: red"></span>
-		<span style="color: red">${userIdExesist}</span>
-		<span id="displayUserName" style="color: red"></span>
-		<br>
-		 Email<input type="email" name="email" id="emailId" onchange="valideEmail()">
+		<span id="displayUserName" style="color: red"></span> </td>
+		</tr>
+
+	<tr>
+		<td> Email </td>    <td><input type="email" name="email" id="emailId" onchange="valideEmail()">
 		 <span id="emailError" style="color: red"></span>
-		<span id="display" style="color: red"></span>
-		<span style="color: red">${emailIdExesist}</span>
-		<br>
-		 Mobile Number<input type="number" name="mobile" id="userMobile" onchange="ValideMobile()">
+		<span id="display" style="color: red"></span></td> </tr>
+	<tr><td>	 Mobile Number </td>  <td><input type="number" name="mobile" id="userMobile" onchange="ValideMobile()">
 		<span id="mobileError" style="color: red"></span>
-		<span id="displayUserMobile" style="color: red"></span>
-		<span style="color: red">${mobileNumberExesist}</span>
-		`<br>
-		 Password<input type="password" name="password" id="userPassword">
+		<span id="displayUserMobile" style="color: red"></span></td>  </tr>
+	<tr><td>	 Password </td>   <td><input type="password" name="password" id="userPassword">
 		<span id="passwordError" style="color: red"></span> 
-		<input type="checkbox" onclick="myFunction()">Show Password 
-		<br>
-		ConfirmPassword<input type="password" name="confirmPassword" id="userConfirmPassword" onblur="ValidePassword()">
-		<span id="passwordCompare" style="color: red"></span> 
-		<br> 
-		Agreement <input type="checkbox" name="agreement" id="agreementConfirm" onclick="ValideName()"> 
-		<br>
-		<button type="submit" class="btn btn-success" id="submitId" disabled="true">SignUp</button>
-	</form>
-	
-	<input type="submit" value="ShowDto" onclick="DisplayDTO()">
-	<span id="showDTO"></span>
+		<input type="checkbox" onclick="myFunction1()">Show Password </td> </tr>
+	<tr><td>	ConfirmPassword </td>  <td><input type="password" name="confirmPassword" id="userConfirmPassword" onblur="ValidePassword()">
+		<span id="passwordCompare" style="color: red"></span>
+		<input type="checkbox" onclick="myFunction2()">Show Confirm Password  </td></tr>
+
+	<tr> <td>	Agreement <input type="checkbox" name="agreement" id="agreementConfirm" onclick="ValideName()"></td> </tr>
+	</table>
+	<div> <button type="submit" class="btn btn-success"  onclick="ValideName()" disabled="true" id="submitId">SignUp</button> </div>
+		</form>
+</div>
 	<h4 style="color: red;">${password}</h4>
 	<script>
 	
-	function DisplayDTO() {
-		console.log('Running in DisplayDTO');
-		const xhttp = new XMLHttpRequest();
-		xhttp.open("GET", "http://localhost:8088/xworkz-rudra-cm/dto");
-		xhttp.send();
-
-		xhttp.onload = function() {
-			console.log(this);
-
-			document.getElementById("showDTO").innerHTML = this.responseText
-
-			var	json=JSON.parse(this.responseText);
-			// document.getElementById("showDTO").innerHTML=json.email;
-			 
-		}
-	}
-		function myFunction() {
+		function myFunction1() {
 			var x = document.getElementById("userPassword");
+			if (x.type === "password") {
+				x.type = "text";
+			} else {
+				x.type = "password";
+			}
+		}
+		function myFunction2() {
+			var x = document.getElementById("userConfirmPassword");
 			if (x.type === "password") {
 				x.type = "text";
 			} else {
@@ -107,6 +100,20 @@
 			if (uservalue != null && uservalue != "" && uservalue.length > 3
 					&& uservalue.length < 30) {
 				console.log('valide name');
+				const xhttp = new XMLHttpRequest();
+				console.log('Running in ajax');
+				console.log(user);
+				console.log(uservalue);
+				
+				xhttp.open("GET", "http://localhost:8088/xworkz-rudra-cm/userName/"+ uservalue);
+				xhttp.send();
+
+				xhttp.onload = function() {
+					console.log(this);
+
+					document.getElementById("displayUserName").innerHTML = this.responseText
+
+				}
 				var agree = document.getElementById('agreementConfirm');
 				console.log(agree.checked);
 				if (agree.checked) {
@@ -118,19 +125,7 @@
 				document.getElementById('submitId').disabled = 'disabled';
 				document.getElementById('nameError').innerHTML = 'Plese enter valide name min 4 and max 30 character';
 			}
-			const xhttp = new XMLHttpRequest();
-			console.log('Running in ajax');
-			console.log(uservalue);
-			xhttp.open("GET", "http://localhost:8088/xworkz-rudra-cm/userName/"
-					+ uservalue);
-			xhttp.send();
 
-			xhttp.onload = function() {
-				console.log(this);
-
-				document.getElementById("displayUserName").innerHTML = this.responseText
-
-			}
 		}
 		function valideEmail() {
 			var userEmail = document.getElementById('emailId');
@@ -139,26 +134,22 @@
 			if (userEmailvalue != null && userEmailvalue != ""
 					&& userEmailvalue.length > 4 && userEmailvalue.length < 40) {
 				console.log('valide email');
+				const xhttp = new XMLHttpRequest();
+				console.log('Running in ajax');
+				console.log(userEmailvalue);
+				xhttp.open("GET", "http://localhost:8088/xworkz-rudra-cm/email/"
+						+ userEmailvalue);
+				xhttp.send();
+
+				xhttp.onload = function() {
+					console.log(this);
+
+					document.getElementById("display").innerHTML = this.responseText
+				}
 				document.getElementById('emailError').innerHTML = '';
 			} else {
 				console.log('invalide email');
-				document.getElementById('emailError').innerHTML = 'Plese enter valide email';
-			}
-			const xhttp = new XMLHttpRequest();
-			console.log('Running in ajax');
-			console.log(userEmailvalue);
-			xhttp.open("GET", "http://localhost:8088/xworkz-rudra-cm/email/"
-					+ userEmailvalue);
-			xhttp.send();
-
-			xhttp.onload = function() {
-				console.log(this);
-
-				document.getElementById("display").innerHTML = this.responseText
-
-				/* 			var	json=JSON.parse(this.responseText);
-				 document.getElementById("display").innerHTML=json.email+'  ID is exist';
-				 */
+				document.getElementById('emailError').innerHTML = 'Plese enter valide email min 4 and max 40 charactes ';
 			}
 
 		}
@@ -169,24 +160,25 @@
 			if (userMobilevalue != null && userMobilevalue != ""
 					&& userMobilevalue.length == 10) {
 				console.log('valide mobile');
+				const xhttp = new XMLHttpRequest();
+				console.log('Running in ajax');
+				console.log(userMobilevalue);
+				xhttp.open("GET", "http://localhost:8088/xworkz-rudra-cm/mobile/"
+						+ userMobilevalue);
+				xhttp.send();
+
+				xhttp.onload = function() {
+					console.log(this);
+
+					document.getElementById("displayUserMobile").innerHTML = this.responseText
+
+				}
 				document.getElementById('mobileError').innerHTML = '';
 			} else {
 				console.log('invalide mobile');
-				document.getElementById('mobileError').innerHTML = 'Plese enter valide Mobile Number';
+				document.getElementById('mobileError').innerHTML = 'Plese enter valide Mobile Number digits must be 10';
 			}
-			const xhttp = new XMLHttpRequest();
-			console.log('Running in ajax');
-			console.log(userMobilevalue);
-			xhttp.open("GET", "http://localhost:8088/xworkz-rudra-cm/mobile/"
-					+ userMobilevalue);
-			xhttp.send();
 
-			xhttp.onload = function() {
-				console.log(this);
-
-				document.getElementById("displayUserMobile").innerHTML = this.responseText
-
-			}
 		}
 		function ValidePassword() {
 			var userPassword = document.getElementById('userPassword');
@@ -204,13 +196,13 @@
 
 				} else {
 					console.log('valide both password are not same');
-					document.getElementById('passwordCompare').innerHTML = 'Password and ConfirmPassword must be same';
+					document.getElementById('passwordCompare').innerHTML = 'Password and ConfirmPassword are not matching';
 				}
 				console.log('valide password');
 				document.getElementById('passwordError').innerHTML = '';
 			} else {
 				console.log('invalide password');
-				document.getElementById('passwordError').innerHTML = 'Plese enter valide password';
+				document.getElementById('passwordError').innerHTML = 'Plese enter valide password length must be greater then 4 and less then 12';
 			}
 
 		}
