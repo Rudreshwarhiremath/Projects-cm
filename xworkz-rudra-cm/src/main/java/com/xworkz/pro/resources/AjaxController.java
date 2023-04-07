@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import com.xworkz.pro.dto.UserDTO;
 import com.xworkz.pro.service.UserService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -66,4 +65,18 @@ public class AjaxController {
 			return "Mobile Number exsist";
 		}
 	}
+	@GetMapping(value = "/reemail/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public String reEmail(@PathVariable String email) {
+		Long dbEmail = this.userService.findByEmail(email);
+		System.err.println(dbEmail);
+
+		if (dbEmail == 0) {
+			System.err.println("Running in equals condition");
+			return "Please enter Existing email";
+		} else {
+			return "  ";
+		}
+	}
+	
+
 }

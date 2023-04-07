@@ -20,7 +20,12 @@ import lombok.Data;
 @NamedQuery(name = "userId",query = "select count(*) from  UserEntity ent where ent.userId=:userBy")
 @NamedQuery(name = "emailId",query = "select count(*) from  UserEntity ent where ent.email=:emailBy")
 @NamedQuery(name = "mobileId",query = "select count(*) from  UserEntity ent where ent.mobile=:mobileBy")
-@NamedQuery(name="userANDpassword",query = "select ent from UserEntity ent where ent.userId=:ui and ent.password=:pwd ")
+@NamedQuery(name="user",query = "select ent from UserEntity ent where ent.userId=:ui")
+@NamedQuery(name="emailid",query = "select ent from UserEntity ent where ent.email=:ei")
+//"update Employee emp set emp.surname=:surname where emp.name=:name\"")
+@NamedQuery(name="updateLoginCount",query = "update UserEntity ent set ent.loginCount=:count where ent.userId=:userID" )
+@NamedQuery(name="updatePassword",query = "update UserEntity ent set ent.password=:up , ent.resetPassword=:urp where ent.userId=:uu" )
+
 public class UserEntity {
 	@Id
 	@Column(name = "id")
@@ -43,5 +48,8 @@ public class UserEntity {
 	private String updatedBy;
 	@Column(name = "updatedDate")
 	private LocalDateTime updatedDate;
-
+	@Column(name = "logincount")
+    private int loginCount;
+	
+	private Boolean resetPassword;
 }

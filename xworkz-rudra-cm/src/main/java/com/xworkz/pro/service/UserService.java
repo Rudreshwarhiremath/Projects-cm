@@ -31,6 +31,14 @@ public interface UserService {
 	default Long findByUser(String user) {
 		return null;
 	}
+	default UserDTO reSetPassword(String email) {
+		return null;
+	}
+	default UserDTO updatePassword(String userId, String password,String confirmPassword) {
+		return null;
+	}
+	
 
 	boolean sendMail(String email);
+	
 }

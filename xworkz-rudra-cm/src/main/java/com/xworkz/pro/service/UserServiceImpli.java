@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
+import java.util.Random;
 import java.util.Set;
 
 import javax.mail.Authenticator;
@@ -22,6 +23,7 @@ import javax.validation.ValidatorFactory;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.xworkz.pro.dto.UserDTO;
@@ -35,6 +37,10 @@ import lombok.extern.slf4j.Slf4j;
 public class UserServiceImpli implements UserService {
 	@Autowired
 	private UserRepositery userRepositery;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
+	String reSetPassword = DefaultPasswordGenerator.generate(6);
 
 	private Set<ConstraintViolation<UserDTO>> validate(UserDTO userDto) {
 		ValidatorFactory validationFactory = Validation.buildDefaultValidatorFactory();
@@ -64,33 +70,50 @@ public class UserServiceImpli implements UserService {
 		if (!userDTO.getPassword().equals(userDTO.getConfirmPassword())) {
 			return null;
 		}
-		if (userCount == 0 && mobileCount == 0) {
+		if (emailCount == 0 && userCount == 0 && mobileCount == 0) {
 			log.info("No Violations procceding to save");
+
 			UserEntity entity = new UserEntity();
+			entity.setUserId(userDTO.getUserId());
+			entity.setEmail(userDTO.getEmail());
+			entity.setMobile(userDTO.getMobile());
+			entity.setAgreement(userDTO.getAgreement());
 			entity.setCreatedBy(userDTO.getUserId());
 			entity.setCreatedDate(LocalDateTime.now());
-			BeanUtils.copyProperties(userDTO, entity);
-			boolean saved = this.userRepositery.save(entity);
-			if (saved) {
-				boolean sent = this.sendMail(userDTO.getEmail());
-				log.info("Saved in Entity-" + saved);
-				log.info("Email sent -:" + sent);
+			entity.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+			// BeanUtils.copyProperties(userDTO, entity);
 
-			}
+			boolean saved = this.userRepositery.save(entity);
+			log.info("Saved in Entity-" + saved);
+			
+			  if (saved) { boolean sent = this.sendMail(userDTO.getEmail());
+			  log.info("Email sent -:" + sent);
+			  
+			  }
+			 
 		}
 		return Collections.emptySet();
 	}
 
 	@Override
 	public UserDTO userSignIn(String userId, String password) {
-		UserEntity entity = this.userRepositery.entity(userId, password);
+		UserEntity entity = this.userRepositery.userSignIn(userId);
 		UserDTO dto = new UserDTO();
-		dto.setUserId(entity.getUserId());
-		dto.setPassword(entity.getPassword());
-		if (dto.getUserId().equals(userId) && dto.getPassword().equals(password)) {
+		BeanUtils.copyProperties(entity, dto);
+		log.info("matching--" + passwordEncoder.matches(password, entity.getPassword()));
+
+		if (entity.getLoginCount() >= 3) {
+			log.info("Running in Login count condition");
 			return dto;
 		}
-		return null;
+
+		if (dto.getUserId().equals(userId) && passwordEncoder.matches(password, entity.getPassword())) {
+			return dto;
+		} else {
+			this.userRepositery.logincount(userId, entity.getLoginCount() + 1);
+			log.info("count of login" + entity.getLoginCount() + 1);
+			return null;
+		}
 	}
 
 	@Override
@@ -126,6 +149,43 @@ public class UserServiceImpli implements UserService {
 	}
 
 	@Override
+	public UserDTO reSetPassword(String email) {
+		// String reSetPassword = DefaultPasswordGenerator.generate(6);
+		log.info("ReSetd password--" + reSetPassword);
+		UserEntity entity = this.userRepositery.reSetPassword(email);
+		if (entity != null) {
+			entity.setPassword(passwordEncoder.encode(reSetPassword));
+			entity.setUpdatedBy("System");
+			entity.setUpdatedDate(LocalDateTime.now());
+			entity.setLoginCount(0);
+			entity.setResetPassword(true);
+			boolean update = this.userRepositery.update(entity);
+			if(update) {
+				sendMail(entity.getEmail());
+			}
+			log.info("Updated---" + update);
+			UserDTO updatedDto = new UserDTO();
+			BeanUtils.copyProperties(entity, updatedDto);
+			return updatedDto;
+		}
+		return UserService.super.reSetPassword(email);
+	}
+
+	@Override
+	public UserDTO updatePassword(String userId, String password, String confirmPassword) {
+		UserEntity uentity = new UserEntity();
+		if (password.equals(confirmPassword)) {
+//			uentity.setUserId(userId);
+//			uentity.setPassword(passwordEncoder.encode(password));
+//			uentity.setResetPassword(false);
+			boolean passwordUpdated = this.userRepositery.updatePassword(userId, passwordEncoder.encode(password), false);
+			log.info("passwordUpdated--" + passwordUpdated);
+		
+		}
+		return UserService.super.updatePassword(userId, password, confirmPassword);
+	}
+
+	@Override
 	public boolean sendMail(String email) {
 		String portNumber = "587";// 485,587,25
 		String hostName = "smtp.office365.com";
@@ -146,13 +206,12 @@ public class UserServiceImpli implements UserService {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(fromEmail, password);
 			}
-
 		});
 		MimeMessage message = new MimeMessage(session);
 		try {
 			message.setFrom(new InternetAddress(fromEmail));
 			message.setSubject("Registration  Completed");
-			message.setText("Thanks for registration");
+			message.setText("Thanks for registration and your password is" + reSetPassword);
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 			Transport.send(message);
 			log.info("mail sent sucessfully");
@@ -161,4 +220,24 @@ public class UserServiceImpli implements UserService {
 		}
 		return true;
 	}
+
+	public final static class DefaultPasswordGenerator {
+		private static final String[] charCategories = new String[] { "abcdefghijklmnopqrstuvwxyz",
+				"ABCDEFGHIJKLMNOPQRSTUVWXYZ", "0123456789" };
+
+		public static String generate(int length) {
+			StringBuilder password = new StringBuilder(length);
+			Random random = new Random(System.nanoTime());
+
+			for (int i = 0; i < length; i++) {
+				String charCategory = charCategories[random.nextInt(charCategories.length)];
+				int position = random.nextInt(charCategory.length());
+				password.append(charCategory.charAt(position));
+			}
+
+			return new String(password);
+		}
+//		String password = DefaultPasswordGenerator.generate(6);[use this reference to generate the password]
+	}
+
 }

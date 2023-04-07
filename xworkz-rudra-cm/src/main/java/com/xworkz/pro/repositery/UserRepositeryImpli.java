@@ -10,6 +10,7 @@ import javax.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.xworkz.pro.dto.UserDTO;
 import com.xworkz.pro.entity.UserEntity;
 
 import lombok.extern.slf4j.Slf4j;
@@ -40,12 +41,11 @@ public class UserRepositeryImpli implements UserRepositery {
 	}
 
 	@Override
-	public UserEntity userSignIn(String userId, String password) {
+	public UserEntity userSignIn(String userId) {
 		EntityManager em = this.entityManagerFactory.createEntityManager();
 		try {
-			Query query = em.createNamedQuery("userANDpassword");
+			Query query = em.createNamedQuery("user");
 			query.setParameter("ui", userId);
-			query.setParameter("pwd", password);
 			Object object = query.getSingleResult();
 			UserEntity entity = (UserEntity) object;
 			log.info("" + entity);
@@ -113,6 +113,68 @@ public class UserRepositeryImpli implements UserRepositery {
 			System.out.println(value);
 			return value;
 
+		} finally {
+			em.close();
+		}
+	}
+
+	@Override
+	public boolean logincount(String userID, int count) {
+		log.info("count:"+count);
+		EntityManager em = this.entityManagerFactory.createEntityManager();
+		try {
+			EntityTransaction et = em.getTransaction();
+			et.begin();
+			Query query = em.createNamedQuery("updateLoginCount");
+			query.setParameter("userID", userID);
+			query.setParameter("count", count);
+			query.executeUpdate();
+			et.commit();
+			return true;
+		} finally {
+			em.close();
+		}
+	}
+	@Override
+	public UserEntity reSetPassword(String email) {
+		EntityManager em = this.entityManagerFactory.createEntityManager();
+		try {
+			Query query = em.createNamedQuery("emailid");
+			query.setParameter("ei", email);
+			Object object = query.getSingleResult();
+			UserEntity entity = (UserEntity) object;
+			log.info("" + entity);
+			return entity;
+		} finally {
+			em.close();
+		}
+	}
+	@Override
+	public boolean update(UserEntity userEntity) {
+		EntityManager em = this.entityManagerFactory.createEntityManager();
+		try {
+			EntityTransaction et = em.getTransaction();
+			et.begin();
+			em.merge(userEntity);
+			et.commit();
+			return true;
+		} finally {
+			em.close();
+		}
+	}
+	@Override
+	public boolean updatePassword(String userId, String password,Boolean resetPassword ) {
+		EntityManager em = this.entityManagerFactory.createEntityManager();
+		try {
+			EntityTransaction et = em.getTransaction();
+			et.begin();
+			Query query = em.createNamedQuery("updatePassword");
+			query.setParameter("uu", userId);
+			query.setParameter("up", password);
+			query.setParameter("urp", resetPassword);
+			query.executeUpdate();
+			et.commit();
+			return true;
 		} finally {
 			em.close();
 		}

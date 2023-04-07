@@ -12,7 +12,7 @@ public interface UserRepositery {
 		return Collections.emptyList();
 	}
 
-	default UserEntity userSignIn(String userId, String password) {
+	default UserEntity userSignIn(String userId) {
 		return null;
 	}
 
@@ -27,4 +27,13 @@ public interface UserRepositery {
 	default Long findByMobile(Long number) {
 		return null;
 	}
+
+	default UserEntity reSetPassword(String email) {
+		return null;
+	}
+	boolean update(UserEntity userEntity);
+	
+	boolean updatePassword(String userId, String password,Boolean resetPassword);
+
+	boolean logincount(String userId, int count);
 }

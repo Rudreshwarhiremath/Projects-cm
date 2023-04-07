@@ -30,6 +30,7 @@
 	</nav>
 <div align="center">
 <h5 style="color: red">${match}</h5>
+<h5 style="color: red">${msg}</h5>
 
 <form action="signin" method="post">
 	<table>
@@ -55,7 +56,9 @@
 	<button type="submit" class="btn btn-success">SignIN</button>
 	</div>
 	</form>
-	<a href="signUp.jsp">Register as New User</a>
+	<a href="signUp.jsp">Register as New User</a> 
+	<br>
+	<a href="resetpassword.jsp">Forgot Password</a> 
 </div>	
 <script>
 function ValideName() {

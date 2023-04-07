@@ -1,7 +1,5 @@
 package com.xworkz.pro.controller;
 
-import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
@@ -48,19 +46,45 @@ public class UserController {
 	@PostMapping("/signin")
 	public String userSignIn(String userId, String password, Model model) {
 		try {
-		UserDTO udto = this.userService.udto(userId, password);
-		if (udto!=null) {
-			log.info("User ID and password is matched");
-			model.addAttribute("userID",udto.getUserId());
-			return "LoginSucess";
-		}
-		}
-		catch (Exception e) {
-			// TODO: handle exception
-		}
-			model.addAttribute("match", "UserID OR Password is not matching");
-			return "SignIn";			
+			UserDTO udto = this.userService.userSignIn(userId, password);
+			log.info("Login count" + udto.getLoginCount());
+			if (udto.getLoginCount() >= 3) {
+				model.addAttribute("msg", "Account locked Reset password");
+				return "SignIn";
+			}
+			if (udto != null) {
 
+				if (udto.getResetPassword()==true) {
+					model.addAttribute("userID", udto.getUserId());
+					return "updatePassword";
+				}
+				log.info("User ID and password is matched");
+				model.addAttribute("userID", udto.getUserId());
+				return "LoginSucess";
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.err.println(e.getMessage());
+		}
+
+		model.addAttribute("match", "UserID OR Password is not matching");
+		return "SignIn";
+
+	}
+
+	@PostMapping("/reset")
+	public String reSetPassword(String email,Model model) {
+		UserDTO udto = this.userService.reSetPassword(email);
+		if(udto.getResetPassword()==true) {
+			model.addAttribute("msg","Password reset sucessful plz login");
+			return "resetpassword";
+		}
+		return "resetpassword";
+	}
+	@PostMapping("/passwordUpdate")
+	public String upDatePassword(String userId, String password,String confirmPassword) {
+		this.userService.updatePassword(userId, password, confirmPassword);
+		return "sucess";
 	}
 
 }
