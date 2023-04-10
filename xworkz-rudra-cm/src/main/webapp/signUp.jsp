@@ -39,22 +39,22 @@
 <table>
 		<tr> <td>	User ID </td>
 		
-	 <td>	<input type="text" name="userId" id="userName" onchange="ValideName()"> 
+	 <td>	<input type="text" name="userId" id="userName" onchange="ValideName()" value="${dto.userId}"> 
 		<span id="nameError" style="color: red"></span>
 		<span id="displayUserName" style="color: red"></span> </td>
 		</tr>
 
 	<tr>
-		<td> Email </td>    <td><input type="email" name="email" id="emailId" onchange="valideEmail()">
+		<td> Email </td>    <td><input type="email" name="email" id="emailId" onchange="valideEmail()" value="${dto.email}">
 		 <span id="emailError" style="color: red"></span>
 		<span id="display" style="color: red"></span></td> </tr>
-	<tr><td>	 Mobile Number </td>  <td><input type="number" name="mobile" id="userMobile" onchange="ValideMobile()">
+	<tr><td>	 Mobile Number </td>  <td><input type="number" name="mobile" id="userMobile" onchange="ValideMobile()" value="${dto.mobile}">
 		<span id="mobileError" style="color: red"></span>
 		<span id="displayUserMobile" style="color: red"></span></td>  </tr>
-	<tr><td>	 Password </td>   <td><input type="password" name="password" id="userPassword">
+	<tr><td>	 Password </td>   <td><input type="password" name="password" id="userPassword" value="${dto.password}">
 		<span id="passwordError" style="color: red"></span> 
 		<input type="checkbox" onclick="myFunction1()">Show Password </td> </tr>
-	<tr><td>	ConfirmPassword </td>  <td><input type="password" name="confirmPassword" id="userConfirmPassword" onblur="ValidePassword()">
+	<tr><td>	ConfirmPassword </td>  <td><input type="password" name="confirmPassword" id="userConfirmPassword" onblur="ValidePassword()" value="${dto.confirmPassword}">
 		<span id="passwordCompare" style="color: red"></span>
 		<input type="checkbox" onclick="myFunction2()">Show Confirm Password  </td></tr>
 

@@ -38,7 +38,7 @@ public class UserController {
 		}
 		model.addAttribute("errors", violations);
 		model.addAttribute("messag", "Registration failed");
-
+		model.addAttribute("dto", userDTO);
 		return "signUp";
 
 	}
@@ -64,7 +64,7 @@ public class UserController {
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.err.println(e.getMessage());
+			log.info(e.getMessage());
 		}
 
 		model.addAttribute("match", "UserID OR Password is not matching");

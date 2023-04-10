@@ -81,12 +81,13 @@ public class UserServiceImpli implements UserService {
 			entity.setCreatedBy(userDTO.getUserId());
 			entity.setCreatedDate(LocalDateTime.now());
 			entity.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+			entity.setResetPassword(false);
 			// BeanUtils.copyProperties(userDTO, entity);
 
 			boolean saved = this.userRepositery.save(entity);
 			log.info("Saved in Entity-" + saved);
 			
-			  if (saved) { boolean sent = this.sendMail(userDTO.getEmail());
+			  if (saved) { boolean sent = this.sendMail(userDTO.getEmail(),"Thanks for registration");
 			  log.info("Email sent -:" + sent);
 			  
 			  }
@@ -154,6 +155,7 @@ public class UserServiceImpli implements UserService {
 		log.info("ReSetd password--" + reSetPassword);
 		UserEntity entity = this.userRepositery.reSetPassword(email);
 		if (entity != null) {
+			log.info("entity found for email"+email);
 			entity.setPassword(passwordEncoder.encode(reSetPassword));
 			entity.setUpdatedBy("System");
 			entity.setUpdatedDate(LocalDateTime.now());
@@ -161,13 +163,15 @@ public class UserServiceImpli implements UserService {
 			entity.setResetPassword(true);
 			boolean update = this.userRepositery.update(entity);
 			if(update) {
-				sendMail(entity.getEmail());
+				sendMail(entity.getEmail(),"Your  reseted password is-> "+reSetPassword);	
 			}
 			log.info("Updated---" + update);
 			UserDTO updatedDto = new UserDTO();
 			BeanUtils.copyProperties(entity, updatedDto);
+			
 			return updatedDto;
 		}
+		log.info("entity not found for email"+email);
 		return UserService.super.reSetPassword(email);
 	}
 
@@ -186,7 +190,7 @@ public class UserServiceImpli implements UserService {
 	}
 
 	@Override
-	public boolean sendMail(String email) {
+	public boolean sendMail(String email,String text) {
 		String portNumber = "587";// 485,587,25
 		String hostName = "smtp.office365.com";
 		String fromEmail = "rudraproject26@outlook.com";
@@ -211,7 +215,8 @@ public class UserServiceImpli implements UserService {
 		try {
 			message.setFrom(new InternetAddress(fromEmail));
 			message.setSubject("Registration  Completed");
-			message.setText("Thanks for registration and your password is" + reSetPassword);
+			//message.setText("Thanks for registration and your password is" + reSetPassword);
+			message.setText(text);
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 			Transport.send(message);
 			log.info("mail sent sucessfully");

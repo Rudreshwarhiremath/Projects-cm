@@ -39,6 +39,6 @@ public interface UserService {
 	}
 	
 
-	boolean sendMail(String email);
+	boolean sendMail(String email,String text);
 	
 }
