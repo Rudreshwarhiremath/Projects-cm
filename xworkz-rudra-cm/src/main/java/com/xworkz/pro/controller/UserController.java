@@ -4,6 +4,7 @@ import java.util.Set;
 
 import javax.validation.ConstraintViolation;
 
+import org.apache.taglibs.standard.tag.common.core.CatchTag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -54,7 +55,7 @@ public class UserController {
 			}
 			if (udto != null) {
 
-				if (udto.getResetPassword()==true) {
+				if (udto.getResetPassword() == true) {
 					model.addAttribute("userID", udto.getUserId());
 					return "updatePassword";
 				}
@@ -73,16 +74,23 @@ public class UserController {
 	}
 
 	@PostMapping("/reset")
-	public String reSetPassword(String email,Model model) {
-		UserDTO udto = this.userService.reSetPassword(email);
-		if(udto.getResetPassword()==true) {
-			model.addAttribute("msg","Password reset sucessful plz login");
-			return "resetpassword";
+	public String reSetPassword(String email, Model model) {
+		try {
+			UserDTO udto = this.userService.reSetPassword(email);
+			if (udto.getResetPassword() == true) {
+				model.addAttribute("msg", "Password reset sucessful plz login");
+				return "resetpassword";
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			log.info(e.getMessage());
 		}
 		return "resetpassword";
+
 	}
+
 	@PostMapping("/passwordUpdate")
-	public String upDatePassword(String userId, String password,String confirmPassword) {
+	public String upDatePassword(String userId, String password, String confirmPassword) {
 		this.userService.updatePassword(userId, password, confirmPassword);
 		return "sucess";
 	}
