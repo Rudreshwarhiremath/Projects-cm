@@ -1,5 +1,6 @@
 package com.xworkz.pro.repositery;
 
+import java.time.LocalTime;
 import java.util.Collections;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public interface UserRepositery {
 	}
 	boolean update(UserEntity userEntity);
 	
-	boolean updatePassword(String userId, String password,Boolean resetPassword);
+	boolean updatePassword(String userId, String password,Boolean resetPassword,LocalTime passwordChangedTime);
 
 	boolean logincount(String userId, int count);
 }

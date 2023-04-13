@@ -1,5 +1,7 @@
 package com.xworkz.pro.dto;
 
+import java.time.LocalTime;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -30,5 +32,8 @@ public class UserDTO {
 	private int loginCount;
 	
 	private Boolean resetPassword;
+	
+	private LocalTime passwordChangedTime;
+
 
 }

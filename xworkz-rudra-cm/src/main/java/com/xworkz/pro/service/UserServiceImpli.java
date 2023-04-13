@@ -1,6 +1,7 @@
 package com.xworkz.pro.service;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -40,8 +41,6 @@ public class UserServiceImpli implements UserService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	String reSetPassword = DefaultPasswordGenerator.generate(6);
-
 	private Set<ConstraintViolation<UserDTO>> validate(UserDTO userDto) {
 		ValidatorFactory validationFactory = Validation.buildDefaultValidatorFactory();
 		Validator validator = validationFactory.getValidator();
@@ -68,6 +67,7 @@ public class UserServiceImpli implements UserService {
 			return violations;
 		}
 		if (!userDTO.getPassword().equals(userDTO.getConfirmPassword())) {
+			log.info("Password is not matching");
 			return null;
 		}
 		if (emailCount == 0 && userCount == 0 && mobileCount == 0) {
@@ -82,16 +82,18 @@ public class UserServiceImpli implements UserService {
 			entity.setCreatedDate(LocalDateTime.now());
 			entity.setPassword(passwordEncoder.encode(userDTO.getPassword()));
 			entity.setResetPassword(false);
+			entity.setPasswordChangedTime(LocalTime.of(0, 0, 0));
 			// BeanUtils.copyProperties(userDTO, entity);
 
 			boolean saved = this.userRepositery.save(entity);
 			log.info("Saved in Entity-" + saved);
-			
-			  if (saved) { boolean sent = this.sendMail(userDTO.getEmail(),"Thanks for registration");
-			  log.info("Email sent -:" + sent);
-			  
-			  }
-			 
+
+			if (saved) {
+				boolean sent = this.sendMail(userDTO.getEmail(), "Thanks for registration");
+				log.info("Email sent -:" + sent);
+
+			}
+
 		}
 		return Collections.emptySet();
 	}
@@ -102,13 +104,23 @@ public class UserServiceImpli implements UserService {
 		UserDTO dto = new UserDTO();
 		BeanUtils.copyProperties(entity, dto);
 		log.info("matching--" + passwordEncoder.matches(password, entity.getPassword()));
+		log.info("Time matching--" + entity.getPasswordChangedTime().isBefore(LocalTime.now()));
+		log.info("Now Present Time--" + LocalTime.now());
+		log.info("PasswordChangedTime--" + entity.getPasswordChangedTime());
 
+//		if (entity.getResetPassword() == true && LocalTime.now().isBefore(entity.getPasswordChangedTime())) {
+//			log.info("Running in Time matching");
+//			return dto;
+//		}
+
+		log.info("Time " + LocalTime.now().isBefore(entity.getPasswordChangedTime()));
 		if (entity.getLoginCount() >= 3) {
 			log.info("Running in Login count condition");
 			return dto;
 		}
 
 		if (dto.getUserId().equals(userId) && passwordEncoder.matches(password, entity.getPassword())) {
+			log.info("Running userId matching and password matching");
 			return dto;
 		} else {
 			this.userRepositery.logincount(userId, entity.getLoginCount() + 1);
@@ -133,64 +145,67 @@ public class UserServiceImpli implements UserService {
 	@Override
 	public Long findByEmail(String email) {
 		Long emailcount = this.userRepositery.findByEmail(email);
-		log.error("Find  by Email");
+		log.error("Find  by Email count");
 		return emailcount;
 	}
 
 	@Override
 	public Long findByMobile(Long mobile) {
 		Long mobilecount = this.userRepositery.findByMobile(mobile);
+		log.error("Find  by mobile count");
 		return mobilecount;
 	}
 
 	@Override
 	public Long findByUser(String user) {
+		log.error("Find  by user count");
 		Long userCount = this.userRepositery.findByUser(user);
 		return userCount;
 	}
 
 	@Override
 	public UserDTO reSetPassword(String email) {
-		// String reSetPassword = DefaultPasswordGenerator.generate(6);
+		log.info("Running in reSetPassword");
+		String reSetPassword = DefaultPasswordGenerator.generate(6);
 		log.info("ReSetd password--" + reSetPassword);
 		UserEntity entity = this.userRepositery.reSetPassword(email);
 		if (entity != null) {
-			log.info("entity found for email"+email);
+			log.info("entity found for email" + email);
 			entity.setPassword(passwordEncoder.encode(reSetPassword));
 			entity.setUpdatedBy("System");
 			entity.setUpdatedDate(LocalDateTime.now());
 			entity.setLoginCount(0);
 			entity.setResetPassword(true);
+			entity.setPasswordChangedTime(LocalTime.now().plusSeconds(120));
 			boolean update = this.userRepositery.update(entity);
-			if(update) {
-				sendMail(entity.getEmail(),"Your  reseted password is-> "+reSetPassword);	
+			if (update) {
+				sendMail(entity.getEmail(),
+						"Your  reseted password is-> " + reSetPassword + "Plz log in again with in 2 min with this password ");
 			}
 			log.info("Updated---" + update);
 			UserDTO updatedDto = new UserDTO();
 			BeanUtils.copyProperties(entity, updatedDto);
-			
+
 			return updatedDto;
 		}
-		log.info("entity not found for email"+email);
+		log.info("entity not found for email" + email);
 		return UserService.super.reSetPassword(email);
 	}
 
 	@Override
 	public UserDTO updatePassword(String userId, String password, String confirmPassword) {
-		UserEntity uentity = new UserEntity();
+		log.info("Running in updating password condition");
 		if (password.equals(confirmPassword)) {
-//			uentity.setUserId(userId);
-//			uentity.setPassword(passwordEncoder.encode(password));
-//			uentity.setResetPassword(false);
-			boolean passwordUpdated = this.userRepositery.updatePassword(userId, passwordEncoder.encode(password), false);
+			boolean passwordUpdated = this.userRepositery.updatePassword(userId, passwordEncoder.encode(password),
+					false, LocalTime.of(0, 0, 0));
 			log.info("passwordUpdated--" + passwordUpdated);
-		
 		}
+
 		return UserService.super.updatePassword(userId, password, confirmPassword);
 	}
 
 	@Override
-	public boolean sendMail(String email,String text) {
+	public boolean sendMail(String email, String text) {
 		String portNumber = "587";// 485,587,25
 		String hostName = "smtp.office365.com";
 		String fromEmail = "rudraproject26@outlook.com";
@@ -215,7 +230,8 @@ public class UserServiceImpli implements UserService {
 		try {
 			message.setFrom(new InternetAddress(fromEmail));
 			message.setSubject("Registration  Completed");
-			//message.setText("Thanks for registration and your password is" + reSetPassword);
+			// message.setText("Thanks for registration and your password is" +
+			// reSetPassword);
 			message.setText(text);
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 			Transport.send(message);

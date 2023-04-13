@@ -1,5 +1,6 @@
 package com.xworkz.pro.repositery;
 
+import java.time.LocalTime;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -10,7 +11,6 @@ import javax.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.xworkz.pro.dto.UserDTO;
 import com.xworkz.pro.entity.UserEntity;
 
 import lombok.extern.slf4j.Slf4j;
@@ -163,7 +163,7 @@ public class UserRepositeryImpli implements UserRepositery {
 		}
 	}
 	@Override
-	public boolean updatePassword(String userId, String password,Boolean resetPassword ) {
+	public boolean updatePassword(String userId, String password,Boolean resetPassword,LocalTime passwordChangedTime ) {
 		EntityManager em = this.entityManagerFactory.createEntityManager();
 		try {
 			EntityTransaction et = em.getTransaction();
@@ -172,6 +172,7 @@ public class UserRepositeryImpli implements UserRepositery {
 			query.setParameter("uu", userId);
 			query.setParameter("up", password);
 			query.setParameter("urp", resetPassword);
+			query.setParameter("pct", passwordChangedTime);
 			query.executeUpdate();
 			et.commit();
 			return true;

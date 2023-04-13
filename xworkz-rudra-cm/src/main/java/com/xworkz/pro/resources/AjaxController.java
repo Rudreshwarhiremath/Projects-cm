@@ -65,18 +65,5 @@ public class AjaxController {
 			return "Mobile Number exsist";
 		}
 	}
-	@GetMapping(value = "/reemail/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public String reEmail(@PathVariable String email) {
-		Long dbEmail = this.userService.findByEmail(email);
-		System.err.println(dbEmail);
-
-		if (dbEmail == 0) {
-			System.err.println("Running in equals condition");
-			return "Please enter Existing email";
-		} else {
-			return "  ";
-		}
-	}
-	
 
 }

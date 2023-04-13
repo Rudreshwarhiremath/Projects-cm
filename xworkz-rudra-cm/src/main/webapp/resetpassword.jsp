@@ -38,8 +38,7 @@
 		<form action="reset" method="post">
 			User Email <br>
 			<input type="email" name="email" id="emailId"
-				onchange="valideEmail()"> <br> <span id="display"
-				style="color: red"></span> <br>
+				onchange="valideEmail()"> <br>
 			<button type="submit" class="btn btn-success">Re-Set</button>
 		</form>
 		<div>
@@ -56,19 +55,6 @@
 			if (userEmailvalue != null && userEmailvalue != ""
 					&& userEmailvalue.length > 4 && userEmailvalue.length < 40) {
 				console.log('valide email');
-				const xhttp = new XMLHttpRequest();
-				console.log('Running in ajax');
-				console.log(userEmailvalue);
-				xhttp.open("GET",
-						"http://localhost:8088/xworkz-rudra-cm/reemail/"
-								+ userEmailvalue);
-				xhttp.send();
-
-				xhttp.onload = function() {
-					console.log(this);
-
-					document.getElementById("display").innerHTML = this.responseText
-				}
 				document.getElementById('emailError').innerHTML = '';
 			} else {
 				console.log('invalide email');
