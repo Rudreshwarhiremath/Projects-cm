@@ -32,6 +32,7 @@
 			<a href="signUp.jsp"><span class="glyphicon glyphicon-user"></span>
 				Sign Up</a> <a href="SignIn.jsp"><span
 				class="glyphicon glyphicon-log-in"></span> Login</a>
+				<li class="active"><a href="index.jsp">Home</a></li>
 		</div>
 	</nav>
 	<div align="center">

@@ -1,17 +1,38 @@
 package com.xworkz.pro.controller;
 
+import java.awt.Image;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalTime;
 import java.util.Set;
 
+import javax.imageio.ImageIO;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.swing.ImageIcon;
 import javax.validation.ConstraintViolation;
 
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.xworkz.pro.dto.UserDTO;
 import com.xworkz.pro.service.UserService;
@@ -49,7 +70,8 @@ public class UserController {
 	}
 
 	@PostMapping("/signin")
-	public String userSignIn(String userId, String password, Model model,HttpServletRequest request) {
+	public String userSignIn(String userId, String password, Model model, HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
 		log.info("Running in userSignIn condition ");
 		try {
 			UserDTO udto = this.userService.userSignIn(userId, password);
@@ -64,7 +86,7 @@ public class UserController {
 				if (udto.getResetPassword() == true) {
 					log.info("Running in ResetPassword true condition");
 					if (!udto.getPasswordChangedTime().isAfter(LocalTime.now())) {
-						log.info("Running in time warifying condition");
+						log.info("Running in time varifying condition");
 						model.addAttribute("msgs", "Time out plz try again");
 						return "SignIn";
 					}
@@ -74,11 +96,12 @@ public class UserController {
 					log.info("Timer-----" + udto.getPasswordChangedTime().isBefore(LocalTime.now()));
 					return "updatePassword";
 				}
-				System.currentTimeMillis();
 				log.info("User ID and password is matched");
-			//	model.addAttribute("userID", udto.getUserId());//request scope
-				HttpSession httpSession= request.getSession(true);
+				// model.addAttribute("userID", udto.getUserId());//request scope
+				HttpSession httpSession = request.getSession(true);
 				httpSession.setAttribute("userID", udto.getUserId());
+				httpSession.setAttribute("dtoPic", udto.getPicName());
+				httpSession.setAttribute("udto", udto);
 				return "LoginSucess";
 			}
 		} catch (Exception e) {
@@ -115,4 +138,42 @@ public class UserController {
 		return "sucess";
 	}
 
+	@PostMapping("/upload")
+	public String onUpload(@RequestParam("chitra") MultipartFile multipartFile, String userId, String email,
+			Long mobile, Model model) throws IOException {
+		log.info("multipartFile" + multipartFile);
+		log.info(multipartFile.getOriginalFilename());
+		log.info(multipartFile.getContentType());
+		log.info("Size of file" + multipartFile.getSize());
+		log.info("Size of bite" + multipartFile.getBytes());
+		if (multipartFile.isEmpty()) {
+			log.info("file not uploaded");
+			model.addAttribute("error", "please select file");
+			return "profileUpdate";
+		}
+		model.addAttribute("sucess", "image uploaded sucessfully");
+		byte[] bytes = multipartFile.getBytes();
+		Path path = Paths.get("D:\\highway\\" + userId + System.currentTimeMillis() + ".jpg");
+		Files.write(path, bytes);
+		String imageName = path.getFileName().toString();
+		log.info("Image name--" + imageName);
+		log.info("Image name in tostring--" + path.toString());
+		log.info("Image file name--" + path.getFileName());
+		this.userService.updateProfile(userId, email, mobile, imageName);
+		return "profileUpdate";
+	}
+
+	@GetMapping("/download")
+	public void onDownload(HttpServletResponse response, @RequestParam String fileName, UserDTO user)
+			throws IOException {
+		Path path = Paths.get("D:\\highway\\" + user.getPicName());
+		path.toFile();
+		response.setContentType("image/jpeg");
+		File file = new File("D:\\highway\\" + fileName);
+		InputStream in = new BufferedInputStream(new FileInputStream(file));
+		ServletOutputStream out = response.getOutputStream();
+		IOUtils.copy(in, out);
+		response.flushBuffer();
+
+	}
 }

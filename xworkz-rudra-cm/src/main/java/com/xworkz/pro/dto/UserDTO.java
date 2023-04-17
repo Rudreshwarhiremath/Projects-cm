@@ -1,5 +1,6 @@
 package com.xworkz.pro.dto;
 
+import java.nio.file.Path;
 import java.time.LocalTime;
 
 import javax.validation.constraints.NotBlank;
@@ -34,6 +35,8 @@ public class UserDTO {
 	private Boolean resetPassword;
 	
 	private LocalTime passwordChangedTime;
+	
+	private String picName;
 
 
 }

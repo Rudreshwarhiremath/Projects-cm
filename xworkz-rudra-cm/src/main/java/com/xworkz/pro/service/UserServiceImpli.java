@@ -1,5 +1,6 @@
 package com.xworkz.pro.service;
 
+import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -179,8 +180,8 @@ public class UserServiceImpli implements UserService {
 			entity.setPasswordChangedTime(LocalTime.now().plusSeconds(120));
 			boolean update = this.userRepositery.update(entity);
 			if (update) {
-				sendMail(entity.getEmail(),
-						"Your  reseted password is-> " + reSetPassword + "Plz log in again with in 2 min with this password ");
+				sendMail(entity.getEmail(), "Your  reseted password is-> " + reSetPassword
+						+ "Plz log in again with in 2 min with this password ");
 			}
 			log.info("Updated---" + update);
 			UserDTO updatedDto = new UserDTO();
@@ -205,11 +206,24 @@ public class UserServiceImpli implements UserService {
 	}
 
 	@Override
+	public UserDTO updateProfile(String userId, String email, Long mobile, String path) {
+		UserEntity upEntity = this.userRepositery.reSetPassword(email);
+		log.info("userId: "+userId +"email: "+email+"mobile: "+mobile+"image name: "+path);
+
+		upEntity.setUserId(userId);
+		upEntity.setMobile(mobile);
+		upEntity.setPicName(path);
+		boolean updated=this.userRepositery.update(upEntity);
+		log.info("updated--"+updated);
+		return UserService.super.updateProfile(userId, email, mobile, path);
+	}
+
+	@Override
 	public boolean sendMail(String email, String text) {
 		String portNumber = "587";// 485,587,25
 		String hostName = "smtp.office365.com";
 		String fromEmail = "rudraproject26@outlook.com";
-		String password = "rudra@2026";
+		String password = "rudra@8088928928";
 		String to = email;
 
 		Properties prop = new Properties();

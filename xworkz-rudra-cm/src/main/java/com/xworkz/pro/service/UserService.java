@@ -1,5 +1,6 @@
 package com.xworkz.pro.service;
 
+import java.nio.file.Path;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -35,6 +36,9 @@ public interface UserService {
 		return null;
 	}
 	default UserDTO updatePassword(String userId, String password,String confirmPassword) {
+		return null;
+	}
+	default UserDTO updateProfile(String userId,String email,Long mobile,String path) {
 		return null;
 	}
 	

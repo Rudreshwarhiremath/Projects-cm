@@ -1,5 +1,6 @@
 package com.xworkz.pro.entity;
 
+import java.nio.file.Path;
 import java.sql.Time;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -55,5 +56,7 @@ public class UserEntity {
 
 	@Column(name = "passwordChangedTime")
 	private LocalTime passwordChangedTime;
+	
+	private String picName;
 
 }

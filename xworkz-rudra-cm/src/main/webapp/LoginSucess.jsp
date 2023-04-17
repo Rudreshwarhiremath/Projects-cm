@@ -22,15 +22,17 @@
 			<a class="navbar-brand" href="#"> <img
 				src=" https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png"
 				alt="" width="80" height="48" class="d-inline-block align text-top">
-				          <li class="active"><a href="index.jsp">Home</a></li>
-      <a href="signUp.jsp"><span class="glyphicon glyphicon-user"></span> Sign Up</a>
-      <a href="SignIn.jsp"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+      <a href="SignIn.jsp"><span class="glyphicon glyphicon-log-in"></span> Logout</a>
+     <span style="color: white;">Welcome:${userID}</span>
+       <img src="download?fileName=${dtoPic}" height="50" width="80">
 		</div>
 	</nav>
 		<div align="center">
 	   User Name:${userID}
-	</div>
-	
-<h1 style="color: green;">LOGIN SUCESSFULLY</h1>
+	 <h1 style="color: green;">LOGIN SUCESSFULLY</h1>
+	  <a href="profileUpdate.jsp">Update profile</a> <br> 
+	  <a href="add.jsp">add</a><br>
+	  Search <input type="search"> 
+	</div> 
 </body>
 </html>
