@@ -1,11 +1,13 @@
 package com.xworkz.pro.dto;
 
-import java.nio.file.Path;
 import java.time.LocalTime;
+import java.util.List;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.xworkz.pro.entity.Technology;
 
 import lombok.Data;
 
@@ -37,6 +39,8 @@ public class UserDTO {
 	private LocalTime passwordChangedTime;
 	
 	private String picName;
+	
+	private List <Technology>technology;
 
 
 }

@@ -1,9 +1,11 @@
-package com.xworkz.pro.dto;
+package com.xworkz.pro.entity;
 
 import java.time.LocalDateTime;
 
-import lombok.Data;
+import javax.persistence.MappedSuperclass;
 
+import lombok.Data;
+//@MappedSuperclass
 @Data
 public abstract class AbstractAudit {
 	private String createdBy;

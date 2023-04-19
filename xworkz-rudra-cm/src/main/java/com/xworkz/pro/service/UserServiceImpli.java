@@ -1,6 +1,5 @@
 package com.xworkz.pro.service;
 
-import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -29,6 +28,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.xworkz.pro.dto.UserDTO;
+import com.xworkz.pro.entity.Technology;
 import com.xworkz.pro.entity.UserEntity;
 import com.xworkz.pro.repositery.UserRepositery;
 
@@ -101,7 +101,7 @@ public class UserServiceImpli implements UserService {
 
 	@Override
 	public UserDTO userSignIn(String userId, String password) {
-		UserEntity entity = this.userRepositery.userSignIn(userId);
+		UserEntity entity = this.userRepositery.getByUser(userId);
 		UserDTO dto = new UserDTO();
 		BeanUtils.copyProperties(entity, dto);
 		log.info("matching--" + passwordEncoder.matches(password, entity.getPassword()));
@@ -181,7 +181,7 @@ public class UserServiceImpli implements UserService {
 			boolean update = this.userRepositery.update(entity);
 			if (update) {
 				sendMail(entity.getEmail(), "Your  reseted password is-> " + reSetPassword
-						+ "Plz log in again with in 2 min with this password ");
+						+ "   Plz log in again with in 2 min with this password ");
 			}
 			log.info("Updated---" + update);
 			UserDTO updatedDto = new UserDTO();
@@ -208,14 +208,30 @@ public class UserServiceImpli implements UserService {
 	@Override
 	public UserDTO updateProfile(String userId, String email, Long mobile, String path) {
 		UserEntity upEntity = this.userRepositery.reSetPassword(email);
-		log.info("userId: "+userId +"email: "+email+"mobile: "+mobile+"image name: "+path);
+		log.info("userId: " + userId + "email: " + email + "mobile: " + mobile + "image name: " + path);
 
 		upEntity.setUserId(userId);
 		upEntity.setMobile(mobile);
 		upEntity.setPicName(path);
-		boolean updated=this.userRepositery.update(upEntity);
-		log.info("updated--"+updated);
+		boolean updated = this.userRepositery.update(upEntity);
+		log.info("updated--" + updated);
 		return UserService.super.updateProfile(userId, email, mobile, path);
+	}
+
+	@Override
+	public UserDTO updateTechnology(String userId, Technology technology) {
+		UserEntity userEntity = this.userRepositery.getByUser(userId);
+		technology.setUserEntity(userEntity);
+		boolean save = this.userRepositery.saveTechnology(technology);
+		log.info("Technology  " + save);
+		return UserService.super.updateTechnology(userId, technology);
+	}
+
+	@Override
+	public List<Technology> technology(String userId) {
+		UserEntity entity = this.userRepositery.getByUser(userId);
+		List<Technology> list = entity.getTechnology();
+		return list;
 	}
 
 	@Override
@@ -244,8 +260,6 @@ public class UserServiceImpli implements UserService {
 		try {
 			message.setFrom(new InternetAddress(fromEmail));
 			message.setSubject("Registration  Completed");
-			// message.setText("Thanks for registration and your password is" +
-			// reSetPassword);
 			message.setText(text);
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 			Transport.send(message);

@@ -24,14 +24,15 @@
 				alt="" width="80" height="48" class="d-inline-block align text-top">
       <a href="SignIn.jsp"><span class="glyphicon glyphicon-log-in"></span> Logout</a>
      <span style="color: white;">Welcome:${userID}</span>
-       <img src="download?fileName=${dtoPic}" height="50" width="80">
+      <span> <img src="download?fileName=${dtoPic}" height="50" width="80" onerror='getDefaultFileImageName(this)'> </span>
 		</div>
 	</nav>
 		<div align="center">
 	   User Name:${userID}
 	 <h1 style="color: green;">LOGIN SUCESSFULLY</h1>
 	  <a href="profileUpdate.jsp">Update profile</a> <br> 
-	  <a href="add.jsp">add</a><br>
+	  <a href="add.jsp">add Technologies</a><br>
+	   <a href="view?userId=${userID}">View Technologies</a><br>
 	  Search <input type="search"> 
 	</div> 
 </body>

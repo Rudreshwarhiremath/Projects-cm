@@ -21,10 +21,7 @@
 			<a class="navbar-brand" href="#"> <img
 				src=" https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png"
 				alt="" width="80" height="48" class="d-inline-block align text-top">
-				<a href="index.jsp">HOME</a> <a class="navbar-brand" href="#"></a> <img
-				src=" https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png"
-				alt="" width="80" height="48" class="d-inline-block align text-top">
-				<li class="active"><a href="index.jsp">Home</a></li>
+				<a href="index.jsp">HOME</a> <a class="navbar-brand" href="#"></a> 
 		</div>
 
 	</nav>

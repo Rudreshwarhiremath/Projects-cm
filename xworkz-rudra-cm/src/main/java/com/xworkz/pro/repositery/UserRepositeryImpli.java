@@ -11,6 +11,7 @@ import javax.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.xworkz.pro.entity.Technology;
 import com.xworkz.pro.entity.UserEntity;
 
 import lombok.extern.slf4j.Slf4j;
@@ -41,7 +42,7 @@ public class UserRepositeryImpli implements UserRepositery {
 	}
 
 	@Override
-	public UserEntity userSignIn(String userId) {
+	public UserEntity getByUser(String userId) {
 		EntityManager em = this.entityManagerFactory.createEntityManager();
 		try {
 			Query query = em.createNamedQuery("user");
@@ -120,7 +121,7 @@ public class UserRepositeryImpli implements UserRepositery {
 
 	@Override
 	public boolean logincount(String userID, int count) {
-		log.info("count:"+count);
+		log.info("count:" + count);
 		EntityManager em = this.entityManagerFactory.createEntityManager();
 		try {
 			EntityTransaction et = em.getTransaction();
@@ -135,6 +136,7 @@ public class UserRepositeryImpli implements UserRepositery {
 			em.close();
 		}
 	}
+
 	@Override
 	public UserEntity reSetPassword(String email) {
 		EntityManager em = this.entityManagerFactory.createEntityManager();
@@ -149,6 +151,7 @@ public class UserRepositeryImpli implements UserRepositery {
 			em.close();
 		}
 	}
+
 	@Override
 	public boolean update(UserEntity userEntity) {
 		EntityManager em = this.entityManagerFactory.createEntityManager();
@@ -162,8 +165,10 @@ public class UserRepositeryImpli implements UserRepositery {
 			em.close();
 		}
 	}
+
 	@Override
-	public boolean updatePassword(String userId, String password,Boolean resetPassword,LocalTime passwordChangedTime ) {
+	public boolean updatePassword(String userId, String password, Boolean resetPassword,
+			LocalTime passwordChangedTime) {
 		EntityManager em = this.entityManagerFactory.createEntityManager();
 		try {
 			EntityTransaction et = em.getTransaction();
@@ -180,4 +185,25 @@ public class UserRepositeryImpli implements UserRepositery {
 			em.close();
 		}
 	}
+
+	@Override
+	public boolean saveTechnology( Technology technology) {
+		EntityManager em = this.entityManagerFactory.createEntityManager();
+		try {
+			EntityTransaction et = em.getTransaction();
+			et.begin();
+			em.persist(technology);
+			et.commit();
+			return true;
+		} finally {
+			em.close();
+		}
+	}
+	/*
+	 * @Override public List<Technology> viewTechnology(String users) {
+	 * EntityManager em=this.entityManagerFactory.createEntityManager(); Query query
+	 * = em.createNamedQuery("users"); query.setParameter("uis", users); List list =
+	 * query.getResultList(); log.info("" + entity); return entity; return
+	 * UserRepositery.super.viewTechnology(id); }
+	 */
 }

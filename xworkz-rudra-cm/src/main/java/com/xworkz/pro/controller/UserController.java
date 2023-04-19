@@ -1,6 +1,5 @@
 package com.xworkz.pro.controller;
 
-import java.awt.Image;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,31 +9,27 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Set;
 
-import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.swing.ImageIcon;
 import javax.validation.ConstraintViolation;
 
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.xworkz.pro.dto.UserDTO;
+import com.xworkz.pro.entity.Technology;
 import com.xworkz.pro.service.UserService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -151,9 +146,12 @@ public class UserController {
 			model.addAttribute("error", "please select file");
 			return "profileUpdate";
 		}
+		String imageFormat = multipartFile.getOriginalFilename().substring(
+				multipartFile.getOriginalFilename().lastIndexOf('.'), multipartFile.getOriginalFilename().length());
+		log.info("Image last form" + imageFormat);
 		model.addAttribute("sucess", "image uploaded sucessfully");
 		byte[] bytes = multipartFile.getBytes();
-		Path path = Paths.get("D:\\highway\\" + userId + System.currentTimeMillis() + ".jpg");
+		Path path = Paths.get("D:\\highway\\" + userId + System.currentTimeMillis() + imageFormat);
 		Files.write(path, bytes);
 		String imageName = path.getFileName().toString();
 		log.info("Image name--" + imageName);
@@ -166,14 +164,29 @@ public class UserController {
 	@GetMapping("/download")
 	public void onDownload(HttpServletResponse response, @RequestParam String fileName, UserDTO user)
 			throws IOException {
-		Path path = Paths.get("D:\\highway\\" + user.getPicName());
-		path.toFile();
-		response.setContentType("image/jpeg");
-		File file = new File("D:\\highway\\" + fileName);
-		InputStream in = new BufferedInputStream(new FileInputStream(file));
-		ServletOutputStream out = response.getOutputStream();
-		IOUtils.copy(in, out);
-		response.flushBuffer();
+			Path path = Paths.get("D:\\highway\\" + user.getPicName());
+			path.toFile();
+			response.setContentType("image/jpeg");
+			File file = new File("D:\\highway\\" + fileName);
+			InputStream in = new BufferedInputStream(new FileInputStream(file));
+			ServletOutputStream out = response.getOutputStream();
+			IOUtils.copy(in, out);
+			response.flushBuffer();
+		
+	}
 
+	@PostMapping("/addTechnology")
+	public String addList(String userId, Technology technology, Model model) {
+		this.userService.updateTechnology(userId, technology);
+		model.addAttribute("techmsg", "Technology added sucessfully");
+		model.addAttribute("tech", technology);
+		return "add";
+	}
+
+	@GetMapping("/view")
+	public String viewTechnology(@RequestParam String userId, Model model) {
+		List<Technology> list = this.userService.technology(userId);
+		model.addAttribute("list", list);
+		return "viewTechnology";
 	}
 }

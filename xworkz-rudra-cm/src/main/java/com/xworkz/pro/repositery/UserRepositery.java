@@ -4,6 +4,7 @@ import java.time.LocalTime;
 import java.util.Collections;
 import java.util.List;
 
+import com.xworkz.pro.entity.Technology;
 import com.xworkz.pro.entity.UserEntity;
 
 public interface UserRepositery {
@@ -13,7 +14,7 @@ public interface UserRepositery {
 		return Collections.emptyList();
 	}
 
-	default UserEntity userSignIn(String userId) {
+	default UserEntity getByUser(String userId) {
 		return null;
 	}
 
@@ -32,9 +33,17 @@ public interface UserRepositery {
 	default UserEntity reSetPassword(String email) {
 		return null;
 	}
+
 	boolean update(UserEntity userEntity);
-	
-	boolean updatePassword(String userId, String password,Boolean resetPassword,LocalTime passwordChangedTime);
+
+	boolean updatePassword(String userId, String password, Boolean resetPassword, LocalTime passwordChangedTime);
 
 	boolean logincount(String userId, int count);
+
+	boolean saveTechnology(Technology technology);
+
+	default List<Technology> viewTechnology(String users) {
+		return null;
+
+	}
 }

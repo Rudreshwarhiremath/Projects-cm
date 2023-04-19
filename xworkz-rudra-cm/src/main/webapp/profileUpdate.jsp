@@ -16,6 +16,7 @@
 				src=" https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png"
 				alt="" width="80" height="48" class="d-inline-block align text-top">
       <a href="SignIn.jsp"><span class="glyphicon glyphicon-log-in"></span> Logout</a>
+      <a href="LoginSucess.jsp">Home</a>
      <span style="color: white;">Welcome:${userID}</span>
        <img src="download?fileName=${dtoPic}" height="50" width="80">
 		</div>
@@ -36,9 +37,11 @@
 	<tr><td>	 Mobile Number </td>  <td><input type="number" name="mobile" id="userMobile" onchange="ValideMobile()" value="${udto.mobile}">
 		<span id="mobileError" style="color: red"></span>
 		<span id="displayUserMobile" style="color: red"></span></td>  </tr>
-	</table>
 	
-	Set Profile Pic: <input type="file" name="chitra"> 
+	
+	<tr> <td> Set Profile Pic:</td><td> <input type="file" name="chitra" > <span style="color: red">${error}</span>  </td> </tr>
+	 
+	 </table>
 	<div> <button type="submit" class="btn btn-success">Update</button> </div>
 	
 	

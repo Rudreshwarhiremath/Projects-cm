@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,14 +20,29 @@
 		<div class="container-fluid">
 			<a class="navbar-brand" href="#"> <img
 				src=" https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png"
-				alt="" width="80" height="48" class="d-inline-block align text-top">
-				          <li class="active"><a href="index.jsp">Home</a></li>
-      <a href="signUp.jsp"><span class="glyphicon glyphicon-user"></span> Sign Up</a>
-      <a href="SignIn.jsp"><span class="glyphicon glyphicon-log-in"></span> Login</a>
-     <span style="color: white;">Welcome:${userID}</span>
-       <img src="download?fileName=${dtoPic}" height="50" width="80">
+				alt="" width="80" height="48" class="d-inline-block align text-top"></a>
+				<a href="LoginSucess.jsp">Home</a>
+			<span style="color: white;">Welcome:${userID}</span> <img
+				src="download?fileName=${dtoPic}" height="50" width="80">
 		</div>
 	</nav>
-
+<div align="center">
+	<form action="addTechnology" method="post">
+	<input value="${userID}" name="userId" readonly="readonly" >
+	<table>	
+    <tr><td>Technology Name </td> <td> <input type="text" name="t_name" value="${tech.t_name}"></td></tr>
+	<tr> <td>	Technology Language  </td> <td> <input type="text" name="t_langauge" value="${tech.t_langauge}"> </td></tr>
+	<tr> <td>	Technology version  </td> <td> <input type="text" name="t_version" value="${tech.t_version}"></td>    </tr> 
+	<tr> <td>	Technology Owner </td> <td>  <input type="text" name="t_owner" value="${tech.t_owner}"></td>       </tr>
+	<tr> <td>	Support From  </td> <td>   <input type="text" name="t_supportFrom" value="${tech.t_supportFrom}"></td>            </tr>
+	<tr> <td>	Support to  </td> <td> <input type="text" name="t_supportTo" value="${tech.t_supportTo}"></td>               </tr>
+	<tr> <td>	License  </td> <td>  <input type="text" name="t_license" value="${tech.t_license}"></td>               </tr>
+	<tr> <td>	Open source </td> <td> <input type="text" name="t_openSource" value="${tech.t_openSource}"></td>            </tr>
+	<tr> <td>	OS Type </td> <td> <input type="text" name="t_osType" value="${tech.t_osType}"></td>               </tr>
+	 </table>
+		<input type="submit" value="Add">
+	</form>
+<span style="color: green;">${techmsg}</span>
+</div>
 </body>
 </html>
