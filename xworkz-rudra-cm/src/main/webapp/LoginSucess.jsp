@@ -31,7 +31,7 @@
 	   User Name:${userID}
 	 <h1 style="color: green;">LOGIN SUCESSFULLY</h1>
 	  <a href="profileUpdate.jsp">Update profile</a> <br> 
-	  <a href="add.jsp">add Technologies</a><br>
+	  <a href="addTechnology">add Technologies</a><br>
 	   <a href="view?userId=${userID}">View Technologies</a><br>
 	  Search <input type="search"> 
 	</div> 

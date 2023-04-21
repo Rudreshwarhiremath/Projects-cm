@@ -5,7 +5,8 @@ import java.time.LocalDateTime;
 import javax.persistence.MappedSuperclass;
 
 import lombok.Data;
-//@MappedSuperclass
+
+@MappedSuperclass
 @Data
 public abstract class AbstractAudit {
 	private String createdBy;

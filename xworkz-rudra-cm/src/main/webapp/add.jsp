@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+	    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+	
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,11 +36,17 @@
 	<tr> <td>	Technology Language  </td> <td> <input type="text" name="t_langauge" value="${tech.t_langauge}"> </td></tr>
 	<tr> <td>	Technology version  </td> <td> <input type="text" name="t_version" value="${tech.t_version}"></td>    </tr> 
 	<tr> <td>	Technology Owner </td> <td>  <input type="text" name="t_owner" value="${tech.t_owner}"></td>       </tr>
-	<tr> <td>	Support From  </td> <td>   <input type="text" name="t_supportFrom" value="${tech.t_supportFrom}"></td>            </tr>
-	<tr> <td>	Support to  </td> <td> <input type="text" name="t_supportTo" value="${tech.t_supportTo}"></td>               </tr>
+	<tr> <td>	Support From  </td> <td>   <input type="date" name="t_supportFrom" value="${tech.t_supportFrom}"></td>            </tr>
+	<tr> <td>	Support to  </td> <td> <input type="date" name="t_supportTo" value="${tech.t_supportTo}"></td>               </tr>
 	<tr> <td>	License  </td> <td>  <input type="text" name="t_license" value="${tech.t_license}"></td>               </tr>
 	<tr> <td>	Open source </td> <td> <input type="text" name="t_openSource" value="${tech.t_openSource}"></td>            </tr>
-	<tr> <td>	OS Type </td> <td> <input type="text" name="t_osType" value="${tech.t_osType}"></td>               </tr>
+	<tr> <td>	OS Type </td> <td> 
+	<select name="t_osType">
+	<option value="${tech.t_osType}">SELECT</option>
+	<c:forEach items="${type}" var="p">
+				<option value="${p}">${p}</option>
+			</c:forEach>
+	</select>  </td>           </tr>
 	 </table>
 		<input type="submit" value="Add">
 	</form>

@@ -3,12 +3,14 @@ package com.xworkz.pro.controller;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -41,6 +43,9 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+
+	private List<String> list = Arrays.asList("MS-Windows", "Ubuntu", "Mac OS", "Fedora", "Solaris", "Free BSD",
+			"Chrome OS", "CentOS", "Debian", "Deepin");
 
 	public UserController() {
 		log.info("" + this.getClass().getSimpleName());
@@ -95,7 +100,9 @@ public class UserController {
 				// model.addAttribute("userID", udto.getUserId());//request scope
 				HttpSession httpSession = request.getSession(true);
 				httpSession.setAttribute("userID", udto.getUserId());
-				httpSession.setAttribute("dtoPic", udto.getPicName());
+				if (udto.getPicName() != null) {
+					httpSession.setAttribute("dtoPic", udto.getPicName());
+				}
 				httpSession.setAttribute("udto", udto);
 				return "LoginSucess";
 			}
@@ -164,6 +171,7 @@ public class UserController {
 	@GetMapping("/download")
 	public void onDownload(HttpServletResponse response, @RequestParam String fileName, UserDTO user)
 			throws IOException {
+		try {
 			Path path = Paths.get("D:\\highway\\" + user.getPicName());
 			path.toFile();
 			response.setContentType("image/jpeg");
@@ -172,12 +180,15 @@ public class UserController {
 			ServletOutputStream out = response.getOutputStream();
 			IOUtils.copy(in, out);
 			response.flushBuffer();
-		
+		} catch (FileNotFoundException e) {
+			e.getStackTrace();
+		}
 	}
 
 	@PostMapping("/addTechnology")
 	public String addList(String userId, Technology technology, Model model) {
 		this.userService.updateTechnology(userId, technology);
+		model.addAttribute("type", list);
 		model.addAttribute("techmsg", "Technology added sucessfully");
 		model.addAttribute("tech", technology);
 		return "add";
@@ -188,5 +199,11 @@ public class UserController {
 		List<Technology> list = this.userService.technology(userId);
 		model.addAttribute("list", list);
 		return "viewTechnology";
+	}
+
+	@GetMapping("/addTechnology")
+	public String addTech(Model model) {
+		model.addAttribute("type", list);
+		return "add";
 	}
 }

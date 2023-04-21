@@ -27,7 +27,8 @@
 				src="download?fileName=${dtoPic}" height="50" width="80">
 		</div>
 	</nav>
-<a href="view?userId=${userID}">FindAll</a>
+<div align="center" style="color: silver;">There are technology were added by ${userID} </div>
+
 	<table class="table table-dark table-hover">
 		<tr>
 			<th>Technology Name</th>

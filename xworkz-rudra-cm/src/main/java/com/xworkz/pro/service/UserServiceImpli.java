@@ -222,6 +222,8 @@ public class UserServiceImpli implements UserService {
 	public UserDTO updateTechnology(String userId, Technology technology) {
 		UserEntity userEntity = this.userRepositery.getByUser(userId);
 		technology.setUserEntity(userEntity);
+		technology.setCreatedBy(userId);
+		technology.setCreatedDate(LocalDateTime.now());
 		boolean save = this.userRepositery.saveTechnology(technology);
 		log.info("Technology  " + save);
 		return UserService.super.updateTechnology(userId, technology);
