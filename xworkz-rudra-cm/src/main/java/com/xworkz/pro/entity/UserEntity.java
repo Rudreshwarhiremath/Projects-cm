@@ -37,8 +37,7 @@ import lombok.Setter;
 //"update Employee emp set emp.surname=:surname where emp.name=:name\"")
 @NamedQuery(name = "updateLoginCount", query = "update UserEntity ent set ent.loginCount=:count where ent.userId=:userID")
 @NamedQuery(name = "updatePassword", query = "update UserEntity ent set ent.password=:up , ent.resetPassword=:urp ,ent.passwordChangedTime=:pct where ent.userId=:uu")
-
-public class UserEntity extends  AbstractAudit implements Serializable {
+public class UserEntity extends AbstractAudit implements Serializable {
 	@Id
 	@Column(name = "id")
 	private int id;
@@ -52,14 +51,7 @@ public class UserEntity extends  AbstractAudit implements Serializable {
 	private String password;
 	@Column(name = "agreement")
 	private Boolean agreement;
-//	@Column(name = "createdBy")
-//	private String createdBy;
-//	@Column(name = "createdDate")
-//	private LocalDateTime createdDate;
-//	@Column(name = "updatedBy")
-//	private String updatedBy;
-//	@Column(name = "updatedDate")
-//	private LocalDateTime updatedDate;
+
 	@Column(name = "logincount")
 	private int loginCount;
 

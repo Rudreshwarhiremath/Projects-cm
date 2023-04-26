@@ -10,8 +10,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalTime;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Set;
 
 import javax.servlet.ServletOutputStream;
@@ -31,7 +29,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.xworkz.pro.dto.UserDTO;
-import com.xworkz.pro.entity.Technology;
 import com.xworkz.pro.service.UserService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -43,9 +40,6 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
-
-	private List<String> list = Arrays.asList("MS-Windows", "Ubuntu", "Mac OS", "Fedora", "Solaris", "Free BSD",
-			"Chrome OS", "CentOS", "Debian", "Deepin");
 
 	public UserController() {
 		log.info("" + this.getClass().getSimpleName());
@@ -74,36 +68,36 @@ public class UserController {
 			HttpServletResponse response) throws IOException {
 		log.info("Running in userSignIn condition ");
 		try {
-			UserDTO udto = this.userService.userSignIn(userId, password);
-			log.info("Login count" + udto.getLoginCount());
-			if (udto.getLoginCount() >= 3) {
+			UserDTO uudto = this.userService.userSignIn(userId, password,model);
+			log.info("Login count" + uudto.getLoginCount());
+			if (uudto.getLoginCount() >= 3) {
 				model.addAttribute("msg", "Account locked Reset password");
 				log.info("Acount locked due to wrong password entering 3 times");
 				return "SignIn";
 			}
-			if (udto != null) {
+			if (uudto != null) {
 
-				if (udto.getResetPassword() == true) {
+				if (uudto.getResetPassword() == true) {
 					log.info("Running in ResetPassword true condition");
-					if (!udto.getPasswordChangedTime().isAfter(LocalTime.now())) {
+					if (!uudto.getPasswordChangedTime().isAfter(LocalTime.now())) {
 						log.info("Running in time varifying condition");
 						model.addAttribute("msgs", "Time out plz try again");
 						return "SignIn";
 					}
-					model.addAttribute("userID", udto.getUserId());
+					model.addAttribute("userID", uudto.getUserId());
 					log.info("Running in reset condition");
-					log.info("ResetPassword---" + udto.getResetPassword());
-					log.info("Timer-----" + udto.getPasswordChangedTime().isBefore(LocalTime.now()));
+					log.info("ResetPassword---" + uudto.getResetPassword());
+					log.info("Timer-----" + uudto.getPasswordChangedTime().isBefore(LocalTime.now()));
 					return "updatePassword";
 				}
 				log.info("User ID and password is matched");
 				// model.addAttribute("userID", udto.getUserId());//request scope
 				HttpSession httpSession = request.getSession(true);
-				httpSession.setAttribute("userID", udto.getUserId());
-				if (udto.getPicName() != null) {
-					httpSession.setAttribute("dtoPic", udto.getPicName());
+				httpSession.setAttribute("userID", uudto.getUserId());
+				if (uudto.getPicName() != null) {
+					httpSession.setAttribute("dtoPic", uudto.getPicName());
 				}
-				httpSession.setAttribute("udto", udto);
+				httpSession.setAttribute("udto", uudto);
 				return "LoginSucess";
 			}
 		} catch (Exception e) {
@@ -137,7 +131,7 @@ public class UserController {
 	public String upDatePassword(String userId, String password, String confirmPassword) {
 		log.info("Running in upDatePassword method");
 		this.userService.updatePassword(userId, password, confirmPassword);
-		return "sucess";
+		return "SignIn";
 	}
 
 	@PostMapping("/upload")
@@ -183,27 +177,5 @@ public class UserController {
 		} catch (FileNotFoundException e) {
 			e.getStackTrace();
 		}
-	}
-
-	@PostMapping("/addTechnology")
-	public String addList(String userId, Technology technology, Model model) {
-		this.userService.updateTechnology(userId, technology);
-		model.addAttribute("type", list);
-		model.addAttribute("techmsg", "Technology added sucessfully");
-		model.addAttribute("tech", technology);
-		return "add";
-	}
-
-	@GetMapping("/view")
-	public String viewTechnology(@RequestParam String userId, Model model) {
-		List<Technology> list = this.userService.technology(userId);
-		model.addAttribute("list", list);
-		return "viewTechnology";
-	}
-
-	@GetMapping("/addTechnology")
-	public String addTech(Model model) {
-		model.addAttribute("type", list);
-		return "add";
 	}
 }

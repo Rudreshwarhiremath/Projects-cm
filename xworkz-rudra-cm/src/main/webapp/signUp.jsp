@@ -22,8 +22,10 @@
 			<a class="navbar-brand" href="#"> <img
 				src=" https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png"
 				alt="" width="80" height="48" class="d-inline-block align text-top">
-				<a href="index.jsp">Home</a>
-				<a href="SignIn.jsp"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+				<div>
+				<a href="index.jsp"  class="btn btn-primary">Home</a>
+				<a href="SignIn.jsp"  class="btn btn-primary">Login</a>
+				</div>
 		</div>
 		
 

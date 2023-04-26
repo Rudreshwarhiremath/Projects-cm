@@ -22,18 +22,25 @@
 			<a class="navbar-brand" href="#"> <img
 				src=" https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png"
 				alt="" width="80" height="48" class="d-inline-block align text-top">
-      <a href="SignIn.jsp"><span class="glyphicon glyphicon-log-in"></span> Logout</a>
+				<div>
+      <a href="SignIn.jsp" class="btn btn-info">Logout</a>
      <span style="color: white;">Welcome:${userID}</span>
-      <span> <img src="download?fileName=${dtoPic}" height="50" width="80" onerror='getDefaultFileImageName(this)'> </span>
+      <span> <img src="download?fileName=${dtoPic}" height="70" width="80"> </span>
+      </div>
 		</div>
 	</nav>
 		<div align="center">
 	   User Name:${userID}
 	 <h1 style="color: green;">LOGIN SUCESSFULLY</h1>
-	  <a href="profileUpdate.jsp">Update profile</a> <br> 
-	  <a href="addTechnology">add Technologies</a><br>
-	   <a href="view?userId=${userID}">View Technologies</a><br>
-	  Search <input type="search"> 
+	  <a href="profileUpdate.jsp" class="btn btn-info">Update profile</a> 
+	  <br>
+	  <br> 
+	  <a href="addTechnology" class="btn btn-info">add Technologies</a>
+	  <br>
+	  <br>
+	   <a href="view?userId=${userID}" class="btn btn-info">View Technologies</a>
+	   <br>
+	   <br>
 	</div> 
 </body>
 </html>

@@ -187,7 +187,7 @@ public class UserRepositeryImpli implements UserRepositery {
 	}
 
 	@Override
-	public boolean saveTechnology( Technology technology) {
+	public boolean saveTechnology(Technology technology) {
 		EntityManager em = this.entityManagerFactory.createEntityManager();
 		try {
 			EntityTransaction et = em.getTransaction();
@@ -199,11 +199,157 @@ public class UserRepositeryImpli implements UserRepositery {
 			em.close();
 		}
 	}
-	/*
-	 * @Override public List<Technology> viewTechnology(String users) {
-	 * EntityManager em=this.entityManagerFactory.createEntityManager(); Query query
-	 * = em.createNamedQuery("users"); query.setParameter("uis", users); List list =
-	 * query.getResultList(); log.info("" + entity); return entity; return
-	 * UserRepositery.super.viewTechnology(id); }
-	 */
+
+	@Override
+	public List<Technology> searchByTechName(String teName, int id) {
+		log.info("Running in repo searchByTechName list " + teName + "id--" + id);
+		EntityManager em = this.entityManagerFactory.createEntityManager();
+		try {
+			Query query = em.createNamedQuery("searchByTechName");
+			query.setParameter("techName", teName);
+			query.setParameter("tid", id);
+			List<Technology> list = query.getResultList();
+			log.info("See List in repo  " + list);
+			return list;
+		} finally {
+			em.close();
+
+		}
+	}
+
+	@Override
+	public List<Technology> searchByTechLanguage(String teLangauge, int id) {
+		log.info("Running in repo searchByTechName list " + teLangauge + "  id--" + id);
+		EntityManager em = this.entityManagerFactory.createEntityManager();
+		try {
+			Query query = em.createNamedQuery("searchByTechLangauge");
+			query.setParameter("techLangauge", teLangauge);
+			query.setParameter("taid", id);
+			List<Technology> list = query.getResultList();
+			log.info("See List in repo  " + list);
+			return list;
+		} finally {
+			em.close();
+
+		}
+	}
+
+	@Override
+	public List<Technology> searchByTechLicense(String teLicense, int id) {
+		log.info("Running in repo searchByTechName list " + teLicense + "id--" + id);
+		EntityManager em = this.entityManagerFactory.createEntityManager();
+		try {
+			Query query = em.createNamedQuery("searchByTechLicense");
+			query.setParameter("techLicense", teLicense);
+			query.setParameter("tbid", id);
+			List<Technology> list = query.getResultList();
+			log.info("See List in repo  " + list);
+			return list;
+		} finally {
+			em.close();
+
+		}
+	}
+
+	@Override
+	public List<Technology> searchByTechOpenSource(String teOpenSource, int id) {
+		log.info("Running in repo searchByTechName list " + teOpenSource + "id--" + id);
+		EntityManager em = this.entityManagerFactory.createEntityManager();
+		try {
+			Query query = em.createNamedQuery("searchByTechOpenSource");
+			query.setParameter("techOpenSource", teOpenSource);
+			query.setParameter("tcid", id);
+			List<Technology> list = query.getResultList();
+			log.info("See List in repo  " + list);
+			return list;
+		} finally {
+			em.close();
+
+		}
+	}
+
+	@Override
+	public List<Technology> searchByTechOsType(String teOsType, int id) {
+		log.info("Running in repo searchByTechName list " + teOsType + "id--" + id);
+		EntityManager em = this.entityManagerFactory.createEntityManager();
+		try {
+			Query query = em.createNamedQuery("searchByTechOsType");
+			query.setParameter("techOsType", teOsType);
+			query.setParameter("tdid", id);
+			List<Technology> list = query.getResultList();
+			log.info("See List in repo  " + list);
+			return list;
+		} finally {
+			em.close();
+
+		}
+	}
+
+	@Override
+	public List<Technology> searchByTechOwner(String teOwner, int id) {
+		log.info("Running in repo searchByTechName list " + teOwner + "id--" + id);
+		EntityManager em = this.entityManagerFactory.createEntityManager();
+		try {
+			Query query = em.createNamedQuery("searchByTechOwner");
+			query.setParameter("techOwner", teOwner);
+			query.setParameter("teid", id);
+			List<Technology> list = query.getResultList();
+			log.info("See List in repo  " + list);
+			return list;
+		} finally {
+			em.close();
+
+		}
+	}
+
+	@Override
+	public List<Technology> searchByTechSupportFrom(String teSupportFrom, int id) {
+		log.info("Running in repo searchByTechName list " + teSupportFrom + "id--" + id);
+		EntityManager em = this.entityManagerFactory.createEntityManager();
+		try {
+			Query query = em.createNamedQuery("searchByTechSupportFrom");
+			query.setParameter("techSupportFrom", teSupportFrom);
+			query.setParameter("tfid", id);
+			List<Technology> list = query.getResultList();
+			log.info("See List in repo  " + list);
+			return list;
+		} finally {
+			em.close();
+
+		}
+	}
+
+	@Override
+	public List<Technology> searchByTechSupportTo(String teSupportTo, int id) {
+		log.info("Running in repo searchByTechName list " + teSupportTo + "id--" + id);
+		EntityManager em = this.entityManagerFactory.createEntityManager();
+		try {
+			Query query = em.createNamedQuery("searchByTechSupportTo");
+			query.setParameter("techSupportTo", teSupportTo);
+			query.setParameter("tgid", id);
+			List<Technology> list = query.getResultList();
+			log.info("See List in repo  " + list);
+			return list;
+		} finally {
+			em.close();
+
+		}
+	}
+
+	@Override
+	public List<Technology> searchByTechVersion(String teVersion, int id) {
+		log.info("Running in repo searchByTechName list " + teVersion + "id--" + id);
+		EntityManager em = this.entityManagerFactory.createEntityManager();
+		try {
+			Query query = em.createNamedQuery("searchByTechVersion");
+			query.setParameter("techVersion", teVersion);
+			query.setParameter("thid", id);
+			List<Technology> list = query.getResultList();
+			log.info("See List in repo  " + list);
+			return list;
+		} finally {
+			em.close();
+
+		}
+	}
 }

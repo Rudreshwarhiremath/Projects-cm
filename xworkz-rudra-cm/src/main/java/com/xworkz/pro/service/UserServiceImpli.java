@@ -26,9 +26,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.xworkz.pro.dto.UserDTO;
-import com.xworkz.pro.entity.Technology;
 import com.xworkz.pro.entity.UserEntity;
 import com.xworkz.pro.repositery.UserRepositery;
 
@@ -100,7 +100,7 @@ public class UserServiceImpli implements UserService {
 	}
 
 	@Override
-	public UserDTO userSignIn(String userId, String password) {
+	public UserDTO userSignIn(String userId, String password, Model model) {
 		UserEntity entity = this.userRepositery.getByUser(userId);
 		UserDTO dto = new UserDTO();
 		BeanUtils.copyProperties(entity, dto);
@@ -117,6 +117,7 @@ public class UserServiceImpli implements UserService {
 		log.info("Time " + LocalTime.now().isBefore(entity.getPasswordChangedTime()));
 		if (entity.getLoginCount() >= 3) {
 			log.info("Running in Login count condition");
+			model.addAttribute("emsgs", "Acount lock");
 			return dto;
 		}
 
@@ -218,23 +219,6 @@ public class UserServiceImpli implements UserService {
 		return UserService.super.updateProfile(userId, email, mobile, path);
 	}
 
-	@Override
-	public UserDTO updateTechnology(String userId, Technology technology) {
-		UserEntity userEntity = this.userRepositery.getByUser(userId);
-		technology.setUserEntity(userEntity);
-		technology.setCreatedBy(userId);
-		technology.setCreatedDate(LocalDateTime.now());
-		boolean save = this.userRepositery.saveTechnology(technology);
-		log.info("Technology  " + save);
-		return UserService.super.updateTechnology(userId, technology);
-	}
-
-	@Override
-	public List<Technology> technology(String userId) {
-		UserEntity entity = this.userRepositery.getByUser(userId);
-		List<Technology> list = entity.getTechnology();
-		return list;
-	}
 
 	@Override
 	public boolean sendMail(String email, String text) {

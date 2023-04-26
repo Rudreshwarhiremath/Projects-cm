@@ -21,7 +21,11 @@
 			<a class="navbar-brand" href="#"> <img
 				src=" https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png"
 				alt="" width="80" height="48" class="d-inline-block align text-top">
-				<a href="index.jsp">HOME</a> <a class="navbar-brand" href="#"></a> 
+						<div>
+			<a href="index.jsp" class="btn btn-primary">Home</a>
+			<a href="signUp.jsp" class="btn btn-primary"> Sign Up</a>
+			 <a href="SignIn.jsp" class="btn btn-primary">Login</a>
+		</div> 
 		</div>
 
 	</nav>

@@ -4,10 +4,14 @@ import java.time.LocalDateTime;
 
 import javax.persistence.MappedSuperclass;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @MappedSuperclass
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public abstract class AbstractAudit {
 	private String createdBy;
 	private LocalDateTime createdDate;

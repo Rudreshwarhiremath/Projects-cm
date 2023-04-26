@@ -21,10 +21,10 @@
 			<a class="navbar-brand" href="#"> <img
 				src=" https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png"
 				alt="" width="80" height="48" class="d-inline-block align text-top">
-				<a href="index.jsp">HOME</a>
-				<a class="navbar-brand" href="#"></a> <img
-				src=" https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png"
-				alt="" width="80" height="48" class="d-inline-block align text-top">
+				<div>
+				<a href="index.jsp"  class="btn btn-primary">HOME</a>
+				<a href="signUp.jsp" class="btn btn-primary">Sign Up</a>
+				</div>
 		</div>
 
 	</nav>
@@ -32,6 +32,7 @@
 <h5 style="color: red">${match}</h5>
 <h5 style="color: red">${msg}</h5>
 <h5 style="color: red">${msgs}</h5>
+<h5 style="color: orange;">${emsgs}</h5>
 
 <form action="signin" method="post">
 	<table>
@@ -57,9 +58,11 @@
 	<button type="submit" class="btn btn-success">SignIN</button>
 	</div>
 	</form>
-	<a href="signUp.jsp">Register as New User</a> 
 	<br>
-	<a href="resetpassword.jsp">Forgot Password</a> 
+	<a href="signUp.jsp" class="btn btn-info">Register as New User</a> 
+	<br>
+	<br>
+	<a href="resetpassword.jsp" class="btn btn-info">Forgot Password</a> 
 </div>	
 <script>
 function ValideName() {

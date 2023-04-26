@@ -6,14 +6,15 @@ import java.util.Set;
 
 import javax.validation.ConstraintViolation;
 
+import org.springframework.ui.Model;
+
 import com.xworkz.pro.dto.UserDTO;
-import com.xworkz.pro.entity.Technology;
 
 public interface UserService {
 
 	Set<ConstraintViolation<UserDTO>> validateAndSave(UserDTO userDTO);
 
-	default UserDTO userSignIn(String userId, String password) {
+	default UserDTO userSignIn(String userId, String password, Model Model) {
 		return null;
 	}
 
@@ -47,11 +48,6 @@ public interface UserService {
 
 	boolean sendMail(String email, String text);
 
-	default UserDTO updateTechnology(String userId, Technology technology) {
-		return null;
-	}
 
-	default List<Technology> technology(String userId) {
-		return null;
-	}
+
 }
