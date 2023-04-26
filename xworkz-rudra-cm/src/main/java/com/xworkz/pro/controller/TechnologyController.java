@@ -23,9 +23,9 @@ public class TechnologyController {
 
 	@Autowired
 	private Techservice techservice;
-	
+
 	private List<String> list = Arrays.asList("MS-Windows", "Ubuntu", "Mac OS", "Fedora", "Solaris", "Free BSD",
-			"Chrome OS", "CentOS", "Debian", "Deepin");
+			"Chrome OS", "CentOS", "Debian", "Deepin", "Linux");
 
 	public TechnologyController() {
 		log.info("Running in technology controller");
@@ -39,7 +39,7 @@ public class TechnologyController {
 
 	@PostMapping("/addTechnology")
 	public String addList(String userId, Technology technology, Model model) {
-		this.techservice.updateTechnology(userId, technology,model);
+		this.techservice.updateTechnology(userId, technology, model);
 		model.addAttribute("type", list);
 		model.addAttribute("techmsg", "Technology added sucessfully");
 		model.addAttribute("tech", technology);
@@ -53,59 +53,14 @@ public class TechnologyController {
 		return "viewTechnology";
 	}
 
-	@GetMapping("/techName")
-	public String searchByTechName(Model model, @RequestParam String teName, @RequestParam String userId) {
-		List<Technology> list = this.techservice.searchByTechName(teName, userId);
+	@GetMapping("/searchTechnology")
+	public String searchTechnology(Model model, @RequestParam String userId, @RequestParam String teName,
+			@RequestParam String teLangauge, @RequestParam String teVersion, @RequestParam String teSupportFrom,
+			@RequestParam String teSupportTo, @RequestParam String teOwner, @RequestParam String teLicense,
+			@RequestParam String teOpenSource, @RequestParam String teOsType) {
+		List<Technology> list = this.techservice.searchTechnology(userId, teName, teLangauge, teVersion, teOwner,
+				teSupportFrom, teSupportTo, teLicense, teOpenSource, teOsType);
 		model.addAttribute("list", list);
 		return "viewTechnology";
 	}
-	@GetMapping("/techLanguage")
-	public String searchByTechLanguage(Model model, @RequestParam String teLangauge, @RequestParam String userId) {
-		List<Technology> list = this.techservice.searchByTechLanguage(teLangauge, userId);
-		model.addAttribute("list", list);
-		return "viewTechnology";
-	}
-	@GetMapping("/techVersion")
-	public String searchByTechVersion(Model model, @RequestParam String teVersion, @RequestParam String userId) {
-		List<Technology> list = this.techservice.searchByTechVersion(teVersion, userId);
-		model.addAttribute("list", list);
-		return "viewTechnology";
-	}
-	@GetMapping("/techSupportFrom")
-	public String searchByTechSupportFrom(Model model, @RequestParam String teSupportFrom, @RequestParam String userId) {
-		List<Technology> list = this.techservice.searchByTechSupportFrom(teSupportFrom, userId);
-		model.addAttribute("list", list);
-		return "viewTechnology";
-	}
-	@GetMapping("/techSupportTo")
-	public String searchByTechSupportTo(Model model, @RequestParam String teSupportTo, @RequestParam String userId) {
-		List<Technology> list = this.techservice.searchByTechSupportTo(teSupportTo, userId);
-		model.addAttribute("list", list);
-		return "viewTechnology";
-	}
-	@GetMapping("/techOwner")
-	public String searchByTechOwner(Model model, @RequestParam String teOwner, @RequestParam String userId) {
-		List<Technology> list = this.techservice.searchByTechOwner(teOwner, userId);
-		model.addAttribute("list", list);
-		return "viewTechnology";
-	}
-	@GetMapping("/techLicense")
-	public String searchByTechLicense(Model model, @RequestParam String teLicense, @RequestParam String userId) {
-		List<Technology> list = this.techservice.searchByTechLicense(teLicense, userId);
-		model.addAttribute("list", list);
-		return "viewTechnology";
-	}
-	@GetMapping("/techOpenSource")
-	public String searchByTechOpenSource(Model model, @RequestParam String teOpenSource, @RequestParam String userId) {
-		List<Technology> list = this.techservice.searchByTechOpenSource(teOpenSource, userId);
-		model.addAttribute("list", list);
-		return "viewTechnology";
-	}
-	@GetMapping("/techOsType")
-	public String searchByTechOsType(Model model, @RequestParam String teOsType, @RequestParam String userId) {
-		List<Technology> list = this.techservice.searchByTechOsType(teOsType, userId);
-		model.addAttribute("list", list);
-		return "viewTechnology";
-	}
-
 }

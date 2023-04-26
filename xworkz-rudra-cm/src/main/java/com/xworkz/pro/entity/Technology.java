@@ -20,16 +20,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "technologies")
-@NamedQuery(name = "searchByTechName", query = "select ent from Technology ent where ent.teName=:techName and ent.userEntity.id=:tid")
-@NamedQuery(name = "searchByTechLangauge", query = "select ent from Technology ent where ent.teLangauge=:techLangauge and ent.userEntity.id=:taid")
-@NamedQuery(name = "searchByTechVersion", query = "select ent from Technology ent where ent.teVersion=:techVersion and ent.userEntity.id=:thid")
-@NamedQuery(name = "searchByTechOwner", query = "select ent from Technology ent where ent.teOwner=:techOwner and ent.userEntity.id=:teid")
-@NamedQuery(name = "searchByTechSupportFrom", query = "select ent from Technology ent where ent.teSupportFrom=:techSupportFrom and ent.userEntity.id=:tfid")
-@NamedQuery(name = "searchByTechSupportTo", query = "select ent from Technology ent where ent.teSupportTo=:techSupportTo and ent.userEntity.id=:tgid")
-@NamedQuery(name = "searchByTechLicense", query = "select ent from Technology ent where ent.teLicense=:techLicense and ent.userEntity.id=:tbid")
-@NamedQuery(name = "searchByTechOpenSource", query = "select ent from Technology ent where ent.teOpenSource=:techOpenSource and ent.userEntity.id=:tcid")
-@NamedQuery(name = "searchByTechOsType", query = "select ent from Technology ent where ent.teOsType=:techOsType and ent.userEntity.id=:tdid")
-
+@NamedQuery(name = "searchTechnology", query = "select ent from Technology ent where ent.teName=:techName or ent.teLangauge=:techLangauge or ent.teVersion=:techVersion or ent.teOwner=:techOwner or ent.teSupportFrom=:techSupportFrom or ent.teSupportTo=:techSupportTo or ent.teLicense=:techLicense or ent.teOpenSource=:techOpenSource or ent.teOsType=:techOsType and ent.userEntity.id=:tid")
 public class Technology extends AbstractAudit {
 	@Id
 	@Column(name = "t_id")

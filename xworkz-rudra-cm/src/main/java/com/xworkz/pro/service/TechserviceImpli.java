@@ -1,7 +1,6 @@
 package com.xworkz.pro.service;
 
 import java.time.LocalDateTime;
-import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,82 +40,13 @@ public class TechserviceImpli implements Techservice {
 	}
 
 	@Override
-	public List<Technology> searchByTechName(String teName, String userId) {
+	public List<Technology> searchTechnology(String userId, String teName, String teLangauge, String teVersion,
+			String teOwner, String teSupportFrom, String teSupportTo, String teLicense, String teOpenSource,
+			String teOsType) {
 		UserEntity entity = this.userRepositery.getByUser(userId);
 		int id = entity.getId();
-		List<Technology> list = userRepositery.searchByTechName(teName, id);
-		log.info("Search List" + list);
-		return list;
-	}
-
-	@Override
-	public List<Technology> searchByTechLanguage(String teLangauge, String userId) {
-		UserEntity entity = this.userRepositery.getByUser(userId);
-		int id = entity.getId();
-		List<Technology> list = userRepositery.searchByTechLanguage(teLangauge, id);
-		log.info("Search List" + list);
-		return list;
-	}
-
-	@Override
-	public List<Technology> searchByTechLicense(String teLicense, String userId) {
-		UserEntity entity = this.userRepositery.getByUser(userId);
-		int id = entity.getId();
-		List<Technology> list = userRepositery.searchByTechLicense(teLicense, id);
-		log.info("Search List" + list);
-		return list;
-	}
-
-	@Override
-	public List<Technology> searchByTechOpenSource(String teOpenSource, String userId) {
-		UserEntity entity = this.userRepositery.getByUser(userId);
-		int id = entity.getId();
-		List<Technology> list = userRepositery.searchByTechOpenSource(teOpenSource, id);
-		log.info("Search List" + list);
-		return list;
-	}
-
-	@Override
-	public List<Technology> searchByTechOsType(String teOsType, String userId) {
-		UserEntity entity = this.userRepositery.getByUser(userId);
-		int id = entity.getId();
-		List<Technology> list = userRepositery.searchByTechOsType(teOsType, id);
-		log.info("Search List" + list);
-		return list;
-	}
-
-	@Override
-	public List<Technology> searchByTechOwner(String teOwner, String userId) {
-		UserEntity entity = this.userRepositery.getByUser(userId);
-		int id = entity.getId();
-		List<Technology> list = userRepositery.searchByTechOwner(teOwner, id);
-		log.info("Search List" + list);
-		return list;
-	}
-
-	@Override
-	public List<Technology> searchByTechSupportFrom(String teSupportFrom, String userId) {
-		UserEntity entity = this.userRepositery.getByUser(userId);
-		int id = entity.getId();
-		List<Technology> list = userRepositery.searchByTechSupportFrom(teSupportFrom, id);
-		log.info("Search List" + list);
-		return list;
-	}
-
-	@Override
-	public List<Technology> searchByTechSupportTo(String teSupportTo, String userId) {
-		UserEntity entity = this.userRepositery.getByUser(userId);
-		int id = entity.getId();
-		List<Technology> list = userRepositery.searchByTechSupportTo(teSupportTo, id);
-		log.info("Search List" + list);
-		return list;
-	}
-
-	@Override
-	public List<Technology> searchByTechVersion(String teVersion, String userId) {
-		UserEntity entity = this.userRepositery.getByUser(userId);
-		int id = entity.getId();
-		List<Technology> list = userRepositery.searchByTechVersion(teVersion, id);
+		List<Technology> list = this.userRepositery.searchTechnology(teName, teLangauge, teVersion, teOwner,
+				teSupportFrom, teSupportTo, teLicense, teOpenSource, teOsType, id);
 		log.info("Search List" + list);
 		return list;
 	}

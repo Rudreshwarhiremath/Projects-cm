@@ -48,48 +48,10 @@ public interface UserRepositery {
 
 	}
 
-	default List<Technology> searchByTechName(String teName, int id) {
+	default List<Technology> searchTechnology(String teName, String teLangauge, String teVersion, String teOwner,
+			String teSupportFrom, String teSupportTo, String teLicense, String teOpenSource, String teOsType, int id) {
 		return null;
 
 	}
 
-	default List<Technology> searchByTechLanguage(String teLangauge, int id) {
-		return null;
-
-	}
-
-	default List<Technology> searchByTechVersion(String teVersion, int id) {
-		return null;
-
-	}
-
-	default List<Technology> searchByTechSupportFrom(String teSupportFrom, int id) {
-		return null;
-
-	}
-
-	default List<Technology> searchByTechSupportTo(String teSupportTo, int id) {
-		return null;
-
-	}
-
-	default List<Technology> searchByTechOwner(String teOwner, int id) {
-		return null;
-
-	}
-
-	default List<Technology> searchByTechLicense(String teLicense, int id) {
-		return null;
-
-	}
-
-	default List<Technology> searchByTechOpenSource(String teOpenSource, int id) {
-		return null;
-
-	}
-
-	default List<Technology> searchByTechOsType(String teOsType, int id) {
-		return null;
-
-	}
 }

@@ -30,15 +30,28 @@
 		</div>
 	</nav>
 	<div>
+	<div style="color: purple;" align="center" > <h2> Search Bar </h2></div>
+	<form action="searchTechnology" > 
 	
+	<div align="center"> <input type="search"  name="teName" placeholder="Technology Name">
+	 <input type="search" name="teLangauge" placeholder="Technology Language">
+	 <input type="search" name="teVersion" placeholder="Technology Version">
+	 <input type="search" name="teOwner" placeholder="Technology Owner">
+	 <input type="search" name="teSupportFrom" placeholder="Support From">
+	 <input type="search" name="teSupportTo" placeholder="Support to">
+	 <input type="search" name="teLicense" placeholder="License"></div>
+	 <div align="center"><input type="search" name="teOpenSource" placeholder="Open source">
+	 <input type="search" name="teOsType" placeholder="OS Type"></div>
+	 <input type="hidden" value="${userID}" name="userId">
+	<div align="center">  <input type="submit" value="Search" class="btn btn-secondary"></div> </form>
 	</div>
-<div align="center" style="color: silver;">These are technology were added by ${userID} </div>
+<div align="center" style="color:darkgreen;">These are technology were added by ${userID} </div>
 
 	<table class="table table-dark table-hover">
 		<tr>
 			<th>Technology Name</th>
 			<th>Technology Language</th>
-			<th>Technology version</th>
+			<th>Technology Version</th>
 			<th>Technology Owner</th>
 			<th>Support From</th>
 			<th>Support to</th>
@@ -53,7 +66,7 @@
 				<td>${r.teVersion}</td>
 				<td>${r.teOwner}</td>
 				<td>${r.teSupportFrom}</td>
-				<td>${r.teSupportTo}</td>
+				<td>${r.teSupportFrom}</td>
 				<td>${r.teLicense}</td>
 				<td>${r.teOpenSource}</td>
 				<td>${r.teOsType}</td>
@@ -61,64 +74,6 @@
 		</c:forEach>
 
 	</table>
-	
-	<div>
-	<table>
-	<tr>
-	<td> <form action="techName" >  Search By Technology Name <input type="search"  name="teName">
-	<input type="hidden" value="${userID}" name="userId">
-	<input type="submit" value="Search"> </form>
-	</td>
-	<td> <form action="techLanguage" >  Search By Technology Language <input type="search"  name="teLangauge">
-	<input type="hidden" value="${userID}" name="userId">
-	<input type="submit" value="Search"> </form>
-	</td>
-	<td> <form action="techVersion" >  Search By Technology version <input type="search"  name="teVersion">
-	<input type="hidden" value="${userID}" name="userId">
-	<input type="submit" value="Search"> </form>
-	</td>
-	</tr>
-	<tr>
-	<td>
-	<form action="techSupportFrom"> Search By Technology Support From <input type="search" name="teSupportFrom">
-	<input type="hidden" value="${userID}" name="userId">
-	<input type="submit" value="Search">
-	</form>
-	</td>
-	<td>
-	<form action="techSupportTo"> Search By Technology Support to <input type="search" name="teSupportTo">
-	<input type="hidden" value="${userID}" name="userId">
-	<input type="submit" value="Search">
-	</form>
-	</td>
-	<td>
-	<form action="techOwner"> Search By Technology Owner <input type="search" name="teOwner">
-	<input type="hidden" value="${userID}" name="userId">
-	<input type="submit" value="Search">
-	</form>
-	</td>
-	</tr>
-	<tr>
-	<td>
-	<form action="techLicense"> Search By Technology License <input type="search" name="teLicense">
-	<input type="hidden" value="${userID}" name="userId">
-	<input type="submit" value="Search">
-	</form>
-	</td>
-	<td>
-	<form action="techOpenSource"> Search By Technology Source <input type="search" name="teOpenSource">
-	<input type="hidden" value="${userID}" name="userId">
-	<input type="submit" value="Search">
-	</form>
-	</td>
-	<td>
-	<form action="techOsType"> Search By Technology OS Type <input type="search" name="teOsType">
-	<input type="hidden" value="${userID}" name="userId">
-	<input type="submit" value="Search">
-	</form>
-	</td>
-	</tr>
-	</table>
-     </div>
+	<div align="center"><a href="view?userId=${userID}" class="btn btn-info">View Technologies</a></div>
 </body>
 </html>
