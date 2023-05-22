@@ -1,0 +1,64 @@
+package com.axis.lms.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.axis.lms.dto.ClassesDto;
+import com.axis.lms.entity.ClassesEntity;
+import com.axis.lms.entity.CourseEntity;
+import com.axis.lms.entity.EnrollmentEntity;
+import com.axis.lms.entity.UserEntity;
+import com.axis.lms.repository.CourseRepository;
+import com.axis.lms.repository.EnrollmentRepository;
+import com.axis.lms.repository.ScheduleRepository;
+import com.axis.lms.repository.UserRepository;
+
+@Service
+public class ScheduleServiceImpli implements ScheduleService {
+	@Autowired
+	private ScheduleRepository scheduleRepository;
+	@Autowired
+	private CourseRepository courseRepository;
+	@Autowired
+	private UserRepository userRepository;
+	@Autowired
+	private EnrollmentRepository enrollmentRepository;
+
+	@Override
+	public boolean save(ClassesDto classesDto) {
+		UserEntity userEntity = this.userRepository.findByUserName(classesDto.getTeacherId());
+		CourseEntity courseEntity = this.courseRepository.findByCourseName(classesDto.getCourseId());
+		ClassesEntity classesEntity = new ClassesEntity();
+		classesEntity.setCourseEntity(courseEntity);
+		classesEntity.setUserEntity(userEntity);
+		BeanUtils.copyProperties(classesDto, classesEntity);
+		this.scheduleRepository.save(classesEntity);
+		return true;
+	}
+
+	@Override
+	public List<ClassesDto> getSchedule(String userName) {
+		UserEntity userEntity = this.userRepository.findByUserName(userName);
+		List<EnrollmentEntity> enrollmentEntities = this.enrollmentRepository.findByUserEntity(userEntity);
+		List<ClassesDto> classesDtos = new ArrayList<ClassesDto>();
+		for (EnrollmentEntity courseEntity : enrollmentEntities) {
+			List<ClassesEntity> classesEntities = this.scheduleRepository
+					.findByCourseEntity(courseEntity.getCourseEntity());
+			for (ClassesEntity classesEntity : classesEntities) {
+				ClassesDto classesDto = new ClassesDto();
+				classesDto.setCourseId(courseEntity.getCourseEntity().getCourseName());
+				classesDto.setTeacherId(courseEntity.getCourseEntity().getUserEntity().getUserName());
+				classesDto.setStartTime(classesEntity.getStartTime());
+				classesDto.setEndTime(classesEntity.getEndTime());
+				//BeanUtils.copyProperties(classesEntity, classesDtos);
+				classesDtos.add(classesDto);
+			}
+		}
+
+		return classesDtos;
+	}
+}

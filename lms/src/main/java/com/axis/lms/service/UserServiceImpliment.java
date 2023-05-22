@@ -1,0 +1,33 @@
+package com.axis.lms.service;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;import com.axis.lms.constants.Role;
+import com.axis.lms.dto.UserDto;
+import com.axis.lms.entity.UserEntity;
+import com.axis.lms.repository.UserRepository;
+
+@Service
+public class UserServiceImpliment implements UserService {
+	@Autowired
+	private UserRepository repository;
+
+	@Override
+	public boolean save(UserDto udto) {
+		UserEntity uentity = new UserEntity();
+		BeanUtils.copyProperties(udto, uentity);
+		this.repository.save(uentity);
+		return true;
+	}
+
+	@Override
+	public UserDto login(String userName, String password) {
+		UserDto udto = new UserDto();
+		UserEntity entity = this.repository.findByUserName(userName);
+		BeanUtils.copyProperties(entity, udto);
+		if (entity.getPassword().equals(password)) {
+			return udto;
+		}
+		return null;
+	}
+}

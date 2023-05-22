@@ -1,0 +1,8 @@
+//package com.axis.lms.service;
+//
+//import com.axis.lms.dto.MessagesDto;
+//
+//public interface MessagesService {
+//	boolean save(MessagesDto messagesDto);
+//
+//}
