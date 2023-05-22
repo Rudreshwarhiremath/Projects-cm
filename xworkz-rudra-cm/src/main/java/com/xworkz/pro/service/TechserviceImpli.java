@@ -44,6 +44,7 @@ public class TechserviceImpli implements Techservice {
 			String teOwner, String teSupportFrom, String teSupportTo, String teLicense, String teOpenSource,
 			String teOsType) {
 		UserEntity entity = this.userRepositery.getByUser(userId);
+		//entity.getTechnology().stream()
 		int id = entity.getId();
 		List<Technology> list = this.userRepositery.searchTechnology(teName, teLangauge, teVersion, teOwner,
 				teSupportFrom, teSupportTo, teLicense, teOpenSource, teOsType, id);

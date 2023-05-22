@@ -97,6 +97,7 @@
 		function ValideName() {
 			var user = document.getElementById('userName');
 			var uservalue = user.value;
+			console.log(user);
 			console.log(uservalue);
 			if (uservalue != null && uservalue != "" && uservalue.length > 3
 					&& uservalue.length < 30) {
