@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CourseDto {
-	private Integer courseId;
+	private int courseId;
 	private String CourseName;
 	private String teacherId;
 	private LocalDate startDate;

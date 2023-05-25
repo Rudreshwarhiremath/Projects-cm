@@ -26,7 +26,7 @@ public class SubmissionsEntity {
 	//private int studentId;
 	private float grade;
 	private String feedBack;
-	@OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
 	@JoinColumn(name = "assignmentsId", referencedColumnName = "assignmentsId")
 	private AssignmentsEntity assignmentsEntity;
 	@ManyToOne(fetch = FetchType.EAGER)

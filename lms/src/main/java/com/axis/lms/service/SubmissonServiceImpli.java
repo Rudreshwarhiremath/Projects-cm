@@ -1,5 +1,8 @@
 package com.axis.lms.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,13 +40,19 @@ public class SubmissonServiceImpli implements SubmissonService {
 	}
 
 	@Override
-	public SubmissionsDto findBySubmission(String userName) {
+	public List<SubmissionsDto> findBySubmission(String userName) {
 		UserEntity userEntity = this.userRepository.findByUserName(userName);
-		SubmissionsEntity submissionsEntity=this.submissionRepositery.findByUserEntity(userEntity);
-		SubmissionsDto submissionsDto=new SubmissionsDto();
-		submissionsDto.setStudentId(submissionsEntity.getUserEntity().getUserName());
-		submissionsDto.setGrade(submissionsEntity.getGrade());
-		submissionsDto.setFeedBack(submissionsEntity.getFeedBack());
+		List<SubmissionsEntity> submissionsEntity = this.submissionRepositery.findByUserEntity(userEntity);
+		List<SubmissionsDto> submissionsDto = new ArrayList<SubmissionsDto>();
+		for (SubmissionsEntity submissionsEntity2 : submissionsEntity) {
+
+			SubmissionsDto submissionsDto1 = new SubmissionsDto();
+			submissionsDto1.setStudentId(submissionsEntity2.getUserEntity().getUserName());
+			submissionsDto1.setGrade(submissionsEntity2.getGrade());
+			submissionsDto1.setFeedBack(submissionsEntity2.getFeedBack());
+			submissionsDto1.setAssignmentId(submissionsEntity2.getAssignmentsEntity().getAssignmentName());
+			submissionsDto.add(submissionsDto1);
+		}
 		return submissionsDto;
 	}
 }

@@ -1,10 +1,12 @@
 package com.axis.lms.controller;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,17 +18,20 @@ import com.axis.lms.constants.Role;
 import com.axis.lms.dto.ClassesDto;
 import com.axis.lms.dto.CourseDto;
 import com.axis.lms.dto.EnrollmentDto;
+import com.axis.lms.dto.MessagesDto;
 import com.axis.lms.dto.SubmissionsDto;
 import com.axis.lms.dto.UserDto;
 import com.axis.lms.service.AssignmentService;
 import com.axis.lms.service.CourseService;
 import com.axis.lms.service.EnrollmentService;
+import com.axis.lms.service.MessagesService;
 import com.axis.lms.service.ScheduleService;
 import com.axis.lms.service.SubmissonService;
 import com.axis.lms.service.UserService;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping(value = "/user")
+@CrossOrigin("http://localhost:3000")
 public class UserController {
 	@Autowired
 	private UserService userService;
@@ -36,8 +41,8 @@ public class UserController {
 	private EnrollmentService enrollmentService;
 	@Autowired
 	private AssignmentService assignmentService;
-//	@Autowired
-//	private MessagesService messagesService;
+	@Autowired
+	private MessagesService messagesService;
 	@Autowired
 	private SubmissonService submissonService;
 	@Autowired
@@ -45,26 +50,30 @@ public class UserController {
 
 	@PostMapping(value = "/register", produces = MediaType.APPLICATION_JSON_VALUE)
 	public String userRegister(@RequestBody UserDto udto) {
-		// udto.setRole(Role.STUDENT);
+		System.out.println(udto.getUserName());
+		System.out.println(udto.getPassword());
+		System.out.println(udto.getRole());
+		System.out.println(udto.getUserId());
 		this.userService.save(udto);
 		return "UserRegestered Sucessfully";
 	}
 
 	@PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
-	public String userLogin(@RequestParam String userName, @RequestParam String password) {
+	public UserDto userLogin(@RequestParam String userName, @RequestParam String password) {
 		UserDto udto = this.userService.login(userName, password);
+		System.out.println(userName);
 		// model.addAttribute("user", udto.getUserId());
 		if (udto.getRole().equals(Role.STUDENT)) {
-			return "Login sucessfully as student";
+			return udto;
 		}
 		if (udto.getRole().equals(Role.TEACHER)) {
-			return "Login sucessfully as teacher";
+			return udto;
 		}
 		if (udto.getRole().equals(Role.ADMIN)) {
-			return "Login sucessfully as admin";
+			return udto;
 		}
 
-		return "Login sucessfully";
+		return null;
 	}
 
 	@GetMapping(value = "/courses", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -98,9 +107,35 @@ public class UserController {
 		}
 		return courseList;
 	}
+
 	@GetMapping(value = "/getGrades", produces = MediaType.APPLICATION_JSON_VALUE)
-	public SubmissionsDto submissionsDto(@RequestParam String userName) {
-		SubmissionsDto submissionsDto=this.submissonService.findBySubmission(userName);
+	public List<SubmissionsDto> submissionsDto(@RequestParam String userName) {
+		List<SubmissionsDto> submissionsDto = this.submissonService.findBySubmission(userName);
 		return submissionsDto;
+	}
+
+	@GetMapping(value = "/getMessage", produces = MediaType.APPLICATION_JSON_VALUE)
+	public MessagesDto messagesDto() {
+		MessagesDto dto = new MessagesDto();
+		dto.setMessageId(1);
+		dto.setMessageText("Hi hello how are you");
+		dto.setSenderId("Someshwari");
+		dto.setReciverId("Smita");
+		dto.setTimeStamp(LocalTime.now());
+		System.out.println(dto);
+		return dto;
+	}
+
+	@PostMapping(value = "/sendMessage", produces = MediaType.APPLICATION_JSON_VALUE)
+	public String textMessage(@RequestBody MessagesDto messagesDto) {
+		this.messagesService.save(messagesDto);
+		return "Send message sucessfully";
+	}
+
+	@GetMapping(value = "/getReciverMsg", produces = MediaType.APPLICATION_JSON_VALUE)
+	public String msgs(@RequestParam String reciver) {
+		MessagesDto messagesDto = this.messagesService.findByReciverId(reciver);
+		String msg = messagesDto.getMessageText();
+		return msg;
 	}
 }

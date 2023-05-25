@@ -27,6 +27,7 @@ public class CourseServiceImpli implements CourseService {
 		for (CourseEntity courseEntity : centity) {
 			CourseDto codto = new CourseDto();
 			BeanUtils.copyProperties(courseEntity, codto);
+			codto.setTeacherId(courseEntity.getUserEntity().getUserName());
 			cdto.add(codto);
 
 		}
