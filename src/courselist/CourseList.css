@@ -1,0 +1,43 @@
+.course-list-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .course-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 20px;
+  }
+  
+  .course-card {
+    background-color: #f8f8f8;
+    border-radius: 5px;
+    padding: 20px;
+  }
+  
+  .course-name {
+    margin: 0 0 10px;
+  }
+  
+  .course-dates {
+    margin: 0 0 10px;
+  }
+  
+  .course-teacher {
+    margin: 0;
+  }
+  
+  .enroll-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .enroll-button:hover {
+    background-color: #0056b3;
+  }
+  
