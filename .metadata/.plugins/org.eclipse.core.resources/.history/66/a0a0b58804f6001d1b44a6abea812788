@@ -1,0 +1,20 @@
+package com.axis.lms.entity;
+
+import java.time.LocalDate;
+
+import javax.persistence.Entity;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+@NoArgsConstructor
+@Getter
+@Setter
+@Entity
+public class AssignmentsEntity {
+	private int id;
+	private int courseId;
+	private String assignmentName;
+	private LocalDate duedate;
+
+}

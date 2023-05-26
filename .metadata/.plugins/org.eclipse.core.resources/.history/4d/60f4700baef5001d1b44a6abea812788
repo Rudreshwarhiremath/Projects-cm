@@ -1,0 +1,5 @@
+package com.axis.lms.controller;
+
+public class CourseController {
+
+}

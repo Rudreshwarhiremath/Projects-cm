@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Delete resource &apos;rest&apos;" deleteContents="true" description="Delete resource &apos;rest&apos;" element1="/rest" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1683106917690"/>&#x0A;<refactoring comment="Delete resource &apos;rest/src/main/java/com/xworkz/rest/postOfficeController&apos;" deleteContents="false" description="Delete resource &apos;rest/src/main/java/com/xworkz/rest/postOfficeController&apos;" element1="/rest/src/main/java/com/xworkz/rest/postOfficeController" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1683209574043"/>
+</session>

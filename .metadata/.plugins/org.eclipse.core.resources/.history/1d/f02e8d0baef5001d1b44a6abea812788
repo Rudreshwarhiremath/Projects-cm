@@ -1,0 +1,9 @@
+package com.axis.lms.service;
+
+import com.axis.lms.dto.CourseDto;
+
+public interface CourseService {
+
+	CourseDto findAll();
+
+}

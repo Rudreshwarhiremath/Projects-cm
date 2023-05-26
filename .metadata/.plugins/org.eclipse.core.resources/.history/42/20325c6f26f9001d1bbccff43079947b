@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <Link rel="stylesheet" href="../Homepage/style.css">
+</head>
+
+<body>
+
+    <!-- create navigation bar ( header) -->
+    <!-- <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span
+                        class="icon-bar"></span> <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand active" href="#">Registration Module</a>
+                <a class="navbar-brand login-btn" href="../Homepage/home.html"> Log Out</a>
+            </div>
+        </div>
+    </nav> -->
+
+
+    <header>
+        <div class = "logo"> Registration Module</div>
+        <div class="hamburger">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+        <nav class="nav-bar">
+            <ul>
+   
+                <li>
+                    <a href="../Homepage/home.html">Log Out</a>
+                </li>
+                
+            </ul>
+        </nav>
+    </header>
+
+    <br>
+    <br>
+    <!-- Create HTML registration form -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+
+
+                <h1 style="text-align: center;">Registration</h1>
+
+                <form id="formRegistration">
+
+                    <div class ="alert alert-danger" role="alert" id="errDiv"></div>
+
+                    <div class="form-group">
+
+                        <label for="role">Role:</label>
+                        <select name="role" id="roles" required>
+                            <option value="ADMIN">ADMIN</option>
+                            <option value="TEACHER">TEACHER</option>
+                            <option value="STUDENT">STUDENT</option>
+
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="name"> Name </label>
+                        <input type="text" id="userName" class="form-control" name="userName" placeholder="Enter User Name"
+                            autofocus="autofocus" required />
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="control-label" for="password"> Password </label> 
+                        <input id="password" class="form-control" type="password" name="password" placeholder="Enter password"
+                            autofocus="autofocus" required />
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" value = "register" class="btn btn-success" >Register</button>
+                        <span>Already registered? <a href="../LoginPage/login.html">Login here</a></span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"> Success</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    User Registered Successfully
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../RegistrationPage/registration-api.js"></script>
+</body>
+
+</html>

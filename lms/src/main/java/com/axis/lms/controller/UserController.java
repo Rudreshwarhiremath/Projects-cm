@@ -129,6 +129,7 @@ public class UserController {
 	@PostMapping(value = "/sendMessage", produces = MediaType.APPLICATION_JSON_VALUE)
 	public String textMessage(@RequestBody MessagesDto messagesDto) {
 		this.messagesService.save(messagesDto);
+		System.out.println(messagesDto);
 		return "Send message sucessfully";
 	}
 

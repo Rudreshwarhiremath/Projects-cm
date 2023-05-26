@@ -1,7 +1,0 @@
-package com.xworkz.pro.entity;
-
-import com.xworkz.pro.dto.AbstractAudit;
-
-public class UserEntity extends AbstractAudit {
-
-}

@@ -1,0 +1,13 @@
+127.0.0.1 - - [01/May/2023:14:27:39 +0530] "GET / HTTP/1.1" 404 751
+0:0:0:0:0:0:0:1 - - [01/May/2023:14:27:40 +0530] "GET /xworkz-rudra-cm/ HTTP/1.1" 200 1017
+0:0:0:0:0:0:0:1 - - [01/May/2023:14:27:46 +0530] "GET /xworkz-rudra-cm/SignIn.jsp HTTP/1.1" 200 2672
+0:0:0:0:0:0:0:1 - - [01/May/2023:14:28:01 +0530] "POST /xworkz-rudra-cm/signin HTTP/1.1" 200 1502
+0:0:0:0:0:0:0:1 - - [01/May/2023:14:28:01 +0530] "GET /xworkz-rudra-cm/download?fileName=Satish1681893929806.jpg HTTP/1.1" 200 899429
+0:0:0:0:0:0:0:1 - - [01/May/2023:14:28:03 +0530] "GET /xworkz-rudra-cm/view?userId=Satish HTTP/1.1" 200 4740
+0:0:0:0:0:0:0:1 - - [01/May/2023:14:28:03 +0530] "GET /xworkz-rudra-cm/download?fileName=Satish1681893929806.jpg HTTP/1.1" 200 899429
+0:0:0:0:0:0:0:1 - - [01/May/2023:14:28:19 +0530] "GET /xworkz-rudra-cm/searchTechnology?teName=java&teLangauge=&teVersion=&teOwner=&teSupportFrom=&teSupportTo=&teLicense=&teOpenSource=&teOsType=&userId=Satish HTTP/1.1" 200 3878
+0:0:0:0:0:0:0:1 - - [01/May/2023:14:28:19 +0530] "GET /xworkz-rudra-cm/download?fileName=Satish1681893929806.jpg HTTP/1.1" 200 899429
+0:0:0:0:0:0:0:1 - - [01/May/2023:14:28:31 +0530] "GET /xworkz-rudra-cm/view?userId=Satish HTTP/1.1" 200 4740
+0:0:0:0:0:0:0:1 - - [01/May/2023:14:28:31 +0530] "GET /xworkz-rudra-cm/download?fileName=Satish1681893929806.jpg HTTP/1.1" 200 899429
+0:0:0:0:0:0:0:1 - - [01/May/2023:14:29:10 +0530] "GET /xworkz-rudra-cm/searchTechnology?teName=&teLangauge=java&teVersion=&teOwner=&teSupportFrom=&teSupportTo=&teLicense=&teOpenSource=&teOsType=&userId=Satish HTTP/1.1" 200 4961
+0:0:0:0:0:0:0:1 - - [01/May/2023:14:29:10 +0530] "GET /xworkz-rudra-cm/download?fileName=Satish1681893929806.jpg HTTP/1.1" 200 899429

@@ -1,0 +1,9 @@
+package com.axis.lms.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.axis.lms.entity.ClassesEntity;
+
+public interface ScheduleRepository extends JpaRepository<ClassesEntity, Integer> {
+
+}

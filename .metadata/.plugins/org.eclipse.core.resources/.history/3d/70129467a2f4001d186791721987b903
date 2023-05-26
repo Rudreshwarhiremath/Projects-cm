@@ -1,0 +1,13 @@
+package com.xworkz.rest.repositery;
+
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.xworkz.rest.entity.ElectionEntity;
+
+public interface ElectionRepositery extends JpaRepository<ElectionEntity, Integer> {
+Optional<ElectionEntity> findByname(String state);
+	//List<ElectionEntity> findByname(@Param(value = "state") String state);
+
+}

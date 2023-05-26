@@ -1,0 +1,37 @@
+package com.axis.lms.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.axis.lms.dto.AssignmentDto;
+import com.axis.lms.dto.SubmissionsDto;
+import com.axis.lms.service.AssignmentService;
+
+@RestController
+@RequestMapping("/")
+public class AssignmentController {
+	@Autowired
+	private AssignmentService assignmentService;
+
+	@PostMapping(value = "/assign", produces = MediaType.APPLICATION_JSON_VALUE)
+	public String getAssignment(@RequestBody AssignmentDto adto) {
+		this.assignmentService.save(adto);
+		return "Assignment assigned sucessfully";
+	}
+    @GetMapping(value = "/submission", produces = MediaType.APPLICATION_JSON_VALUE)
+	public SubmissionsDto sdto() {
+		SubmissionsDto ssdto = new SubmissionsDto();
+		ssdto.setAssignmentId(1);
+		ssdto.setGrade(8.9f);
+		ssdto.setFeedBack("hi how are you");
+		ssdto.setStudentId(2);
+	    ssdto.setSubmissionsId(0);
+		
+		return ssdto;
+	}
+}

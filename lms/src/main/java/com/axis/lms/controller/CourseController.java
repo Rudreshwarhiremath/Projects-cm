@@ -62,16 +62,15 @@ public class CourseController {
 	}
 
 	@GetMapping(value = "/enrolList", produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<String> enrolled(@RequestParam String courseName) {
-		System.out.println(courseName);
-		List<UserDto> udtos = this.enrollmentService.enrollList(courseName);
-		List<String>users=new ArrayList<String>();
-		for (UserDto userDto : udtos) {
-			String userName=userDto.getUserName();
-			users.add(userName);
-		}
+	public List<String> enrolled() {
+		//List<UserDto> udtos = this.enrollmentService.enrollList();
+		List<String> users =new ArrayList<String>();
+		users.add("Someshwari");
+		users.add("Smita");
+		users.add("Sampatti");
 		return users;
 	}
+
 //	@GetMapping(value = "/schedule",produces = MediaType.APPLICATION_JSON_VALUE)
 //	public ClassesDto classesDto() {
 //		ClassesDto classesDto1=new ClassesDto();

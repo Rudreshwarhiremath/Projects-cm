@@ -1,0 +1,23 @@
+package com.axis.lms.service;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.axis.lms.dto.SubmissionsDto;
+import com.axis.lms.entity.SubmissionsEntity;
+import com.axis.lms.repository.SubmissionRepositery;
+
+@Service
+public class SubmissonServiceImpli implements SubmissonService {
+	@Autowired
+	private SubmissionRepositery submissionRepositery;
+
+	@Override
+	public boolean save(SubmissionsDto submissionsDto) {
+		SubmissionsEntity entity = new SubmissionsEntity();
+		BeanUtils.copyProperties(submissionsDto, entity);
+		this.submissionRepositery.save(entity);
+		return true;
+	}
+}

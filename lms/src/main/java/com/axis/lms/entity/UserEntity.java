@@ -34,7 +34,7 @@ public class UserEntity {
 	private String userName;
 	private String password;
 	private Role role;
-	@OneToMany(mappedBy = "userEntity",  cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
 	private List<EnrollmentEntity> enrolmententity;
 	@OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
 	private List<SubmissionsEntity> submissionsEntity;

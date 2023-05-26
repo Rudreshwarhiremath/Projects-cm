@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <Link rel="stylesheet" href="style.css">
+    <title>Document</title>
+    <style>
+        .centered {
+          text-align: center;
+          line-height: 400vh;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
+    </style>
+
+</head>
+<body>
+    <header>
+        
+        <div class="hamburger">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+        <nav class="nav-bar">
+            <ul>
+                <li>
+                    <a href="../Faculty/list-course.html" >Courses</a>
+                </li>
+               
+                <li>
+                    <a href="#">Materials</a>
+                </li>
+                <li>
+                    <a href="#">Marks</a>
+                </li>
+                <li>
+                    <a href="#">Recordings</a>
+                </li>
+                <li>
+                    <a href="#">Class Schedules</a>
+                </li>
+                <li>
+                    <a href="#">Study Plan</a>
+                </li>
+                <li>
+                    <a href="#">Notifications</a>
+                </li>
+                <li>
+                    <a href="#">Q&A</a>
+                </li>
+                <li>
+                    <a href="../Homepage/home.html">Log Out</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div style="position: relative;">
+        <img src= "https://www.hashmicro.com/blog/wp-content/uploads/2022/11/Student-Portal-Features-and-Why-do-All-Colleges-Need-It.png" alt="" style="width: 100%; height: auto; position: fixed; top: 0; left: 0; z-index: -1;" style="width: 100%;">
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; text-align: center;">
+            <div class="centered">
+                
+                <h1 style="font-size: 48px;">Welcome to Faculty Portal<h1></h1>
+            </div>
+            
+        </div>
+    </div>
+
+    <img src="https://www.hashmicro.com/blog/wp-content/uploads/2022/11/Student-Portal-Features-and-Why-do-All-Colleges-Need-It.png" alt="" style="width: 100%; height: auto; position: fixed; top: 0; left: 0; z-index: -1;">
+   
+</body>
+</html>

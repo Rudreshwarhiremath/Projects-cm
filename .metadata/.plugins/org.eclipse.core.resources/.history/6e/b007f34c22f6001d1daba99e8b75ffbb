@@ -1,0 +1,24 @@
+package com.axis.lms.service;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.axis.lms.dto.EnrollmentDto;
+import com.axis.lms.entity.EnrollmentEntity;
+import com.axis.lms.repository.EnrollmentRepository;
+
+@Service
+public class EnrollmentServiceImpli implements EnrollmentService {
+	@Autowired
+	private EnrollmentRepository enrollmentRepository;
+
+	@Override
+	public boolean save(EnrollmentDto edto) {
+		EnrollmentEntity enrollmentEntity = new EnrollmentEntity();
+		BeanUtils.copyProperties(edto, enrollmentEntity);
+		this.enrollmentRepository.save(enrollmentEntity);
+		return false;
+	}
+
+}

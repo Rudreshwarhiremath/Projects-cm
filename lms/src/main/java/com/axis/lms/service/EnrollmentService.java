@@ -9,7 +9,7 @@ import com.axis.lms.dto.UserDto;
 public interface EnrollmentService {
 	boolean save(EnrollmentDto edto);
 
-	List<UserDto> enrollList(String courseName);
+	List<String> enrollList();
 	
 	List<CourseDto> enroledCourses(String userName);
 	

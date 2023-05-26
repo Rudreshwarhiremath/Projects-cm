@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+
+    <!-- create navigation bar ( header) -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span
+                        class="icon-bar"></span> <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../Faculty/list-course.html">Courses</a>
+                <a class="navbar-brand" href="../Homepage/home.html">Log Out</a>
+            </div>
+        </div>
+    </nav>
+
+
+    <br>
+    <br>
+    <div class="container">
+        <div class="row">
+            <h1 > View Courses </h1>
+        </div>
+
+        <br>
+        <table class="table table-striped table-bordered" id="tableDetails">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Course Id</th>
+                    <th scope="col"> Course Name</th>
+                    <th scope="col"> Faculty Name </th>
+                    <th scope="col"> Start Date </th>
+                    <th scope="col"> End Date</th>
+                    <th scope="col"> Materials </th>
+                    <th scope="col"> Recordings</th>
+                    
+            </thead>
+
+            <tbody>
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <script src="./view-course-api.js"></script>
+</body>
+
+</html>

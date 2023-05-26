@@ -1,0 +1,27 @@
+package com.axis.lms.controller;
+
+import java.time.LocalDate;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.axis.lms.dto.AssignmentDto;
+import com.axis.lms.service.AssignmentService;
+
+@RestController
+@RequestMapping("/")
+public class AssignmentController {
+	@Autowired
+	private AssignmentService assignmentService;
+
+	@PostMapping(value = "/assign", produces = MediaType.APPLICATION_JSON_VALUE)
+	public String getAssignment(@RequestBody AssignmentDto adto) {
+		this.assignmentService.save(adto);
+		return "Assignment assigned sucessfully";
+	}
+}

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        .text-center {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- create navigation bar ( header) -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">About Us</span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../Homepage/home.html">Log Out</a>
+
+            </div>
+        </div>
+    </nav>
+
+    <br>
+    <br>
+    <div style="position: relative;">
+        <img src="https://www.hashmicro.com/blog/wp-content/uploads/2022/11/Student-Portal-Features-and-Why-do-All-Colleges-Need-It.png"
+            style="width: 100%; ">
+        <div
+            style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; text-align: center;">
+            <h1 class="text-center"> About Us</h1>
+            <p class="text-justify ">Welcome to our Learning Management Portal! We are dedicated to providing the best
+                online learning experience for
+                our students. Our platform is designed to be user-friendly, allowing students to easily access their
+                courses and
+                connect with their instructors and peers.
+
+                Our team is made up of experienced educators and developers who are passionate about online education.
+                We
+                believe that technology can enhance the learning process and make education more accessible to people
+                around the
+                world.
+
+                Whether you are a student looking to further your education or an instructor looking to share your
+                knowledge
+                with others, our Learning Management Portal has something to offer you. Join our community today and
+                start
+                learning!
+            </p>
+            <p class="text-justify ">Our mission is to provide a comprehensive platform for learners to acquire
+                knowledge and skills that will help them achieve their personal and professional goals. We offer a
+                diverse range of courses across various disciplines, from beginner to advanced levels, to cater to the
+                needs of learners at all stages of their learning journey. Our team of experienced instructors is
+                dedicated to providing high-quality educational content and ensuring that our learners receive
+                personalized attention and support throughout their learning experience. With our user-friendly
+                interface and state-of-the-art technology, we strive to create a seamless learning experience for all
+                our users. Join us today and take the first step towards achieving your learning goals!</p>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

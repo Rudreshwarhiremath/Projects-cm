@@ -1,0 +1,82 @@
+package com.axis.lms.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.axis.lms.dto.CourseDto;
+import com.axis.lms.dto.EnrollmentDto;
+import com.axis.lms.dto.UserDto;
+import com.axis.lms.service.AssignmentService;
+import com.axis.lms.service.CourseService;
+import com.axis.lms.service.EnrollmentService;
+import com.axis.lms.service.MessagesService;
+import com.axis.lms.service.SubmissonService;
+import com.axis.lms.service.UserService;
+
+@RestController
+@RequestMapping("/")
+public class UserController {
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private CourseService courseService;
+	@Autowired
+	private EnrollmentService enrollmentService;
+	@Autowired
+	private AssignmentService assignmentService;
+	@Autowired
+	private MessagesService messagesService;
+	@Autowired
+	private SubmissonService submissonService;
+	
+
+	@GetMapping(value = "/somu",produces = MediaType.APPLICATION_JSON_VALUE)
+	public UserDto getValues() {
+		UserDto udto = new UserDto();
+		udto.setUserId(1);
+		udto.setUserName("Somi");
+		udto.setPassword("dummi");
+		udto.setRole("Admin");
+		return udto;
+	}
+
+	@PostMapping(value = "/register", produces = MediaType.APPLICATION_JSON_VALUE)
+	public String userRegister(@RequestBody UserDto udto) {
+		this.userService.save(udto);
+		return "UserRegestered Sucessfully";
+	}
+
+	@PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
+	public String userLogin(@RequestParam String userName,@RequestParam String password) {
+		UserDto udto = this.userService.login(userName, password);
+		//model.addAttribute("user", udto.getUserId());
+
+		return "Login sucessfully";
+	}
+
+	@GetMapping(value = "/courses", produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<CourseDto> allCourses() {
+		List<CourseDto> courseList = this.courseService.findAll();
+		return courseList;
+
+	}
+
+	@PostMapping(value = "/enrole", produces = MediaType.APPLICATION_JSON_VALUE)
+	public String courseEnrole(@RequestBody EnrollmentDto edto) {
+		this.enrollmentService.save(edto);
+		return "Enrolled sucessfully";
+	}
+	//public List<>
+
+
+}

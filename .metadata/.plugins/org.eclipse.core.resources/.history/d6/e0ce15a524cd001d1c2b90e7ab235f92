@@ -1,5 +1,0 @@
-package com.xworkz.pro.service;
-
-public interface UserService {
-
-}

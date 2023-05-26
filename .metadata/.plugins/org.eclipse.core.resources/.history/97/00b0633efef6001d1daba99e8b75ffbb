@@ -1,0 +1,8 @@
+server.servlet.context-path=/axis
+server.port=9999
+
+spring.datasource.url=jdbc:mysql://localhost:3306/axis_lms
+spring.datasource.username=root
+spring.datasource.password=Xworkz@123
+spring.jpa.hibernate.ddl-auto=update
+

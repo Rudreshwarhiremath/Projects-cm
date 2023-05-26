@@ -1,0 +1,8 @@
+package com.axis.lms.service;
+
+import com.axis.lms.dto.EnrollmentDto;
+
+public interface EnrollmentService {
+	boolean save(EnrollmentDto edto);
+
+}

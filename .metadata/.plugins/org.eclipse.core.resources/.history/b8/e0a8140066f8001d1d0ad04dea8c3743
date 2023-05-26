@@ -1,0 +1,72 @@
+package com.axis.lms.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.axis.lms.dto.CourseDto;
+import com.axis.lms.dto.EnrollmentDto;
+import com.axis.lms.dto.UserDto;
+import com.axis.lms.entity.CourseEntity;
+import com.axis.lms.entity.EnrollmentEntity;
+import com.axis.lms.entity.UserEntity;
+import com.axis.lms.repository.CourseRepository;
+import com.axis.lms.repository.EnrollmentRepository;
+import com.axis.lms.repository.UserRepository;
+
+@Service
+public class EnrollmentServiceImpli implements EnrollmentService {
+	@Autowired
+	private EnrollmentRepository enrollmentRepository;
+	@Autowired
+	private UserRepository userRepository;
+	@Autowired
+	private CourseRepository courseRepositiry;
+
+	@Override
+	public boolean save(EnrollmentDto edto) {
+		UserEntity userEntity = this.userRepository.findByUserName(edto.getStudentId());
+		CourseEntity courseEntity = this.courseRepositiry.findByCourseName(edto.getCourseId());
+		EnrollmentEntity enrollmentEntity = new EnrollmentEntity();
+		enrollmentEntity.setCourseEntity(courseEntity);
+		enrollmentEntity.setUserEntity(userEntity);
+		this.enrollmentRepository.save(enrollmentEntity);
+		return true;
+	}
+
+	public List<UserEntity> getEnrolled() {
+		EnrollmentEntity enrollmentEntity = new EnrollmentEntity();
+		// enrollmentEntity.getUserEntity().getEnrolList();
+		return null;
+
+	}
+
+	@Override
+	public List<UserDto> enrollList(String courseName) {
+		CourseEntity courseEntity = this.courseRepositiry.findByCourseName(courseName);
+		List<EnrollmentEntity> enrollmentEntity = this.enrollmentRepository.findByCourseEntity(courseEntity);
+		List<UserDto> userDto = new ArrayList<UserDto>();
+		for (EnrollmentEntity enrollEntity : enrollmentEntity) {
+			UserDto udto = new UserDto();
+			udto.setUserName(enrollEntity.getUserEntity().getUserName());
+			userDto.add(udto);
+		}
+		return userDto;
+	}
+
+	@Override
+	public List<CourseDto> enroledCourses(String userName) {
+		UserEntity userEntity = this.userRepository.findByUserName(userName);
+		List<EnrollmentEntity> enrollmentEntities = this.enrollmentRepository.findByUserEntity(userEntity);
+		List<CourseDto> courseDtos = new ArrayList<CourseDto>();
+		for (EnrollmentEntity courseEntity : enrollmentEntities) {
+			CourseDto courseDto = new CourseDto();
+			courseDto.setCourseName(courseEntity.getCourseEntity().getCourseName());
+			courseDtos.add(courseDto);
+		}
+		return courseDtos;
+	}
+
+}

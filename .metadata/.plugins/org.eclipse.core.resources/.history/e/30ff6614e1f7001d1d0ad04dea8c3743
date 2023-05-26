@@ -1,0 +1,24 @@
+package com.axis.lms.service;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.axis.lms.dto.AssignmentDto;
+import com.axis.lms.entity.AssignmentsEntity;
+import com.axis.lms.repository.AssignmentRepository;
+
+@Service
+public class AssignmentServiceImpl implements AssignmentService {
+	@Autowired
+	private AssignmentRepository assignmentRepository;
+
+	@Override
+	public boolean save(AssignmentDto assignmentDto) {
+		AssignmentsEntity assignmentsEntity = new AssignmentsEntity();
+		BeanUtils.copyProperties(assignmentDto, assignmentsEntity);
+		assignmentRepository.save(assignmentsEntity);
+		return true;
+	}
+
+}

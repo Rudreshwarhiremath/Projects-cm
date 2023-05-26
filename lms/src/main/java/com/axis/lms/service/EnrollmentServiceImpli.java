@@ -44,15 +44,23 @@ public class EnrollmentServiceImpli implements EnrollmentService {
 	}
 
 	@Override
-	public List<UserDto> enrollList(String courseName) {
-		CourseEntity courseEntity = this.courseRepositiry.findByCourseName(courseName);
-		List<EnrollmentEntity> enrollmentEntity = this.enrollmentRepository.findByCourseEntity(courseEntity);
-		List<UserDto> userDto = new ArrayList<UserDto>();
-		for (EnrollmentEntity enrollEntity : enrollmentEntity) {
-			UserDto udto = new UserDto();
-			udto.setUserName(enrollEntity.getUserEntity().getUserName());
-			userDto.add(udto);
-		}
+	public List<String> enrollList() {
+		// List<EnrollmentEntity> enrollmentEntity =
+		// this.enrollmentRepository.findAll();
+		// System.out.println(enrollmentEntity);
+		// List<EnrollmentEntity> enrollmentEntity =
+		// this.enrollmentRepository.findByCourseEntity(courseEntity);
+		List<String> userDto = new ArrayList<String>();
+		// for (EnrollmentEntity enrollEntity : enrollmentEntity) {
+		// UserDto udto = new UserDto();
+		// enrollEntity.getUserEntity().getUserName();
+		// System.out.println(enrollEntity.getUserEntity().getUserName());
+		// udto.setUserName(enrollEntity.getUserEntity().getUserName());
+		// }
+//		String users = "Smita";
+//		String users1 = "Someshwari";
+//		userDto.add(users);
+//		userDto.add(users1);
 		return userDto;
 	}
 

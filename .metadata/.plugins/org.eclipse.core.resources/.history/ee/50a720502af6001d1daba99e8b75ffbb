@@ -1,0 +1,12 @@
+package com.axis.lms.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.axis.lms.repository.SubmissionRepositery;
+
+@Service
+public class SubmissonServiceImpli implements SubmissonService {
+	@Autowired
+	private SubmissionRepositery submissionRepositery;
+}

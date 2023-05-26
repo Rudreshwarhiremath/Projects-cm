@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <Link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        
+        <div class="hamburger">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+        <nav class="nav-bar">
+            <ul>
+                <li>
+                    <a href="../Faculty/view-course.html" >Courses</a>
+                </li>
+                <li>
+                    <a href="#">Courses</a>
+                </li>
+                <li>
+                    <a href="#">Materials</a>
+                </li>
+                <li>
+                    <a href="#">Marks</a>
+                </li>
+                <li>
+                    <a href="#">Recordings</a>
+                </li>
+                <li>
+                    <a href="#">Class Schedules</a>
+                </li>
+                <li>
+                    <a href="#">Study Plan</a>
+                </li>
+                <li>
+                    <a href="#">Notifications</a>
+                </li>
+                <li>
+                    <a href="#">Q&A</a>
+                </li>
+                
+            </ul>
+        </nav>
+    </header>
+</body>
+</html>

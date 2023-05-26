@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+
+    <!-- create navigation bar ( header) -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span
+                        class="icon-bar"></span> <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../Faculty/list-course.html">Courses</a>
+                <a class="navbar-brand" href="../Homepage/home.html">Log Out</a>
+            </div>
+        </div>
+    </nav>
+    <br>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+                <h1 class="text-center">Add New Course</h1>
+                <div class="card-body">
+                    <form id="formCourse">
+                        <div class ="alert alert-danger" role="alert" id="errDiv"></div>
+                        <div class="form-group">
+                            <label> Course Name </label>
+                            <input type="text" name="courseName" id="courseName" class="form-control"
+                                placeholder="Enter Course Name" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label> Faculty Name </label>
+                            <input type="text" name="facultyName" id="facultyName" class="form-control"
+                                placeholder="Enter Faculty Name" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label> Start Date </label>
+                            <input type="date" name="startDate" id="startDate" class="form-control"
+                                placeholder="Enter Start Date" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label > End Date </label>
+                            <input type="date" name="endDate" id="endDate" class="form-control"
+                                placeholder="Enter End Date" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label> Material Link </label>
+                            <input type="url" name="material" id="material" class="form-control"
+                                placeholder="Enter Material Link"  />
+                        </div>
+
+                        <div class="form-group">
+                            <label> Recording Link </label>
+                            <input type="url" name="recording" id="recording" class="form-control"
+                                placeholder="Enter Recording Link"  />
+                        </div>
+
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-primary">
+                                Add
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="successModal" role="dialog">
+        <div class="modal-dialog">
+        
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Course Addition</h4>
+            </div>
+            <div class="modal-body">
+              <p>Course Added Successfully</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+
+
+    <script src="../Faculty/create-course-api.js"></script>
+</body>
+
+</html>

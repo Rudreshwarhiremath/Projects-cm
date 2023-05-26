@@ -1,0 +1,5 @@
+package com.axis.lms.repository;
+
+public interface ScheduleRepository {
+
+}

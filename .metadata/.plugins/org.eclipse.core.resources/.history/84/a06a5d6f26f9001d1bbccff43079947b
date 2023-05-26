@@ -1,0 +1,172 @@
+const register = document.getElementById('register-page')
+register.addEventListener("click", (event) => {
+  window.location.href = "./registration.html"
+})
+
+
+function apiLoginUser(login, form) {
+
+  const headers = {
+    'content-type': 'application/json'
+
+  }
+
+  axios.post('http://localhost:8080/users/login', login, { headers })
+    .then(res => {
+      console.log(res)
+      console.log(res.data.bd)
+      form.reset()
+      alert("Logged-in successfully")
+      showSuccessModal()
+      return res.data
+    })
+    .then(data => {
+      const role = data.bd
+      if (role === 'admin') window.location.href = './admin-dashboard.html'
+      else if (role === 'faculty') window.location.href = './faculty-dashboard.html'
+      else window.location.href = './student-dashboard.html'
+    })
+    .catch(err => {
+      console.log(err)
+      const errorMsg = document.getElementById('errorDiv');
+      errorMsg.style.display = 'block'
+      errorMsg.innerHTML = `<strong>${err.res.data.msg}</strong>`
+
+    })
+
+}
+
+function reDirect() {
+  window.location.href = ""
+}
+
+function setUpLoginForm() {
+  const formLogin = document.getElementById('formLogin');
+  const emailInput = document.getElementById('email');
+  const passwordInput = document.getElementById('password');
+  const errorDiv = document.getElementById('errorDiv');
+
+  formLogin.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    if (!emailInput.validity.valid || !passwordInput.validity.valid) {
+      errorDiv.innerHTML = 'Please enter a valid email and password.';
+
+      return;
+    }
+
+    const formData = new FormData(e.target);
+    const login = Object.fromEntries(formData.entries());
+    apiLoginUser(login, formLogin);
+  });
+
+  emailInput.addEventListener('input', () => {
+    if (emailInput.validity.valid) {
+      errorDiv.innerHTML = '';
+    } else {
+      errorDiv.innerHTML = 'Please enter a valid email.';
+
+    }
+  });
+
+  passwordInput.addEventListener('input', () => {
+    if (passwordInput.validity.valid) {
+      errorDiv.innerHTML = '';
+    } else {
+      errorDiv.innerHTML = 'Please enter a valid password.';
+
+    }
+  });
+}
+
+
+setUpLoginForm()
+
+
+function showSuccessModal() {
+  const myModalEl = document.getElementById('successModal');
+  const modal = new bootstrap.Modal(myModalEl)
+  modal.show()
+}
+
+
+
+function apiRegisterUser(registration, form) {
+
+  const headers = {
+      'content-type': 'application/json'
+
+  }
+
+  axios.post('http://localhost:8080/users/register', registration, { headers })
+      .then(res => {
+          console.log(res.data)
+          alert("User Registered Successfully")
+          form.reset()
+          showSuccessModal()
+          reDirect()
+      })
+      .catch(err => {
+          console.log(err)
+          alert("User Registration unsuccessful")
+      })
+}
+
+
+function reDirect() {
+  window.location.href = ""
+}
+
+function validateEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+function setUpRegistrationForm() {
+
+  const formRegistration = document.getElementById('formRegistration')
+  const nameInput = formRegistration.querySelector('#name');
+  const emailInput = formRegistration.querySelector('#email');
+  const passwordInput = formRegistration.querySelector('#password');
+  formRegistration.addEventListener('submit', (event) => {
+      event.preventDefault();
+      
+      const name = nameInput.value.trim();
+      const email = emailInput.value.trim();
+      const password = passwordInput.value.trim();
+      
+      let errors = [];
+      
+      if (name.length < 3) {
+          errors.push('Name must be at least 3 characters long.');
+      }
+      
+      if (!validateEmail(email)) {
+          errors.push('Email is invalid.');
+      }
+      
+      if (password.length <=6) {
+          errors.push('Password must be at least 8 characters long.');
+      }
+      
+      if (errors.length > 0) {
+          
+          console.log(errors);
+          return;
+      }
+      
+      
+      const registration = { name, email, password };
+      apiRegisterUser(registration, formRegistration);
+  });
+}
+
+
+setUpRegistrationForm()
+
+
+function showSuccessModal() {
+  const myModalEl = document.getElementById('successModal');
+  const modal = new bootstrap.Modal(myModalEl)
+  modal.show()
+}

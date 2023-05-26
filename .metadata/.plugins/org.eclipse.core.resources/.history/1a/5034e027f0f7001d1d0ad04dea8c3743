@@ -1,0 +1,68 @@
+package com.axis.lms.controller;
+
+import java.time.LocalDate;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.axis.lms.dto.CourseDto;
+import com.axis.lms.dto.UserDto;
+import com.axis.lms.service.AssignmentService;
+import com.axis.lms.service.CourseService;
+import com.axis.lms.service.EnrollmentService;
+import com.axis.lms.service.SubmissonService;
+import com.axis.lms.service.UserService;
+
+@RestController
+@RequestMapping("/")
+
+public class CourseController {
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private CourseService courseService;
+	@Autowired
+	private EnrollmentService enrollmentService;
+	@Autowired
+	private AssignmentService assignmentService;
+	// @Autowired
+	// private MessagesService messagesService;
+	@Autowired
+	private SubmissonService submissonService;
+
+	@GetMapping(value = "/set", produces = MediaType.APPLICATION_JSON_VALUE)
+	public CourseDto getCourse() {
+		CourseDto cdto = new CourseDto();
+		cdto.setCourseId(1);
+		cdto.setCourseName("AWS");
+		cdto.setEndDate(LocalDate.of(2024, 02, 01));
+		cdto.setStartDate(LocalDate.now());
+		return cdto;
+	}
+
+	@PostMapping(value = "/addCourse", produces = MediaType.APPLICATION_JSON_VALUE)
+	public String createCourse(@RequestBody CourseDto cdto) {
+		this.courseService.courseSave(cdto);
+		System.out.println(cdto.getTeacherId());
+		return "course Added sucessfully";
+	}
+
+	@GetMapping(value = "/enrolList", produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<UserDto> enrolled(@RequestParam String courseName) {
+		System.out.println(courseName);
+		List<UserDto> udtos = this.enrollmentService.enrollList(courseName);
+		return udtos;
+	}
+//@PostMapping(value = "/msgs",produces = MediaType.APPLICATION_JSON_VALUE)
+//	public String msgs(@RequestBody MessagesDto mdto) {
+//		this.messagesService.save(mdto);
+//		return "message sent sucessfully";
+//	}
+}

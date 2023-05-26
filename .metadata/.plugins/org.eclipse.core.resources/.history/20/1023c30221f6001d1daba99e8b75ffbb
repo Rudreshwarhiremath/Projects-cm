@@ -1,0 +1,31 @@
+package com.axis.lms.entity;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@Entity
+@Table(name = "Enrollments")
+public class EnrollmentEntity {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer enrollmentId;
+	
+	@JoinColumn(name = "userId",referencedColumnName = "userId")
+	private int studentId;
+	
+	@JoinColumn(name = "courseId",referencedColumnName = "courseId")
+	private int courseId;
+}

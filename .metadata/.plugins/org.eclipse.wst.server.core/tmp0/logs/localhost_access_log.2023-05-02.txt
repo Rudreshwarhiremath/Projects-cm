@@ -1,0 +1,11 @@
+127.0.0.1 - - [02/May/2023:23:03:02 +0530] "GET / HTTP/1.1" 404 751
+0:0:0:0:0:0:0:1 - - [02/May/2023:23:03:03 +0530] "GET /xworkz-rudra-cm/ HTTP/1.1" 200 1017
+0:0:0:0:0:0:0:1 - - [02/May/2023:23:03:28 +0530] "GET /xworkz-rudra-cm/ HTTP/1.1" 200 1017
+0:0:0:0:0:0:0:1 - - [02/May/2023:23:03:32 +0530] "GET /xworkz-rudra-cm/SignIn.jsp HTTP/1.1" 200 2672
+0:0:0:0:0:0:0:1 - - [02/May/2023:23:03:37 +0530] "GET /xworkz-rudra-cm/resetpassword.jsp HTTP/1.1" 200 2162
+0:0:0:0:0:0:0:1 - - [02/May/2023:23:04:51 +0530] "POST /xworkz-rudra-cm/reset HTTP/1.1" 200 2219
+0:0:0:0:0:0:0:1 - - [02/May/2023:23:05:17 +0530] "GET /xworkz-rudra-cm/SignIn.jsp HTTP/1.1" 200 2672
+0:0:0:0:0:0:0:1 - - [02/May/2023:23:05:26 +0530] "POST /xworkz-rudra-cm/signin HTTP/1.1" 200 3554
+0:0:0:0:0:0:0:1 - - [02/May/2023:23:05:42 +0530] "POST /xworkz-rudra-cm/passwordUpdate HTTP/1.1" 200 2672
+0:0:0:0:0:0:0:1 - - [02/May/2023:23:05:59 +0530] "POST /xworkz-rudra-cm/signin HTTP/1.1" 200 1502
+0:0:0:0:0:0:0:1 - - [02/May/2023:23:05:59 +0530] "GET /xworkz-rudra-cm/download?fileName=Satish1681893929806.jpg HTTP/1.1" 200 899429

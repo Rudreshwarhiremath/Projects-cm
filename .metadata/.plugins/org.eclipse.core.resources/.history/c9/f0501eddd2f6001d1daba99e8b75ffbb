@@ -1,0 +1,32 @@
+package com.axis.lms.entity;
+
+import java.time.LocalDate;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+@NoArgsConstructor
+@Getter
+@Setter
+@Entity
+public class AssignmentsEntity {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)	
+	private int assignmentsId;
+	private int courseId;
+	private String assignmentName;
+	private LocalDate duedate;
+	@OneToOne
+	@JoinColumn(name = "courseId",referencedColumnName = "courseId",insertable = false,updatable = false)
+	private CourseEntity courseEntity;
+	@OneToOne
+	private SubmissionsEntity submissionsEntity;
+
+}

@@ -1,0 +1,20 @@
+package com.axis.lms.entity;
+
+import javax.persistence.Entity;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@NoArgsConstructor
+@Getter
+@Setter
+@Entity
+public class SubmissionsEntity {
+	private int id;
+	private int assignmentId;
+	private int studentId;
+	private float grade;
+	private String feedBack;
+
+}

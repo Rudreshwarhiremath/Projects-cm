@@ -22,12 +22,11 @@
 			<a class="navbar-brand" href="#"> <img
 				src=" https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png"
 				alt="" width="80" height="48" class="d-inline-block align text-top">
-				<a href="signUp.jsp">signUpPage</a>
-				<a class="navbar-brand" href="#"></a> <img
-				src=" https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png"
-				alt="" width="80" height="48" class="d-inline-block align text-top">
+				<div >
+			<a href="signUp.jsp" class="btn btn-info">Sign Up</a> 
+			<a href="SignIn.jsp"  class="btn btn-info"> Login</a>
+			</div>
 		</div>
-		
 	</nav>
 </body>
 </html>

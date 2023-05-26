@@ -1,0 +1,24 @@
+package com.axis.lms.dto;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@NoArgsConstructor
+@Getter
+@Setter
+
+public class SubmissionsDto {
+	
+	private int submissionsId;
+	private int assignmentId;
+	private int studentId;
+	private float grade;
+	private String feedBack;
+
+}

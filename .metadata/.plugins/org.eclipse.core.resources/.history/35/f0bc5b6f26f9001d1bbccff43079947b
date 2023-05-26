@@ -1,0 +1,112 @@
+// import React, { useState } from 'react';
+
+// function SignupForm() {
+//   const [email, setEmail] = useState('');
+//   const [password, setPassword] = useState('');
+
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+//    const result= axios.post('http://localhost:9999/axis/som/register',{
+//         Headers:{
+//            // Accept:'application/json'
+//             'content-type': 'application/json'
+//         }
+//     })
+//     console.log(result);
+//     console.log('Submitted:', email, password);
+//   };
+
+//   return (
+//     <form onSubmit={handleSubmit}>
+//       <input
+//         type="userName"
+//         placeholder="userName"
+//         value={email}
+//         onChange={(e) => setEmail(e.target.value)}
+//       />
+//       <input
+//         type="password"
+//         placeholder="Password"
+//         value={password}
+//         onChange={(e) => setPassword(e.target.value)}
+//       />
+//       <button type="submit">Sign Up</button>
+//     </form>
+//   );
+// }
+
+// export default SignupForm;
+
+
+
+
+
+const validateForm=({role,userName,password}) =>{
+
+    console.log(role)
+    console.log(userName)
+    console.log(password)
+    const roles=document.getElementById('roles')
+    
+    if(!roles.value) return {msg:'Please select the role', sts: false}
+    if(userName.length < 3) return {msg:'Please enter a valid name', sts: false}
+    if(password.length<=6 ) return {msg:'Please enter a valid password ', sts: false}
+    if (!userName || password.length<=6 ) return {msg:'Please enter a valid user name and password', sts: false}
+    
+
+    return {sts: 'success', msg:'Valid registration"'}
+}
+
+function setUpRegistrationForm() {
+
+    const errDiv=document.getElementById('errDiv')
+    errDiv.style.display='none'
+
+    const formRegistration = document.getElementById('formRegistration')
+    formRegistration.addEventListener('submit', (event) => {
+        event.preventDefault();
+        
+        const formData=new FormData(event.target)
+        const registration = Object.fromEntries(formData.entries())
+        console.log(registration)
+        
+        const {sts,msg} =validateForm((registration))
+        if(sts) apiRegisterUser(registration, formRegistration);
+       // else{
+        //    errDiv.style.display='block'
+        //    errDiv.innerHTML=`<strong>${msg}</strong>`
+       // }
+    });
+}
+
+
+setUpRegistrationForm()
+
+
+function apiRegisterUser(registration, form) {
+
+    const headers = {
+        'content-type': 'application/json'
+
+    }
+
+    axios.post('http://localhost:9999/axis/user/register', registration ,{ headers })
+        .then(res => {
+            console.log(res.data)
+            showSuccessModal()
+            alert("User Registered Successfully")
+            window.location.href="../Loginpage/login.html"
+            form.reset()
+           })
+        .catch(err => {
+            console.log(err)
+            alert("User Registration unsuccessful")
+        })
+}
+
+
+// function showSuccessModal() {
+//     const myModalEl = document.getElementById('successModal');
+//     const modal = new bootstrap.Modal(myModalEl)
+//     modal.show()
+// }

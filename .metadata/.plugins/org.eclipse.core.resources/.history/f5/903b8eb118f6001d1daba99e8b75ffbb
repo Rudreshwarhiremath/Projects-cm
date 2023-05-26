@@ -1,0 +1,45 @@
+package com.axis.lms.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.axis.lms.dto.CourseDto;
+import com.axis.lms.entity.CourseEntity;
+import com.axis.lms.repository.CourseRepository;
+
+@Service
+public class CourseServiceImpli implements CourseService {
+	@Autowired
+	private CourseRepository courseRepository;
+
+	@Override
+	public List<CourseDto> findAll() {
+		List<CourseEntity> centity = this.courseRepository.findAll();
+		List<CourseDto> cdto = new ArrayList<CourseDto>();
+		for (CourseEntity courseEntity : centity) {
+			CourseDto codto = new CourseDto();
+			BeanUtils.copyProperties(centity, codto);
+			cdto.add(codto);
+
+		}
+		return cdto;
+	}
+
+	@Override
+	public boolean courseSave(CourseDto cdto) {
+		CourseEntity centity = new CourseEntity();
+		System.out.println(cdto.getCourseName());
+	BeanUtils.copyProperties(cdto, centity);
+//		centity.setCourseName(cdto.getCourseName());
+//		centity.setTeacherId(cdto.getTeacherId());
+//		centity.setStartDate(cdto.getStartDate());
+//		centity.setEndDate(cdto.getEndDate());
+		this.courseRepository.save(centity);
+		return true;
+	}
+
+}

@@ -1,0 +1,44 @@
+package com.axis.lms.controller;
+
+import java.time.LocalDate;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.axis.lms.dto.CourseDto;
+import com.axis.lms.service.CourseService;
+import com.axis.lms.service.EnrollmentService;
+import com.axis.lms.service.UserService;
+
+@RestController
+@RequestMapping("/")
+
+public class CourseController {
+	@Autowired
+	private UserService service;
+	@Autowired
+	private CourseService courseService;
+	@Autowired
+	private EnrollmentService enrollmentService;
+
+	@GetMapping(value = "/set", produces = MediaType.APPLICATION_JSON_VALUE)
+	public CourseDto getCourse() {
+		CourseDto cdto = new CourseDto();
+		cdto.setCourseId(1);
+		cdto.setCourseName("AWS");
+		cdto.setEndDate(LocalDate.of(2024, 02, 01));
+		cdto.setStartDate(LocalDate.now());
+		cdto.setTeacherId(1);
+		return cdto;
+	}
+
+	@PostMapping(value = "/addCourse", produces = MediaType.APPLICATION_JSON_VALUE)
+	public String createCourse(CourseDto cdto) {
+		this.courseService.courseSave(cdto);
+		return "course Added sucessfully";
+	}
+}
