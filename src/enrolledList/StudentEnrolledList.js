@@ -3,11 +3,16 @@ import axios from 'axios';
 import './StudentEnrolled.css';
 
 const EnrolledStudents = () => {
-  const [students, setStudents] = useState([]);
+  const [users, setStudents] = useState([]);
+  const [userName , setUserName] = useState();
 
   useEffect(() => {
+    
+    const data = localStorage.getItem('userName')
+    console.log(data);
+    setUserName(data);
     // Fetch the enrolled students for the teacher from the server
-    axios.get('http://localhost:9999/axis/enrolList')
+    axios.get(`http://localhost:9999/axis/enrolList?userName=${userName}`)
       .then((response) => {
         console.log('Enrolled students:', response.data);
         setStudents(response.data);
@@ -20,7 +25,7 @@ const EnrolledStudents = () => {
   return (
     <div className="enrolled-students-container">
       <h2>Enrolled Students</h2>
-      {students.length > 0 ? (
+      {users.length >= 0 ? (
         <table className="enrolled-students-table">
           <thead>
             <tr>
@@ -28,9 +33,9 @@ const EnrolledStudents = () => {
             </tr>
           </thead>
           <tbody>
-            {students.map((student) => (
-              <tr key={student.id}>
-                <td>{student.userName}</td>
+            {users.map((student) => (
+              <tr key={student.users}>
+                <td>{student.users}</td>
               </tr>
             ))}
           </tbody>
@@ -43,3 +48,5 @@ const EnrolledStudents = () => {
 };
 
 export default EnrolledStudents;
+
+

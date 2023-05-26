@@ -13,6 +13,8 @@ import EnrolledStudents from './enrolledList/StudentEnrolledList';
 import GradeAssignment from './AssignGrades/GradesFeedback';
 import StudentNavbar from './layout/StudentNavbar';
 import TeacherDashbord from './Teacher/TeacherDashbord';
+import SendMessage from './SendMessage/SendMessage';
+import Admin from './Admin/AdminDashboard';
 function App() {
   return (
     <div className="App">
@@ -29,6 +31,8 @@ function App() {
          <Route exact path="/GradesAndFeedback" element={<GradeAssignment />} />
          <Route exact path="/StudentNavbar" element={<StudentNavbar />} />
          <Route exact path="/TeacherDashbord" element={<TeacherDashbord />} />
+         <Route exact path="/SendMessage" element={<SendMessage />} />
+         <Route exact path="/AdminDashboard" element={<Admin />} />
        
       
       </Routes>

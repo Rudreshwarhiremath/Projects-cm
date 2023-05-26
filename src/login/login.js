@@ -65,7 +65,12 @@ const LoginPage = () => {
             
 
         } if(roles==="TEACHER") {
+            console.log(props);
+            localStorage.setItem('userName', props);
+            console.log("Saved To local storage");
             navigate("/TeacherDashbord");
+        } if(roles==="ADMIN"){
+            navigate("/AdminDashboard")
         }
     }
     console.log(userName)

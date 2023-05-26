@@ -6,7 +6,7 @@ const GradeAssignment = () => {
   const [grade, setGrade] = useState('');
   const [studentId, setStudentId] = useState('');
   const [assignmentId, setAssignmentId] = useState('');
-  const [submissionId, setSubmissionId] = useState('');
+ 
 
   const handleFeedbackChange = (event) => {
     setFeedback(event.target.value);
@@ -24,9 +24,7 @@ const GradeAssignment = () => {
     setAssignmentId(event.target.value);
   };
 
-  const handleSubmissionIdChange = (event) => {
-    setSubmissionId(event.target.value);
-  };
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -36,8 +34,8 @@ const GradeAssignment = () => {
       feedBack: feedback,
       grade: grade,
       studentId: studentId,
-      assignmentId: assignmentId,
-      submissionsId: submissionId
+      assignmentId: assignmentId
+     
     };
 
     // Send the grading data to the server
@@ -55,7 +53,7 @@ const GradeAssignment = () => {
     setGrade('');
     setStudentId('');
     setAssignmentId('');
-    setSubmissionId('');
+    
   };
 
   return (
@@ -78,10 +76,7 @@ const GradeAssignment = () => {
           <label htmlFor="assignmentId">Assignment ID:</label>
           <input type="text" id="assignmentId" className="form-control" value={assignmentId} onChange={handleAssignmentIdChange} />
         </div>
-        <div className="form-group">
-          <label htmlFor="submissionId">Submission ID:</label>
-          <input type="text" id="submissionId" className="form-control" value={submissionId} onChange={handleSubmissionIdChange} />
-        </div>
+       
         <button type="submit" className="btn btn-primary">Grade Assignment</button>
       </form>
     </div>
